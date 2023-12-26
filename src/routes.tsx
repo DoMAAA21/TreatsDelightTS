@@ -5,6 +5,7 @@ import type { RouteObject } from 'react-router';
 import  DashboardLayout from './layouts/dashboardLayout';
 import DefaultLayout from './layouts/defaultLayout';
 //Views
+import LoginPage from './views/auth/login';
 import UserPage from './views/admin/user';
 
 
@@ -22,9 +23,10 @@ const AppRoutes: FC = () => {
       path: '/',
       element: <DefaultLayout/>,
       children: [
-        { path: 'user', element: <UserPage /> },
+        { path: 'loginasd', element: <LoginPage /> },
       ] 
     },
+    { path: '/login',element: <LoginPage/>},
   ];
 
   
