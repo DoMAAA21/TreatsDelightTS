@@ -37,7 +37,7 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
             </button>
           </li>
           {navConfig.map((item) => (
-            <li key={item.title} className={`hover:bg-gray-400 p-2 mb-1 rounded text-gray-600 hover:text-white ${isLinkActive(item.path) ? 'bg-gray-400 text-white' : ''}`}>
+            <li key={item.title} className={`hover:bg-indigo-500 p-2 mb-1 rounded text-gray-600 hover:text-white ${isLinkActive(item.path) ? 'bg-indigo-500 text-white' : ''}`}>
               <Link
                 to={item.path}
                 className="block py-2 px-4"

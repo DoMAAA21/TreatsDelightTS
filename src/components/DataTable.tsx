@@ -84,7 +84,7 @@ const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
-          <thead className="bg-gray-600 text-white">
+          <thead className="bg-gray-300 text-gray-600">
             <tr>
               {columns.map((column) => (
                 <th
