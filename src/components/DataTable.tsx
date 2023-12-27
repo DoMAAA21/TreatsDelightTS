@@ -60,14 +60,14 @@ const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
   };
 
   return (
-    <div>
-      <div className="flex justify-end items-center p-2 m-2">
-        <div className="relative">
+    <div className="p-4">
+      <div className="flex justify-between items-center mb-4">
+        <div className="relative ml-auto">
           <input
             type="text"
-            placeholder=""
+            placeholder="Search..."
             onChange={handleSearchChange}
-            className="p-2 pr-10 border border-gray-300 rounded-md"
+            className="w-48 p-2 border border-gray-300 rounded-md"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,49 +82,52 @@ const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
         </div>
       </div>
 
-      <table className="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
-        <thead className="bg-gray-600 text-white">
-          <tr>
-            {columns.map((column) => (
-              <th
-                key={column.field}
-                className="p-2 cursor-pointer w-40  lg:h-8 lg:p-4"
-                onClick={() => handleSort(column.field)}
-              >
-                {column.label}
-                {sortColumn === column.field && (
-                  <span className="ml-1">{sortOrder === 'asc' ? '↑' : '↓'}</span>
-                )}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedData.length > 0 ? (
-            paginatedData.map((item, index) => (
-              <tr
-                key={index}
-                className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-700 hover:text-white`}
-              >
-                {columns.map((column) => (
-                  <td key={column.field} className="p-2 text-center lg:h-8 lg:m-4">
-                    {item[column.field]}
-                  </td>
-                ))}
-              </tr>
-            ))
-          ) : (
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+          <thead className="bg-gray-600 text-white">
             <tr>
-              <td colSpan={columns.length} className="p-4 font-bold text-center">
-                No available data.
-              </td>
+              {columns.map((column) => (
+                <th
+                  key={column.field}
+                  className="p-2 cursor-pointer lg:h-10 lg:p-4 w-40 h-10"
+                  onClick={() => handleSort(column.field)}
+                >
+                  {column.label}
+                  {sortColumn === column.field && (
+                    <span className="ml-1">{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                  )}
+                </th>
+              ))}
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {paginatedData.length > 0 ? (
+              paginatedData.map((item, index) => (
+                <tr
+                  key={index}
+                  className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-700 hover:text-white`}
+                >
+                  {columns.map((column) => (
+                    <td key={column.field} className="p-2 text-center lg:h-8 lg:m-4 w-40">
+                      {item[column.field]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={columns.length} className="p-4 text-center lg:h-8 lg:m-4 w-40">
+                  No available data.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
       <div className="flex justify-between p-4 items-center">
         <div className="text-md">Page {page} of {pageCount}</div>
-        <div className="space-x-4">
+        <div className="flex space-x-4">
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}

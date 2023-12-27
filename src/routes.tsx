@@ -23,7 +23,7 @@ const AppRoutes: FC = () => {
       path: '/',
       element: <DefaultLayout/>,
       children: [
-        { path: 'loginasd', element: <LoginPage /> },
+        { path: 'user', element: <UserPage /> },
       ] 
     },
     { path: '/login',element: <LoginPage/>},
