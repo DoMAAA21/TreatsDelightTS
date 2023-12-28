@@ -24,8 +24,11 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string 
     dispatch(deleteUserSuccess(data.success))
     return data.success;
 
-  } catch (error: any) {
-    throw error.response.data.message;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw error.response?.data?.message || 'An error occured';
+    }
+    throw 'An error occured';
   }
 }
 );

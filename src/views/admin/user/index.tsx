@@ -8,8 +8,8 @@ import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import { colors } from '../../../components/theme';
 import { successMsg } from '../../../components/toast';
-import EditIcon from '../../../assets/icons/edit.svg'
-import DeleteIcon from '../../../assets/icons/trashcan.svg'
+import EditIcon from '../../../assets/icons/edit.svg';
+import DeleteIcon from '../../../assets/icons/trashcan.svg';
 
 interface User {
     _id: number | string;
@@ -18,14 +18,12 @@ interface User {
     course: string;
     religion: string;
     role: string;
-    actions: any
+    actions: React.ReactNode;
 }
-
-type DataRow<T> = Record<keyof T, string | number | any>;
 
 interface UsersData {
     columns: { label: string; field: keyof User }[];
-    rows: DataRow<User>[];
+    rows: { [key: string]: string | number | React.ReactNode }[];
 }
 
 const UserPage: FC = () => {
@@ -38,15 +36,12 @@ const UserPage: FC = () => {
 
         if (isDeleted) {
             dispatch(fetchAllUsers());
-            dispatch(deleteUserReset())
+            dispatch(deleteUserReset());
             successMsg('User deleted successfully');
-
         }
     }, [dispatch, isDeleted]);
 
     const deleteUserHandler = (id: number | string) => {
-
-
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -57,50 +52,21 @@ const UserPage: FC = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteUser(id))
-                Swal.fire(
-                    'Deleted!',
-                    'User has been deleted.',
-                    'success'
-                )
+                dispatch(deleteUser(id));
+                Swal.fire('Deleted!', 'User has been deleted.', 'success');
             }
-        })
-
-
-
-    }
+        });
+    };
 
     const usersData: UsersData = {
         columns: [
-            {
-                label: 'User ID',
-                field: '_id',
-            },
-            {
-                label: 'Full Name',
-                field: 'fullName',
-            },
-            {
-                label: 'Email',
-                field: 'email',
-            },
-            {
-                label: 'Course',
-                field: 'course',
-            },
-            {
-                label: 'Religion',
-                field: 'religion',
-            },
-            {
-                label: 'Role',
-                field: 'role',
-            },
-            {
-                label: 'Actions',
-                field: 'actions',
-
-            },
+            { label: 'User ID', field: '_id' },
+            { label: 'Full Name', field: 'fullName' },
+            { label: 'Email', field: 'email' },
+            { label: 'Course', field: 'course' },
+            { label: 'Religion', field: 'religion' },
+            { label: 'Role', field: 'role' },
+            { label: 'Actions', field: 'actions' },
         ],
         rows: users.map((user) => ({
             _id: user._id,
@@ -118,7 +84,7 @@ const UserPage: FC = () => {
                             className="transition duration-300 ease-in-out transform hover:scale-110"
                         />
                     </Link>
-                    <button className=" w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteUserHandler(user._id)}>
+                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteUserHandler(user._id)}>
                         <img
                             src={DeleteIcon}
                             alt="Delete Icon"
@@ -127,10 +93,7 @@ const UserPage: FC = () => {
                     </button>
                 </div>
             ),
-
-
-
-        } as DataRow<User>)),
+        })),
     };
 
     return (
@@ -152,9 +115,7 @@ const UserPage: FC = () => {
                 </div>
                 <div className="p-4">
                     <Link to="/dashboard/add-user">
-                        <button className={`${colors.primary} font-bold py-2 px-4 rounded-md`}>
-                            Add User
-                        </button>
+                        <button className={`${colors.primary} font-bold py-2 px-4 rounded-md`}>Add User</button>
                     </Link>
                 </div>
             </div>

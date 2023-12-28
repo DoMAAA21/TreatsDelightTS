@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 interface User {
   id: string;
@@ -40,13 +40,15 @@ export const login = createAsyncThunk<User, AuthPayload>('auth/login', async ({ 
 
     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/login`, { email, password }, config);
 
-
     dispatch(loginSuccess(data.user));
     return data.user;
-  } catch (error: any) {
-  
-    dispatch(loginFail(error.response.data.message));
-    return rejectWithValue(error.response.data.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(loginFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    dispatch(loginFail('An error occurred'));
+    return rejectWithValue('An error occurred');
   }
 }
 );

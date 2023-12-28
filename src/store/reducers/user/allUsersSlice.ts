@@ -30,8 +30,13 @@ export const fetchAllUsers = createAsyncThunk('allUsers/fetchAllUsers', async (_
     const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/users`, { withCredentials: true });
     dispatch(allUsersSuccess(data.users));
     return data.users;
-  } catch (error: any) {
-    return rejectWithValue(error.response.data.message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(allUsersFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    dispatch(allUsersFail('An error occurred'));
+    return rejectWithValue('An error occurred');
   }
 });
 
