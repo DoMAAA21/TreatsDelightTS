@@ -8,11 +8,11 @@ interface NavItem {
 const defaultNavConfig: NavItem[] = [
   {
     title: 'Dashboard',
-    path: '/admin',
+    path: '/admin/dashboard',
   },
   {
-    title: 'User',
-    path: '/admin/user',
+    title: 'Owners',
+    path: '/admin/owner-all',
   },
   {
     title: 'stores',

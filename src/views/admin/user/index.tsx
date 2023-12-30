@@ -1,13 +1,14 @@
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchAllUsers } from '../../../store/reducers/user/allUsersSlice';
+import { fetchAllOwners } from '../../../store/reducers/user/allUsersSlice';
 import { deleteUser, deleteUserReset } from '../../../store/reducers/user/userSlice';
 import Swal from 'sweetalert2';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import { colors } from '../../../components/theme';
 import { successMsg } from '../../../components/toast';
+import TableLoader from '../../../components/TableLoader';
 import EditIcon from '../../../assets/icons/edit.svg';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';
 
@@ -28,14 +29,14 @@ interface UsersData {
 
 const UserPage: FC = () => {
     const dispatch = useAppDispatch();
-    const { users } = useAppSelector((state) => state.allUsers);
+    const { users, loading } = useAppSelector((state) => state.allUsers);
     const { isDeleted } = useAppSelector((state) => state.user);
 
     useEffect(() => {
-        dispatch(fetchAllUsers());
+        dispatch(fetchAllOwners());
 
         if (isDeleted) {
-            dispatch(fetchAllUsers());
+            dispatch(fetchAllOwners());
             dispatch(deleteUserReset());
             successMsg('User deleted successfully');
         }
@@ -114,14 +115,19 @@ const UserPage: FC = () => {
                     <h1 className="text-2xl font-semibold">Owners</h1>
                 </div>
                 <div className="p-4">
-                    <Link to="/dashboard/add-user">
+                    <Link to="/admin/owner-add">
                         <button className={`${colors.primary} font-bold py-2 px-4 rounded-md`}>Add User</button>
                     </Link>
                 </div>
             </div>
 
             <div className="ph-4">
-                <DataTable columns={usersData.columns} rows={usersData.rows} />
+                {loading ? (
+                    <TableLoader />
+                ) : (
+                    <DataTable columns={usersData.columns} rows={usersData.rows} />
+                )}
+
             </div>
         </>
     );

@@ -4,6 +4,11 @@ import axios, { AxiosError } from 'axios';
 interface User {
   id: string;
   email: string;
+  avatar: {
+    url: string;
+  }
+  fname: string;
+  lname: string;
   role: string;
 }
 
@@ -53,6 +58,21 @@ export const login = createAsyncThunk<User, AuthPayload>('auth/login', async ({ 
 }
 );
 
+export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue, dispatch }) => {
+  try {
+    const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, { withCredentials: true });
+
+    return dispatch(logoutSuccess(data.success))
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(logoutFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    dispatch(logoutFail('An error occurred'));
+    return rejectWithValue('An error occurred');
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -73,12 +93,20 @@ const authSlice = createSlice({
       state.role = null;
       state.error = action.payload;
     },
+    logoutSuccess(state) {
+      state.isAuthenticated = false;
+      state.loading = false;
+      state.user = null;
+    },
+    logoutFail(state, action: PayloadAction<string>) {
+      state.error = action.payload;
+    },
     clearErrors(state) {
       state.error = null
     }
   },
 });
 
-export const { loginRequest, loginSuccess, loginFail, clearErrors } = authSlice.actions;
+export const { loginRequest, loginSuccess, loginFail, logoutSuccess, logoutFail, clearErrors } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -27,9 +27,26 @@ const initialState: AllUsersState = {
 
 export const fetchAllUsers = createAsyncThunk('allUsers/fetchAllUsers', async (_, { rejectWithValue, dispatch }) => {
   try {
+    dispatch(allUsersRequest());
     const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/users`, { withCredentials: true });
     dispatch(allUsersSuccess(data.users));
     return data.users;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(allUsersFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    dispatch(allUsersFail('An error occurred'));
+    return rejectWithValue('An error occurred');
+  }
+});
+
+export const fetchAllOwners = createAsyncThunk('allUsers/fetchAllOwners', async (_, { rejectWithValue, dispatch }) => {
+  try {
+    dispatch(allUsersRequest());
+    const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/owners`, { withCredentials: true });
+    dispatch(allUsersSuccess(data.owners));
+    return data.owners;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       dispatch(allUsersFail(error.response?.data?.message || 'An error occurred'));
