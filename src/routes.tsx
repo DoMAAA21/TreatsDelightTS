@@ -6,8 +6,8 @@ import  DashboardLayout from './layouts/dashboardLayout';
 import DefaultLayout from './layouts/defaultLayout';
 //Views
 import LoginPage from './views/auth/login';
-import UserPage from './views/admin/user';
-import AddUserPage from './views/admin/user/addUser';
+import UserPage from './views/admin/owner';
+import AddOwnerPage from './views/admin/owner/addOwner';
 
 
 
@@ -18,7 +18,7 @@ const AppRoutes: FC = () => {
       element: <DashboardLayout/>,
       children: [
         { path: 'owner-all', element: <UserPage /> },
-        { path: 'owner-add', element: <AddUserPage /> },
+        { path: 'owner-add', element: <AddOwnerPage /> },
       ] 
     },
     {

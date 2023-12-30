@@ -1,22 +1,22 @@
-import { FC, FormEvent, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { colors } from '../../../components/theme';
 import { clearErrors, login } from '../../../store/reducers/auth/authenticationSlice';
-import { errorMsg } from '../../../components/toast';
+import { topErrorMsg } from '../../../components/toast';
 
 
-const LoginForm: FC = () => {
+const LoginForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { isAuthenticated, error } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, error, loading } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) navigate("/");
     if (error) {
-      errorMsg(error);
+      topErrorMsg(error);
       dispatch(clearErrors());
     }
   }, [isAuthenticated, error])
@@ -44,10 +44,11 @@ const LoginForm: FC = () => {
 
         />
         <button
-          className={`mt-5 tracking-wide ${colors.primary} font-semibold w-full py-4 rounded-lg  transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}>
-
+          className={`mt-5 tracking-wide ${colors.primary} font-semibold w-full py-4 rounded-lg  transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
+          disabled={loading}
+        >
           <span className="ml-3">
-            Log in
+            {loading ? 'Logging in...' : 'Log in'}
           </span>
         </button>
       </form>

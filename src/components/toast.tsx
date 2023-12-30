@@ -12,8 +12,8 @@ export const successMsg = (message: string) =>
         background: 'green',
         color: 'white',
         showConfirmButton: false,
-        customClass:{
-            container : 'p-2'
+        customClass: {
+            container: 'p-2'
         }
     });
 
@@ -27,6 +27,20 @@ export const errorMsg = (message: any) =>
         timerProgressBar: true,
         toast: true,
         position: 'bottom-end',
+        background: 'red',
+        color: 'white',
+        showConfirmButton: false,
+    });
+
+export const topErrorMsg = (message: any) =>
+    Swal.fire({
+        text: `${message}`,
+        icon: 'error',
+        iconColor: 'white',
+        timer: 3500,
+        timerProgressBar: true,
+        toast: true,
+        position: 'top-end',
         background: 'red',
         color: 'white',
         showConfirmButton: false,

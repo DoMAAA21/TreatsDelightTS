@@ -116,7 +116,7 @@ const UserPage: FC = () => {
                 </div>
                 <div className="p-4">
                     <Link to="/admin/owner-add">
-                        <button className={`${colors.primary} font-bold py-2 px-4 rounded-md`}>Add User</button>
+                        <button className={`${colors.primary} font-bold py-2 px-4 rounded-lg`}>Add +</button>
                     </Link>
                 </div>
             </div>

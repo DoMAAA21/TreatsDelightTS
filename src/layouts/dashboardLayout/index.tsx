@@ -1,9 +1,9 @@
-import {FC, useEffect, useState } from 'react';
+import {useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
 
-const DashboardLayout: FC = () => {
+const DashboardLayout = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -30,10 +30,10 @@ const DashboardLayout: FC = () => {
   return (
     <>
       <Navbar isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
-      <div className="flex w-full">
-        <div className="lg:ml-64 p-4 w-full h-full">
+      <div className="flex w-full h-screen">
+        <div className="lg:ml-64 p-4 w-full h-full bg-gray-100">
           <Sidebar isMobileMenuOpen={isMobileMenuOpen} closeMobileMenu={closeMobileMenu} />
-          <Outlet />
+          <Outlet/>
         </div>
       </div>
     </>

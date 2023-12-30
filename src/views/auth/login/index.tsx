@@ -1,12 +1,11 @@
-import { FC } from 'react';
 import LoginForm from './loginForm';
 import Logo from '../../../assets/logo.png'
 import BreakFastLogo from '../../../assets/svg/breakfast.svg';
 
-const LoginPage: FC = () => {
+const LoginPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-      <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1 rounded-lg">
+      <div className="max-w-screen-xl sm:m-2  bg-white shadow sm:rounded-lg flex justify-center  rounded-lg">
         <div className="flex-1 bg-indigo-100 text-center hidden lg:flex rounded-tl-lg rounded-bl-lg">
           <div
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat flex items-center"
@@ -17,11 +16,11 @@ const LoginPage: FC = () => {
         </div>
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div>
-            <img src={Logo} className="w-48 mx-auto lg:w-32" />
+            <img src={Logo} className="w-32 mx-auto lg:w-32" />
           </div>
-          <div className="mt-12 flex flex-col items-center">
+          <div className="mt-4 flex flex-col items-center">
             <h1 className="text-2xl xl:text-3xl font-extrabold">
-              Log In
+              Log in
             </h1>
             <div className="w-full flex-1 mt-8">
               <div className="flex flex-col items-center">
