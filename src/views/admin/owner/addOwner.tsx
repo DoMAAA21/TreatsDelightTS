@@ -1,4 +1,4 @@
-import {useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -8,6 +8,7 @@ import { colors } from '../../../components/theme';
 import { religions } from '../../../components/inputs';
 import { newUser, newUserReset } from '../../../store/reducers/user/newUserSlice';
 import { successMsg, errorMsg } from '../../../components/toast';
+import defaultAvatar from '../../../assets/defaultavatar.png';
 
 
 interface FormData {
@@ -16,7 +17,7 @@ interface FormData {
   email: string;
   password: string;
   religion: string;
-  avatar: File | String | null ;
+  avatar: File | String | null;
   role: string;
 }
 
@@ -31,12 +32,10 @@ const validationSchema = Yup.object({
 
 
 const AddUserPage = () => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    const { loading, error, success } = useAppSelector((state: any) => state.newUser);
-  
-  const { imagePreview, compressedImage, handleImageChange } = useChangeImage();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loading, error, success } = useAppSelector((state) => state.newUser);
+  const { imagePreview, compressedImage, handleImageChange } = useChangeImage(defaultAvatar);
 
   const initialValues: FormData = {
     fname: '',
@@ -48,19 +47,19 @@ const AddUserPage = () => {
     role: 'Owner'
   };
 
-    useEffect(() => {
+  useEffect(() => {
 
-      if (error) {
-        errorMsg(error);
-        dispatch(newUserReset());
-      }
+    if (error) {
+      errorMsg(error);
+      dispatch(newUserReset());
+    }
 
-      if (success) {
-        navigate('/admin/owner-all');
-        dispatch(newUserReset());
-        successMsg('User created successfully');
-      }
-    }, [dispatch, error, success, navigate]);
+    if (success) {
+      navigate('/admin/owner-all');
+      dispatch(newUserReset());
+      successMsg('User created successfully');
+    }
+  }, [dispatch, error, success, navigate]);
 
   const onSubmit = (data: FormData) => {
     const userData: FormData = {
@@ -73,37 +72,8 @@ const AddUserPage = () => {
       avatar: compressedImage,
     };
 
-    console.log(userData)
-
     dispatch(newUser(userData));
   };
-
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.name === "avatar") {
-  //     const file = e.target.files && e.target.files[0];
-
-  //     if (file) {
-  //       new Compressor(file, {
-  //         quality: 0.6,
-  //         maxWidth: 800,
-  //         maxHeight: 800,
-  //         success(result) {
-  //           const reader = new FileReader();
-  //           reader.onload = () => {
-  //             if (reader.readyState === 2) {
-  //               setAvatarPreview(reader.result as string);
-  //               setAvatar(reader.result as string);
-  //             }
-  //           };
-  //           reader.readAsDataURL(result);
-  //         },
-  //         error(err: Error) {
-  //           console.error('Image compression error:', err);
-  //         },
-  //       });
-  //     }
-  //   }
-  // };
 
   return (
     <div className="flex justify-center">
@@ -154,7 +124,7 @@ const AddUserPage = () => {
                   name="religion"
                   className="mt-1 p-2 w-full border border-gray-400 rounded-md"
                 >
-                  <option value="" disabled>Select Religion</option>
+                  <option value="" disabled>Select religion</option>
                   {religions.map(religion => (
                     <option key={religion.label} value={religion.value}>{religion.label}</option>
                   ))}
@@ -226,7 +196,7 @@ const AddUserPage = () => {
                   className={`mt-6 ${colors.primary} py-2 px-4 rounded-lg w-full`}
                   disabled={loading}
                 >
-                {loading ? 'Submitting...' : 'Submit'}
+                  {loading ? 'Submitting...' : 'Submit'}
                 </button>
               </div>
             </Form>

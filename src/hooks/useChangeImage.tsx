@@ -1,22 +1,17 @@
 import { useState, ChangeEvent } from 'react';
 import Compressor from 'compressorjs';
-import defaultAvatar from '../assets/defaultavatar.png';
 
-interface ImageCompressionOptions {
-  quality?: number;
-  maxWidth?: number;
-  maxHeight?: number;
-}
 
-const useChangeImage = (options: ImageCompressionOptions = {}) => {
-  const [imagePreview, setImagePreview] = useState<string>(defaultAvatar);
+
+const useChangeImage = ( img:string) => {
+  const [imagePreview, setImagePreview] = useState<string>(img);
   const [compressedImage, setCompressedImage] = useState<File | null>(null);
 
   const compressImage = (file: File) => {
     new Compressor(file, {
-      quality: options.quality || 0.6,
-      maxWidth: options.maxWidth || 800,
-      maxHeight: options.maxHeight || 800,
+      quality:  0.6,
+      maxWidth:  800,
+      maxHeight: 800,
       success(result) {
         const compressedFile = new File([result], file.name, { type: file.type });
         setImagePreview(URL.createObjectURL(compressedFile));
@@ -37,10 +32,13 @@ const useChangeImage = (options: ImageCompressionOptions = {}) => {
     }
   };
 
+  
+
   return {
     imagePreview,
     compressedImage,
     handleImageChange,
+    setImagePreview
   };
 };
 

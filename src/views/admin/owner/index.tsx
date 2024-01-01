@@ -16,7 +16,6 @@ interface User {
     _id: number | string;
     fullName: string;
     email: string;
-    course: string;
     religion: string;
     role: string;
     actions: React.ReactNode;
@@ -64,7 +63,6 @@ const UserPage: FC = () => {
             { label: 'User ID', field: '_id' },
             { label: 'Full Name', field: 'fullName' },
             { label: 'Email', field: 'email' },
-            { label: 'Course', field: 'course' },
             { label: 'Religion', field: 'religion' },
             { label: 'Role', field: 'role' },
             { label: 'Actions', field: 'actions' },
@@ -73,12 +71,11 @@ const UserPage: FC = () => {
             _id: user._id,
             fullName: `${user.fname} ${user.lname}`,
             email: user.email,
-            course: user.course,
             religion: user.religion,
             role: user.role,
             actions: (
                 <div className="flex items-center ml-6">
-                    <Link to={`/dashboard/edit-user/${user._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
+                    <Link to={`/admin/owner/${user._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
                         <img
                             src={EditIcon}
                             alt="Edit Icon"

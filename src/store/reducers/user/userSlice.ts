@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-
-
 interface UserState {
   loading: boolean;
   isUpdated: boolean;
@@ -16,6 +14,17 @@ const initialState: UserState = {
   isDeleted: false,
   error: null,
 };
+
+
+interface UserData {
+  fname: string;
+  lname: string;
+  email: string;
+  password: string;
+  religion: string;
+  role: string;
+  avatar?: File | Blob | string | null;
+}
 
 
 export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string | number, { dispatch }) => {
@@ -33,26 +42,31 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string 
 }
 );
 
-// export const updateUser = createAsyncThunk('user/updateUser',async ({id,userData},{dispatch,rejectWithValue}) => {
-//   console.log(userData)
-//     try {
+export const updateUser = createAsyncThunk<boolean, { id: string | number; userData: UserData | any }>('user/updateUser', async ({ id, userData }, { dispatch, rejectWithValue }) => {
+  try {
 
-//       dispatch(updateUserRequest());
-//         const config = {
-//             headers: {
-//               'Content-Type': 'application/json',
-//             },
-//           };
-//       const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/user/${id}`, userData,{ withCredentials: true },config);
-//       dispatch(updateUserSuccess( data.success))
-//       return data.success;
+    dispatch(updateUserRequest());
 
-//     } catch (error) {
-//       dispatch(updateUserFail(error.response.data.message))
-//       return rejectWithValue(error.response.data.message);
-//     }
-//   }
-// );
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/user/${id}`, userData, { withCredentials: true, ...config });
+    
+    dispatch(updateUserSuccess(data.success));
+    return data.success;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(updateUserFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    
+    dispatch(updateUserFail('An error occurred'));
+    return rejectWithValue('An error occurred');
+  }
+});
 
 
 
