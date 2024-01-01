@@ -42,7 +42,7 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string 
 }
 );
 
-export const updateUser = createAsyncThunk<boolean, { id: string | number; userData: UserData | any }>('user/updateUser', async ({ id, userData }, { dispatch, rejectWithValue }) => {
+export const updateUser = createAsyncThunk<boolean, { id: string | number; userData: UserData }>('user/updateUser', async ({ id, userData }, { dispatch, rejectWithValue }) => {
   try {
 
     dispatch(updateUserRequest());

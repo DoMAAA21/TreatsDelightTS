@@ -16,15 +16,16 @@ import { successMsg } from '../../../components/toast';
 
 
 
+
 interface UserFormData {
-    fname: string | any;
-    lname: string | any;
-    email: string | any;
-    password: string | any;
-    religion: string | any;
-    avatar: File | String | null;
-    role: string | any;
-}
+    fname: string;
+    lname: string;
+    email: string;
+    password: string;
+    religion: string;
+    avatar: File | Blob | string | null;
+    role: string;
+  }
 
 const validationSchema = Yup.object({
     fname: Yup.string().required('First name is required'),

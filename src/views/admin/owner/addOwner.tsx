@@ -17,7 +17,7 @@ interface FormData {
   email: string;
   password: string;
   religion: string;
-  avatar: File | String | null;
+  avatar: File | string | null;
   role: string;
 }
 
