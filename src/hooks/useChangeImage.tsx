@@ -24,7 +24,7 @@ const useChangeImage = ( img:string) => {
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'avatar') {
+    if (e.target.name === 'image') {
       const file = e.target.files && e.target.files[0];
       if (file) {
         compressImage(file);

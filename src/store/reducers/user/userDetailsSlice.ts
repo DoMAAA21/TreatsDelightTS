@@ -68,7 +68,7 @@ const userDetailsSlice = createSlice({
         clearErrors: (state) => {
             state.error = null;
         },
-        userUpdated: (state) => {
+        clearUser: (state) => {
             state.error = null;
             state.user = {
                 fname: '',
@@ -86,7 +86,7 @@ export const {
     userDetailsSuccess,
     userDetailsFail,
     clearErrors,
-    userUpdated,
+    clearUser,
 } = userDetailsSlice.actions;
 
 export default userDetailsSlice.reducer;

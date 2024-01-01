@@ -163,7 +163,7 @@ const AddUserPage = () => {
 
               <div className="flex items-center mt-4">
                 <div >
-                  <figure className="avatar mr-3 item-rtl">
+                  <figure className="mr-3 item-rtl">
                     <img
                       src={imagePreview}
                       className="rounded-circle w-64 h-64 object-cover"
@@ -174,16 +174,16 @@ const AddUserPage = () => {
                 <div className="custom-file">
                   <Field
                     type="file"
-                    name="avatar"
+                    name="image"
                     className="custom-file-input"
-                    id="avatar"
+                    id="image"
                     accept="image/*"
                     onChange={handleImageChange}
                     style={{ display: 'none' }}
                   />
                 </div>
                 <label
-                  htmlFor="avatar"
+                  htmlFor="image"
                   className="bg-blue-500 px-4 py-2 text-white rounded cursor-pointer"
                 >
                   Choose Avatar
