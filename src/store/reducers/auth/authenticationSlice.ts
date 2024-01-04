@@ -10,6 +10,10 @@ interface User {
   fname: string;
   lname: string;
   role: string;
+  store?: {
+    storeId?: string | number;
+    name?: string
+  }
 }
 
 interface AuthState {

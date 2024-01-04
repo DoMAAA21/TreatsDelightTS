@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchAllStores } from '../../../store/reducers/store/allStoressSlice';
-import { deleteStore, deleteStoreReset } from '../../../store/reducers/store/storeSlice';
+import { fetchAllEmployees } from '../../../store/reducers/employee/allEmployeesSlice';
+import { deleteEmployee, deleteEmployeeReset } from '../../../store/reducers/employee/employeeSlice';
 import Swal from 'sweetalert2';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
@@ -12,37 +12,36 @@ import TableLoader from '../../../components/TableLoader';
 import EditIcon from '../../../assets/icons/edit.svg';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';
 
-interface Store {
+interface Employee {
     _id: number | string;
-    name: string;
-    slogan: string;
-    stall: string;
-    location: string;
-    active: string | boolean;
+    fullName: string;
+    email: string;
+    religion: string;
+    role: string;
     actions: React.ReactNode;
 }
 
-interface StoresData {
-    columns: { label: string; field: keyof Store }[];
+interface EmployeesData {
+    columns: { label: string; field: keyof Employee }[];
     rows: { [key: string]: string | number | React.ReactNode }[];
 }
 
-const StorePage: FC = () => {
+const EmployeePage: FC = () => {
     const dispatch = useAppDispatch();
-    const { stores, loading } = useAppSelector((state) => state.allStores);
-    const { isDeleted } = useAppSelector((state) => state.store);
+    const { employees, loading } = useAppSelector((state) => state.allEmployees);
+    const { isDeleted } = useAppSelector((state) => state.employee);
 
     useEffect(() => {
-        dispatch(fetchAllStores());
+        dispatch(fetchAllEmployees());
 
         if (isDeleted) {
-            dispatch(fetchAllStores());
-            dispatch(deleteStoreReset());
-            successMsg('Store deleted successfully');
+            dispatch(fetchAllEmployees());
+            dispatch(deleteEmployeeReset());
+            successMsg('Employee deleted successfully');
         }
     }, [dispatch, isDeleted]);
 
-    const deleteStoreHandler = (id: number | string) => {
+    const deleteEmployeeHandler = (id: number | string) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -53,39 +52,37 @@ const StorePage: FC = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteStore(id));
-                Swal.fire('Deleted!', 'Store has been deleted.', 'success');
+                dispatch(deleteEmployee(id));
+                Swal.fire('Deleted!', 'Employee has been deleted.', 'success');
             }
         });
     };
 
-    const storesData: StoresData = {
+    const employeesData: EmployeesData = {
         columns: [
-            { label: 'Store ID', field: '_id' },
-            { label: 'Name', field: 'name' },
-            { label: 'Slogan', field: 'slogan' },
-            { label: 'Stall', field: 'stall' },
-            { label: 'Location', field: 'location' },
-            { label: 'Active', field: 'active' },
+            { label: 'Employee ID', field: '_id' },
+            { label: 'Full Name', field: 'fullName' },
+            { label: 'Email', field: 'email' },
+            { label: 'Religion', field: 'religion' },
+            { label: 'Role', field: 'role' },
             { label: 'Actions', field: 'actions' },
         ],
-        rows: stores.map((store) => ({
-            _id: store._id,
-            name: store.name,
-            slogan: store.slogan,
-            stall: store.stall,
-            location: store.location,
-            active: store.active ? 'Yes' : 'No',
+        rows: employees.map((employee) => ({
+            _id: employee._id,
+            fullName: `${employee.fname} ${employee.lname}`,
+            email: employee.email,
+            religion: employee.religion,
+            role: employee.role,
             actions: (
                 <div className="flex items-center ml-6">
-                    <Link to={`/admin/store/${store._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
+                    <Link to={`/admin/owner/${employee._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
                         <img
                             src={EditIcon}
                             alt="Edit Icon"
                             className="transition duration-300 ease-in-out transform hover:scale-110"
                         />
                     </Link>
-                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteStoreHandler(store._id)}>
+                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteEmployeeHandler(employee._id)}>
                         <img
                             src={DeleteIcon}
                             alt="Delete Icon"
@@ -99,7 +96,7 @@ const StorePage: FC = () => {
 
     return (
         <>
-            <MetaData title={'All Store'} />
+            <MetaData title={'All Employees'} />
             <div
                 style={{
                     display: 'flex',
@@ -112,10 +109,10 @@ const StorePage: FC = () => {
                 }}
             >
                 <div className="p-4">
-                    <h1 className="text-2xl font-semibold">Stores</h1>
+                    <h1 className="text-2xl font-semibold">Employees</h1>
                 </div>
                 <div className="p-4">
-                    <Link to="/admin/store-add">
+                    <Link to="/admin/employee-add">
                         <button className={`${colors.primary} font-bold py-2 px-4 rounded-lg`}>Add +</button>
                     </Link>
                 </div>
@@ -125,7 +122,7 @@ const StorePage: FC = () => {
                 {loading ? (
                     <TableLoader />
                 ) : (
-                    <DataTable columns={storesData.columns} rows={storesData.rows} />
+                    <DataTable columns={employeesData.columns} rows={employeesData.rows} />
                 )}
 
             </div>
@@ -133,4 +130,4 @@ const StorePage: FC = () => {
     );
 };
 
-export default StorePage;
+export default EmployeePage;

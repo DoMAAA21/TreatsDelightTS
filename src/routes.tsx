@@ -12,6 +12,10 @@ import EditOwnerPage from './views/admin/owner/editOwner';
 import StorePage from './views/admin/store';
 import AddStorePage from './views/admin/store/addStore';
 import EditStorePage from './views/admin/store/editStore';
+import EmployeePage from './views/admin/employee';
+import AddEmployeePage from './views/admin/employee/addEmployee';
+import EditEmployeePage from './views/admin/employee/editEmployee';
+
 
 
 
@@ -27,6 +31,9 @@ const AppRoutes: FC = () => {
         { path: 'store-all', element: <StorePage /> },
         { path: 'store-add', element: <AddStorePage /> },
         { path: 'store/:id', element: <EditStorePage /> },
+        { path: 'employee-all', element: <EmployeePage /> },
+        { path: 'employee-add', element: <AddEmployeePage /> },
+        { path: 'employee/:id', element: <EditEmployeePage /> },
       ] 
     },
     {

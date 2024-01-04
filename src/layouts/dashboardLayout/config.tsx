@@ -1,29 +1,48 @@
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks';
 
 interface NavItem {
   title: string;
   path: string;
 }
 
-const defaultNavConfig: NavItem[] = [
-  {
-    title: 'Dashboard',
-    path: '/admin/dashboard',
-  },
-  {
-    title: 'Owners',
-    path: '/admin/owner-all',
-  },
-  {
-    title: 'Stores',
-    path: '/admin/store-all',
-  },
-
-
-];
-
 export const useNav = () => {
-  const [navConfig] = useState<NavItem[]>(defaultNavConfig);
+  const { user } = useAppSelector((state) => state.auth);
+
+  const [navConfig] = useState<NavItem[]>(() => {
+    const defaultConfig: NavItem[] = [
+      {
+        title: 'Dashboard',
+        path: '/admin/dashboard',
+      },
+      {
+        title: 'Owners',
+        path: '/admin/owner-all',
+      },
+      {
+        title: 'Stores',
+        path: '/admin/store-all',
+      },
+      {
+        title: 'Employees',
+        path: '/admin/employee-all',
+      },
+    ];
+
+    //Role Filtering
+    if (user?.role === 'Employee') {
+      const filteredNav = ['Employees'];
+      return defaultConfig.filter((item) => filteredNav.includes(item.title));
+    }
+
+    if (user?.role === 'Admin') {
+      const filteredNav = ['Dashboard','Stores', 'Owners'];
+      return defaultConfig.filter((item) => filteredNav.includes(item.title));
+    }
+
+
+    return defaultConfig;
+  });
 
   return { navConfig };
 };
