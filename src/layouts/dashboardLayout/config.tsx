@@ -15,9 +15,10 @@ const defaultNavConfig: NavItem[] = [
     path: '/admin/owner-all',
   },
   {
-    title: 'stores',
-    path: '/admin/stores',
+    title: 'Stores',
+    path: '/admin/store-all',
   },
+
 
 ];
 

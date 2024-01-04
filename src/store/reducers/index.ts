@@ -5,6 +5,11 @@ import allUsersReducer from './user/allUsersSlice';
 import userReducer from './user/userSlice';
 import newUserReducer from './user/newUserSlice';
 import userDetailsReducer from './user/userDetailsSlice';
+import allStoresReducer from './store/allStoressSlice';
+import storeReducer from './store/storeSlice';
+import newStoreReducer from './store/newStoreSlice';
+import storeDetailsReducer from './store/storeDetailsSlice';
+
 
 
 const rootReducer = combineReducers({
@@ -12,7 +17,11 @@ const rootReducer = combineReducers({
     allUsers : allUsersReducer,
     user : userReducer,
     newUser : newUserReducer,
-    userDetails : userDetailsReducer
+    userDetails : userDetailsReducer,
+    allStores : allStoresReducer,
+    store : storeReducer,
+    newStore : newStoreReducer,
+    storeDetails : storeDetailsReducer
 })
 
 export default rootReducer;

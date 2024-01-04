@@ -1,6 +1,4 @@
-import { FC } from 'react';
-
-const TableLoader: FC = () => {
+const TableLoader = () => {
   return (
     <div className="relative min-w-full bg-white  rounded-lg overflow-hidden p-4 animate-pulse">
       <div className="absolute top-3 right-4 h-10 w-44 bg-gray-300 mb-2 rounded-md animate-pulse"/>
