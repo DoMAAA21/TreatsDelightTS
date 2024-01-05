@@ -12,6 +12,7 @@ import storeDetailsReducer from './store/storeDetailsSlice';
 import allEmployeesReducer from './employee/allEmployeesSlice';
 import employeeReducer from './employee/employeeSlice';
 import newEmployeeReducer from './employee/newEmployeeSlice';
+import employeeDetailsReducer from './employee/employeeDetailsSlice';
 
 
 
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     storeDetails : storeDetailsReducer,
     allEmployees : allEmployeesReducer,
     employee : employeeReducer,
-    newEmployee : newEmployeeReducer
+    newEmployee : newEmployeeReducer,
+    employeeDetails : employeeDetailsReducer
 })
 
 export default rootReducer;

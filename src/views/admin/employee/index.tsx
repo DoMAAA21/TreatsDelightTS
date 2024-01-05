@@ -75,7 +75,7 @@ const EmployeePage: FC = () => {
             role: employee.role,
             actions: (
                 <div className="flex items-center ml-6">
-                    <Link to={`/admin/owner/${employee._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
+                    <Link to={`/admin/employee/${employee._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
                         <img
                             src={EditIcon}
                             alt="Edit Icon"

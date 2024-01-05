@@ -40,18 +40,16 @@ export const newEmployee = createAsyncThunk<NewEmployeeResponse, NewEmployeeData
         const authState = getState().auth;
         const storeId = authState.user?.store?.storeId;
         const storeName = authState.user?.store?.name;
-        const additionalData = {
+        const storeDetails = {
             storeId,
             storeName: storeName,
         };
         const formEmployeeData = {
             ...employeeData,
-            ...additionalData
+            ...storeDetails
         }
 
-        // employeeData.storeId = storeId
-
-        console.log(formEmployeeData)
+    
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',

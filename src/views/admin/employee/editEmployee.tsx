@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import useChangeImage from '../../../hooks/useChangeImage';
-import { getUserDetails, clearUser } from '../../../store/reducers/user/userDetailsSlice';
-import { updateUser, updateUserReset, clearErrors} from '../../../store/reducers/user/userSlice';
+import { getEmployeeDetails, clearEmployee } from '../../../store/reducers/employee/employeeDetailsSlice';
+import { updateEmployee, updateEmployeeReset, clearErrors} from '../../../store/reducers/employee/employeeSlice';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { colors } from '../../../components/theme';
 import { religions } from '../../../components/inputs';
@@ -17,7 +17,7 @@ import { successMsg, errorMsg} from '../../../components/toast';
 
 
 
-interface UserFormData {
+interface EmployeeFormData {
     fname: string;
     lname: string;
     email: string;
@@ -42,20 +42,20 @@ const EditOwnerPage = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const { user, loading: userLoading } = useAppSelector((state) => state.userDetails)
-    const { loading, isUpdated, error } = useAppSelector((state) => state.user);
+    const { employee, loading: employeeLoading } = useAppSelector((state) => state.employeeDetails)
+    const { loading, isUpdated, error } = useAppSelector((state) => state.employee);
     const { imagePreview, compressedImage, handleImageChange, setImagePreview } = useChangeImage(defaultAvatar);
 
 
 
     useEffect(() => {
 
-        if (user && user.avatar && user.avatar.url) {
-            setImagePreview(user?.avatar?.url);
+        if (employee && employee.avatar && employee.avatar.url) {
+            setImagePreview(employee?.avatar?.url);
         }
 
-        if (id !== undefined && user && user._id !== id) {
-            dispatch(getUserDetails(id));
+        if (id !== undefined && employee && employee._id !== id) {
+            dispatch(getEmployeeDetails(id));
         }
 
 
@@ -66,30 +66,30 @@ const EditOwnerPage = () => {
         }
 
         if (isUpdated) {
-            successMsg('User updated successfully');
-            navigate('/admin/owner-all');
-            dispatch(updateUserReset());
-            dispatch(clearUser());
+            successMsg('Employee updated successfully');
+            navigate('/admin/employee-all');
+            dispatch(updateEmployeeReset());
+            dispatch(clearEmployee());
         }
 
 
 
 
-    }, [dispatch, id, user, isUpdated])
+    }, [dispatch, id, employee, isUpdated])
 
     const initialValues = {
-        fname: user?.fname || '',
-        lname: user?.lname || '',
-        email: user?.email || '',
+        fname: employee?.fname || '',
+        lname: employee?.lname || '',
+        email: employee?.email || '',
         password: '',
-        role: user?.role || '',
-        course: user?.course || '',
-        religion: user?.religion || '',
+        role: employee?.role || '',
+        course: employee?.course || '',
+        religion: employee?.religion || '',
         avatar: '',
     };
 
-    const onSubmit = (data: UserFormData) => {
-        const userData: UserFormData = {
+    const onSubmit = (data: EmployeeFormData) => {
+        const employeeData: EmployeeFormData = {
             fname: data.fname,
             lname: data.lname,
             email: data.email,
@@ -99,11 +99,11 @@ const EditOwnerPage = () => {
             avatar: compressedImage,
         };
         if (id) {
-            dispatch(updateUser({ id, userData }));
+            dispatch(updateEmployee({ id, employeeData }));
         }
     };
 
-    if (userLoading) {
+    if (employeeLoading) {
         return <FormSkeletonLoader />
     }
 
