@@ -33,7 +33,7 @@ const validationSchema = Yup.object({
 const AddEmployeePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { loading, error, success } = useAppSelector((state) => state.newUser);
+  const { loading, error, success } = useAppSelector((state) => state.newEmployee);
   const { imagePreview, compressedImage, handleImageChange } = useChangeImage(defaultAvatar);
 
   const initialValues: FormData = {
@@ -53,9 +53,9 @@ const AddEmployeePage = () => {
     }
 
     if (success) {
-      navigate('/admin/owner-all');
+      navigate('/admin/employee-all');
       dispatch(newEmployeeReset());
-      successMsg('User created successfully');
+      successMsg('Employee added successfully');
     }
   }, [dispatch, error, success, navigate]);
 

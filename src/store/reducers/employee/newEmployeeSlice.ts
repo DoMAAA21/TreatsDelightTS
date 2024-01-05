@@ -40,18 +40,18 @@ export const newEmployee = createAsyncThunk<NewEmployeeResponse, NewEmployeeData
         const authState = getState().auth;
         const storeId = authState.user?.store?.storeId;
         const storeName = authState.user?.store?.name;
-        // const additionalData = {
-        //     storeId,
-        //     storeName: storeName,
-        // };
-        // const formEmployeeData = {
-        //     ...employeeData,
-        //     ...additionalData
-        // }
+        const additionalData = {
+            storeId,
+            storeName: storeName,
+        };
+        const formEmployeeData = {
+            ...employeeData,
+            ...additionalData
+        }
 
         // employeeData.storeId = storeId
 
-        console.log(employeeData)
+        console.log(formEmployeeData)
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -59,7 +59,7 @@ export const newEmployee = createAsyncThunk<NewEmployeeResponse, NewEmployeeData
         };
 
         const { data } = await axios.post<NewEmployeeResponse>(
-            `${import.meta.env.VITE_BASE_URL}/api/v1/admin/employee/new`, employeeData, { withCredentials: true, ...config }
+            `${import.meta.env.VITE_BASE_URL}/api/v1/admin/employee/new`, formEmployeeData, { withCredentials: true, ...config }
         );
         console.log(data);
         dispatch(newEmployeeSuccess(data));
