@@ -90,14 +90,14 @@ const ProductPage: FC = () => {
             active: product.active ? 'Yes' : 'No',
             actions: (
                 <div className="flex items-center ml-6">
-                    <Link to={`/admin/product/${product._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
+                    <Link to={`/admin/product/${product._id}`} className="mr-2 w-8 h-8 md:h-14 md:w-12 lg:h-8 lg:w-8">
                         <img
                             src={EditIcon}
                             alt="Edit Icon"
                             className="transition duration-300 ease-in-out transform hover:scale-110"
                         />
                     </Link>
-                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteProductHandler(product._id)}>
+                    <button className="w-8 h-8 md:h-14 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteProductHandler(product._id)}>
                         <img
                             src={DeleteIcon}
                             alt="Delete Icon"

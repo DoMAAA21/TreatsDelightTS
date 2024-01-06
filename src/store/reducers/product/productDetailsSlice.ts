@@ -17,6 +17,15 @@ interface ProductDetails {
         stock: number;
         category: string;
         active: boolean | string;
+        nutrition:{
+            calories: number;
+            protein: number;
+            carbs: number;
+            fat: number;
+            fiber: number;
+            sugar: number;
+            sodium: number;
+        }
         images?: ProductImage[] | string[];
 
     };
@@ -32,7 +41,16 @@ const initialState: ProductDetails = {
         sellPrice: 0,
         stock: 0,
         category: '',
-        active: ''
+        active: '',
+        nutrition:{
+            calories: 0,
+            protein: 0,
+            carbs: 0,
+            fat: 0,
+            fiber: 0,
+            sugar: 0,
+            sodium: 0
+        }
     },
     loading: false,
     error: null,
@@ -82,7 +100,16 @@ const productDetailsSlice = createSlice({
                 sellPrice: 0,
                 stock: 0,
                 category: '',
-                active: ''
+                active: '',
+                nutrition:{
+                    calories: 0,
+                    protein: 0,
+                    carbs: 0,
+                    fat: 0,
+                    fiber: 0,
+                    sugar: 0,
+                    sodium: 0
+                }
             };
         },
     },

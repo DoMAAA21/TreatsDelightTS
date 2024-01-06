@@ -10,6 +10,13 @@ interface Product {
     sellPrice: number;
     stock: number;
     category: string;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber: number;
+    sugar: number;
+    sodium: number;
     active: boolean | string;
 }
 
@@ -33,6 +40,13 @@ interface NewProductData {
     stock: number;
     category: string;
     active: boolean | string;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber: number;
+    sugar: number;
+    sodium: number;
     firstImage: File | String | null; //first image is mandatory
     secondImage?: File | String | null;  //remaining are not
     thirdImage?: File | String | null;

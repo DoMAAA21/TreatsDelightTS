@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form, ErrorMessage  } from 'formik';
 import Compressor from 'compressorjs';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { colors } from '../../../components/theme';
@@ -9,6 +9,7 @@ import { newProduct, newProductReset } from '../../../store/reducers/product/new
 import { successMsg, errorMsg } from '../../../components/toast';
 import { categories } from '../../../components/inputs';
 import blankLogo from '../../../assets/blanklogo.png';
+import axios from 'axios';
 
 
 
@@ -62,6 +63,12 @@ const AddProductPage = () => {
     const [firstImage, setFirstImage] = useState<File | null>(null);
     const [secondImage, setSecondImage] = useState<File | null>(null);
     const [thirdImage, setThirdImage] = useState<File | null>(null);
+    const [name, setName] = useState<string>('');
+   
+
+    // const [calories, setCalories] = useState<number>(0);
+
+    console.log(name)
 
 
 
@@ -124,6 +131,36 @@ const AddProductPage = () => {
         });
     };
 
+    const fetchNutritionFacts = async () => {
+        try {
+            const result = await axios.post(
+                'https://api.openai.com/v1/chat/completions',
+                {
+                    model: 'gpt-3.5-turbo-16k',
+                    messages: [
+                        { role: 'system', content: 'You are a helpful assistant.' },
+                        { role: 'user', content: `can u give the nutrition facts (calories, protein, carbs, fat, fiber, sugar, sodium) of ${name} per 100grams the nutrition facts values dont is plain dont include _ in json format no explanation only json` },
+                    ],
+                },
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + import.meta.env.VITE_OPEN_AI_KEY,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            const nutritionFacts = result.data.choices[0].message.content;
+            console.log(nutritionFacts)
+            //   const parsedNutritionFacts = parseNutritionFacts(nutritionFacts);
+
+            // Set form values with the parsed nutrition facts
+            // Example: setCalories(parsedNutritionFacts.calories);
+        } catch (error) {
+            console.error('Error communicating with GPT-3:', error);
+        }
+    }
+
 
 
     const onSubmit = (data: FormData) => {
@@ -168,11 +205,12 @@ const AddProductPage = () => {
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                                     Name
                                 </label>
-                                <Field
+                                <input
                                     type="text"
                                     id="name"
                                     name="name"
                                     className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    onChange={(e:any) => setName(e.target.value)}
                                 />
                                 <ErrorMessage name="name" component="div" className="text-red-500" />
                             </div>
@@ -282,6 +320,15 @@ const AddProductPage = () => {
                                 <div className="flex-1 border-t"></div>
                             </div>
 
+                            <button
+                                type="button"
+                                className={`mr-4 ${colors.primary} py-2 px-4 rounded-lg`}
+                                onClick={fetchNutritionFacts}
+                            >
+                                Fetch Nutrition Facts
+                            </button>
+
+
                             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
                                 <div className="flex-1">
                                     <label htmlFor="calories" className="block text-sm font-medium text-gray-700">
@@ -334,7 +381,7 @@ const AddProductPage = () => {
                                     <ErrorMessage name="fat" component="div" className="text-red-500" />
                                 </div>
                             </div>
-                           
+
                             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
                                 <div className="flex-1">
                                     <label htmlFor="calories" className="block text-sm font-medium text-gray-700">

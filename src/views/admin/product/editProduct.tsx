@@ -30,6 +30,13 @@ interface ProductFormData {
     category: string;
     active: boolean | string;
     portion: boolean;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber: number;
+    sugar: number;
+    sodium: number;
     firstImage: File | String | null;
     secondImage?: File | String | null;
     thirdImage?: File | String | null;
@@ -38,11 +45,18 @@ interface ProductFormData {
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required').min(1, 'Minimum of 1').max(100, 'Maximum of 100 characters'),
-    costPrice: Yup.number().required('Cost price is Required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
+    costPrice: Yup.number().required('Cost price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
     sellPrice: Yup.number().required('Sell price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
-    stock: Yup.number().required('Stock is Required').min(0, 'Minimum of 0').max(999, 'Maximum of 999').integer('Stock cannot be decimal'),
+    stock: Yup.number().required('Stock is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999').integer('Stock cannot be decimal'),
     category: Yup.string().required('Category is required'),
     active: Yup.boolean().required('Active or Not'),
+    calories: Yup.number().required('Calorie is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999'),
+    protein: Yup.number().required('Protein is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999'),
+    carbs: Yup.number().required('Carbs is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999'),
+    fat: Yup.number().required('Fat is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999'),
+    fiber: Yup.number().required('Fiber is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999'),
+    sugar: Yup.number().required('Sugar is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999'),
+    sodium: Yup.number().required('Sodium is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999'),
 });
 
 
@@ -68,18 +82,18 @@ const EditProductPage = () => {
         if (product && product.images && product.images.length > 0 && !loading) {
             const productImages: (string | ProductImage)[] = product.images;
             const imagePreviews: (string | null)[] = Array(3).fill(null);
-        
+
             productImages.forEach((image) => {
                 if (typeof image === 'object' && image.index !== undefined && image.index >= 0 && image.index < 3 && image.url) {
                     imagePreviews[image.index] = image.url;
                 }
             });
-        
+
             setFirstImagePrev(imagePreviews[0] || blankLogo);
             setSecondImagePrev(imagePreviews[1] || blankLogo);
             setThirdImagePrev(imagePreviews[2] || blankLogo);
         }
-        
+
 
         if (id !== undefined && product && product._id !== id) {
             dispatch(getProductDetails(id));
@@ -132,6 +146,13 @@ const EditProductPage = () => {
         category: product?.category || '',
         active: product?.active === true ? 'True' : 'False',
         portion: false,
+        calories: product?.nutrition.calories || 0,
+        protein: product?.nutrition.protein || 0,
+        carbs: product?.nutrition.carbs || 0,
+        fat: product?.nutrition.fat || 0,
+        fiber: product?.nutrition.fiber || 0,
+        sugar: product?.nutrition.sugar || 0,
+        sodium: product?.nutrition.sodium || 0,
         firstImage: ''
     }
 
@@ -147,6 +168,13 @@ const EditProductPage = () => {
             stock: data.stock,
             portion: false,
             active: isActive,
+            calories: data.calories,
+            protein: data.protein,
+            carbs: data.carbs,
+            fat: data.fat,
+            fiber: data.fiber,
+            sugar: data.sugar,
+            sodium: data.sodium,
             firstImage: firstImage,
             secondImage: secondImage ? secondImage : null,
             thirdImage: thirdImage ? thirdImage : null,
@@ -164,7 +192,7 @@ const EditProductPage = () => {
         <div className="flex justify-center">
             <div className="lg:w-100 w-11/12 mt-6">
                 <div className="bg-white p-6 rounded-lg shadow">
-                    <h2 className="text-2xl font-bold mb-4">Add Product</h2>
+                    <h2 className="text-2xl font-bold mb-4">Edit Product</h2>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
@@ -283,14 +311,114 @@ const EditProductPage = () => {
                                 <ErrorMessage name="active" component="div" className="text-red-500" />
                             </div>
 
+                            <div className="flex items-center mb-4">
+                                <div className="flex-1 border-t"></div>
+                                <p className="font-semibold">Nutrition</p>
+                                <div className="flex-1 border-t"></div>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
+                                <div className="flex-1">
+                                    <label htmlFor="calories" className="block text-sm font-medium text-gray-700">
+                                        Calories
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        id="calories"
+                                        name="calories"
+                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    />
+                                    <ErrorMessage name="calories" component="div" className="text-red-500" />
+                                </div>
+
+                                <div className="flex-1">
+                                    <label htmlFor="protein" className="block text-sm font-medium text-gray-700">
+                                        Protein
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        id="protein"
+                                        name="protein"
+                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    />
+                                    <ErrorMessage name="protein" component="div" className="text-red-500" />
+                                </div>
+
+                                <div className="flex-1">
+                                    <label htmlFor="carbs" className="block text-sm font-medium text-gray-700">
+                                        Carbs
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        id="carbs"
+                                        name="carbs"
+                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    />
+                                    <ErrorMessage name="carbs" component="div" className="text-red-500" />
+                                </div>
+                                <div className="flex-1">
+                                    <label htmlFor="fat" className="block text-sm font-medium text-gray-700">
+                                        Fats
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        id="fat"
+                                        name="fat"
+                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    />
+                                    <ErrorMessage name="fat" component="div" className="text-red-500" />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
+                                <div className="flex-1">
+                                    <label htmlFor="calories" className="block text-sm font-medium text-gray-700">
+                                        Fiber
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        id="fiber"
+                                        name="fiber"
+                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    />
+                                    <ErrorMessage name="fiber" component="div" className="text-red-500" />
+                                </div>
+
+                                <div className="flex-1">
+                                    <label htmlFor="sugar" className="block text-sm font-medium text-gray-700">
+                                        Sugar
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        id="sugar"
+                                        name="sugar"
+                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    />
+                                    <ErrorMessage name="sugar" component="div" className="text-red-500" />
+                                </div>
+
+                                <div className="flex-1">
+                                    <label htmlFor="sodium" className="block text-sm font-medium text-gray-700">
+                                        Sodium
+                                    </label>
+                                    <Field
+                                        type="number"
+                                        id="sodium"
+                                        name="sodium"
+                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                    />
+                                    <ErrorMessage name="sodium" component="div" className="text-red-500" />
+                                </div>
+                            </div>
+
 
                             <div className="space-y-2">
-                                <div>Images (Left most is required)</div>
-                                <div className="flex space-x-4">
+                                <div>Images (Leftmost is required)</div>
+                                <div className="flex space-x-2">
                                     <button type="button" onClick={() => document.getElementById('imageInput0')?.click()}>
                                         <img
                                             src={firstImagePrev}
-                                            className="rounded-circle w-64 h-64 object-cover cursor-pointer"
+                                            className="rounded-circle w-24 h-24 object-cover cursor-pointer lg:w-40 lg:h-40" // Adjust the size for both full-width and mobile
                                             alt="Avatar Preview"
                                         />
                                         <input
@@ -305,7 +433,7 @@ const EditProductPage = () => {
                                     <button type="button" onClick={() => document.getElementById('imageInput1')?.click()}>
                                         <img
                                             src={secondImagePrev}
-                                            className="rounded-circle w-64 h-64 object-cover cursor-pointer"
+                                            className="rounded-circle w-24 h-24 object-cover cursor-pointer lg:w-40 lg:h-40" // Adjust the size for both full-width and mobile
                                             alt="Avatar Preview"
                                         />
                                         <input
@@ -320,7 +448,7 @@ const EditProductPage = () => {
                                     <button type="button" onClick={() => document.getElementById('imageInput2')?.click()}>
                                         <img
                                             src={thirdImagePrev}
-                                            className="rounded-circle w-64 h-64 object-cover cursor-pointer"
+                                            className="rounded-circle w-24 h-24 object-cover cursor-pointer lg:w-40 lg:h-40" // Adjust the size for both full-width and mobile
                                             alt="Avatar Preview"
                                         />
                                         <input
@@ -333,6 +461,7 @@ const EditProductPage = () => {
                                     </button>
                                 </div>
                             </div>
+
 
 
 

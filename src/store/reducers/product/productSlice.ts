@@ -24,6 +24,13 @@ interface ProductData {
     stock: number;
     category: string;
     active: boolean | string;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber: number;
+    sugar: number;
+    sodium: number;
     avatar?: File | Blob | string | null;
 }
 
