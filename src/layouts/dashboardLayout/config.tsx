@@ -27,11 +27,15 @@ export const useNav = () => {
         title: 'Employees',
         path: '/admin/employee-all',
       },
+      {
+        title: 'Products',
+        path: '/admin/product-all',
+      },
     ];
 
     //Role Filtering
     if (user?.role === 'Employee') {
-      const filteredNav = ['Employees'];
+      const filteredNav = ['Employees','Products'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 

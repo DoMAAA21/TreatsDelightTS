@@ -1,5 +1,4 @@
 import { combineReducers } from '@reduxjs/toolkit';
-
 import authenticationReducer from './auth/authenticationSlice';
 import allUsersReducer from './user/allUsersSlice';
 import userReducer from './user/userSlice';
@@ -13,6 +12,10 @@ import allEmployeesReducer from './employee/allEmployeesSlice';
 import employeeReducer from './employee/employeeSlice';
 import newEmployeeReducer from './employee/newEmployeeSlice';
 import employeeDetailsReducer from './employee/employeeDetailsSlice';
+import allProductsReducer from './product/allProductsSlice';
+import productReducer from './product/productSlice';
+import newProductReducer from './product/newProductSlice';
+import productDetailsReducer from './product/productDetailsSlice';
 
 
 
@@ -29,7 +32,11 @@ const rootReducer = combineReducers({
     allEmployees : allEmployeesReducer,
     employee : employeeReducer,
     newEmployee : newEmployeeReducer,
-    employeeDetails : employeeDetailsReducer
+    employeeDetails : employeeDetailsReducer,
+    allProducts : allProductsReducer,
+    product : productReducer,
+    newProduct : newProductReducer,
+    productDetails : productDetailsReducer
 })
 
 export default rootReducer;

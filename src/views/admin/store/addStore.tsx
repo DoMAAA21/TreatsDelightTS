@@ -7,7 +7,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { colors } from '../../../components/theme';
 import { newStore, newStoreReset } from '../../../store/reducers/store/newStoreSlice';
 import { successMsg, errorMsg } from '../../../components/toast';
-import defaultAvatar from '../../../assets/defaultavatar.png';
+import defaultLogo from '../../../assets/defaultlogo.png';
 
 
 interface FormData {
@@ -33,7 +33,7 @@ const AddStorePage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { loading, error, success } = useAppSelector((state) => state.newStore);
-    const { imagePreview, compressedImage, handleImageChange } = useChangeImage(defaultAvatar);
+    const { imagePreview, compressedImage, handleImageChange } = useChangeImage(defaultLogo);
 
     const initialValues = {
         name: '',

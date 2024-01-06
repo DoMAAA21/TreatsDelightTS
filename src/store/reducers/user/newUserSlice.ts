@@ -70,10 +70,6 @@ const newUserSlice = createSlice({
     name: 'newUser',
     initialState,
     reducers: {
-        // updateField: (state, action: PayloadAction<{ name: keyof NewUserState; value: any }>) => {
-        //     const { name, value } = action.payload;
-        //     state[name] = value;
-        // },
         newUserRequest: (state) => {
             state.loading = true;
         },
@@ -99,7 +95,6 @@ const newUserSlice = createSlice({
 });
 
 export const {
-    // updateField,
     newUserRequest,
     newUserSuccess,
     newUserFail,
