@@ -172,8 +172,8 @@ const ProductForm = ({ formik }: UseProductFormProps) => {
                     value={formik.values.active}
                 >
                     <option value="" label="Select active status" />
-                    <option value="True" label="True" />
-                    <option value="False" label="False" />
+                    <option value="True" label="Yes" />
+                    <option value="False" label="No" />
                 </select>
                 {formik.touched.active && formik.errors.active ? (
                     <div className="text-red-500">{formik.errors.active}</div>

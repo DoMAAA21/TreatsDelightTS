@@ -84,7 +84,7 @@ const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
-          <thead className="bg-gray-300 text-gray-600">
+          <thead className="bg-blue-300 text-gray-700">
             <tr>
               {columns.map((column) => (
                 <th
@@ -105,7 +105,7 @@ const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
               paginatedData.map((item, index) => (
                 <tr
                   key={index}
-                  className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-700 hover:text-white`}
+                  className={`bg-white hover:bg-gray-400 hover:text-white`}
                 >
                   {columns.map((column) => (
                     <td key={column.field} className="p-2 text-center lg:h-8 lg:m-4 w-40">

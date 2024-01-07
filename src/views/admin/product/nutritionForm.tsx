@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import useFetchNutritionFacts from "../../../hooks/useFetchNutrition";
 import { colors } from "../../../components/theme";
 import { errorMsg, successMsg } from "../../../components/toast";
+import OpenAILogo from '../../../assets/icons/openAi.svg'
 
 
 interface UseNutritionFactsProps {
@@ -43,7 +44,7 @@ interface UseNutritionFactsProps {
 
 const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
 
-    const { gptLoading, gptSuccess, gptError, fetchNutrition, setGptError , setGptSuccess } = useFetchNutritionFacts({ formik },'product');
+    const { gptLoading, gptSuccess, gptError, fetchNutrition, setGptError, setGptSuccess } = useFetchNutritionFacts({ formik }, 'product');
 
     useEffect(() => {
         if (gptError) {
@@ -65,7 +66,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                 <p className="font-semibold">Nutrition</p>
                 <div className="flex-1 border-t"></div>
             </div>
-            <button type="button" onClick={fetchNutritionFacts} className={`mt-2 mb-2 ${colors.primary} py-2 px-4 rounded-lg w-full`}>
+            <button type="button" onClick={fetchNutritionFacts} className={`mt-2 mb-2 ${colors.info} py-2 px-4 rounded-lg w-full flex items-center justify-center`}>
                 {gptLoading ? (
                     <div role="status">
                         <svg aria-hidden="true" className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,13 +75,19 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                         </svg>
                         <span className="sr-only">Loading...</span>
                     </div>
-                ) : 'Ask ChatGPT'}
+                ) : (
+                    <>
+                        <img src={OpenAILogo} alt="" className="w-6 h-6" />
+                        <span className="ml-2">Ask ChatGPT</span>
+                    </>
+                )}
             </button>
+
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
                 {/* Calories */}
                 <div className="flex-1">
                     <label htmlFor="calories" className="block text-sm font-medium text-gray-700">
-                        Calories
+                        Calories <span className="text-xs text-gray-500">(kcal)</span>
                     </label>
                     <input
                         type="number"
@@ -99,7 +106,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                 {/* Protein */}
                 <div className="flex-1">
                     <label htmlFor="protein" className="block text-sm font-medium text-gray-700">
-                        Protein
+                        Protein <span className="text-xs text-gray-500">(g)</span>
                     </label>
                     <input
                         type="number"
@@ -118,7 +125,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                 {/* Carbs */}
                 <div className="flex-1">
                     <label htmlFor="carbs" className="block text-sm font-medium text-gray-700">
-                        Carbs
+                        Carbs <span className="text-xs text-gray-500">(g)</span>
                     </label>
                     <input
                         type="number"
@@ -137,7 +144,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                 {/* Fats */}
                 <div className="flex-1">
                     <label htmlFor="fat" className="block text-sm font-medium text-gray-700">
-                        Fats
+                        Fats <span className="text-xs text-gray-500">(g)</span>
                     </label>
                     <input
                         type="number"
@@ -158,7 +165,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                 {/* Fiber */}
                 <div className="flex-1">
                     <label htmlFor="fiber" className="block text-sm font-medium text-gray-700">
-                        Fiber
+                        Fiber <span className="text-xs text-gray-500">(g)</span>
                     </label>
                     <input
                         type="number"
@@ -177,7 +184,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                 {/* Sugar */}
                 <div className="flex-1">
                     <label htmlFor="sugar" className="block text-sm font-medium text-gray-700">
-                        Sugar
+                        Sugar <span className="text-xs text-gray-500">(g)</span>
                     </label>
                     <input
                         type="number"
@@ -196,7 +203,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                 {/* Sodium */}
                 <div className="flex-1">
                     <label htmlFor="sodium" className="block text-sm font-medium text-gray-700">
-                        Sodium
+                        Sodium <span className="text-xs text-gray-500">(mg)</span>
                     </label>
                     <input
                         type="number"

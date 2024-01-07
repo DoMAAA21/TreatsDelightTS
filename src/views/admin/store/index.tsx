@@ -75,7 +75,15 @@ const StorePage: FC = () => {
             slogan: store.slogan,
             stall: store.stall,
             location: store.location,
-            active: store.active ? 'Yes' : 'No',
+            active: store.active ? (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
+                  Yes
+                </span>
+              ) : (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-red-600 text-white">
+                  No
+                </span>
+              ),
             actions: (
                 <div className="flex items-center ml-6">
                     <Link to={`/admin/store/${store._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
