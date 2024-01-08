@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { colors } from '../../../components/theme';
 import { newProduct, newProductReset } from '../../../store/reducers/product/newProductSlice';
 import { successMsg, errorMsg } from '../../../components/toast';
-import blankLogo from '../../../assets/blanklogo.png';
+import blankLogo from '../../../assets/svg/blank.svg';
 import NutritionForm from './nutritionForm';
 import ProductForm from './productForm';
 
@@ -160,7 +160,7 @@ const AddProductPage = () => {
                         <NutritionForm formik={formik}/>
 
                         <div className="space-y-2">
-                            <div>Images (Leftmost is required)</div>
+                            <div>Images <span className="text-xs text-gray-500">(Leftmost is required)</span></div>
                             <div className="flex space-x-2">
                                 <button type="button" onClick={() => document.getElementById('imageInput0')?.click()}>
                                     <img

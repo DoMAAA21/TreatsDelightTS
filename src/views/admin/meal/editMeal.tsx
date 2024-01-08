@@ -10,7 +10,7 @@ import { colors } from '../../../components/theme';
 import { getProductDetails, clearProduct } from '../../../store/reducers/product/productDetailsSlice';
 import { updateProduct, updateProductReset, clearErrors } from '../../../store/reducers/product/productSlice';
 import { successMsg, errorMsg } from '../../../components/toast';
-import blankLogo from '../../../assets/blanklogo.png';
+import blankLogo from '../../../assets/svg/blank.svg';
 import FormSkeletonLoader from '../../../components/FormLoader';
 
 
@@ -218,7 +218,7 @@ const EditProductPage = () => {
                         <NutritionForm formik={formik} />
 
                         <div className="space-y-2">
-                            <div>Images (Leftmost is required)</div>
+                            <div>Images <span className="text-xs text-gray-500">(Leftmost is required)</span></div>
                             <div className="flex space-x-2">
                                 <button type="button" onClick={() => document.getElementById('imageInput0')?.click()}>
                                     <img
