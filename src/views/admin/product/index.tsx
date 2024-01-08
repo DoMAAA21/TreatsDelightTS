@@ -72,7 +72,7 @@ const ProductPage: FC = () => {
             { label: 'Product ID', field: '_id' },
             { label: 'Name', field: 'name' },
             { label: 'Description', field: 'description' },
-            { label: 'Cost Price', field: 'costPrice' },
+            { label: 'Cost', field: 'costPrice' },
             { label: 'Sell Price', field: 'sellPrice' },
             { label: 'Stock', field: 'stock' },
             { label: 'Category', field: 'category' },

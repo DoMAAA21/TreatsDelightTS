@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import EmployeeForm from './employeeForm';
 import useChangeImage from '../../../hooks/useChangeImage';
 import { getEmployeeDetails, clearEmployee } from '../../../store/reducers/employee/employeeDetailsSlice';
-import { updateEmployee, updateEmployeeReset, clearErrors} from '../../../store/reducers/employee/employeeSlice';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { updateEmployee, updateEmployeeReset, clearErrors } from '../../../store/reducers/employee/employeeSlice';
+import { Formik, Form } from 'formik';
 import { colors } from '../../../components/theme';
-import { religions } from '../../../components/inputs';
 import FormSkeletonLoader from '../../../components/FormLoader';
 import defaultAvatar from '../../../assets/defaultavatar.png';
-import { successMsg, errorMsg} from '../../../components/toast';
+import { successMsg, errorMsg } from '../../../components/toast';
 
 
 
@@ -111,100 +111,26 @@ const EditOwnerPage = () => {
         <div className="flex justify-center">
             <div className="lg:w-100 w-11/12 mt-6">
                 <div className="bg-white p-6 rounded-lg shadow">
-                    <h2 className="text-2xl font-bold mb-4">Edit Owner</h2>
+                    <h2 className="text-2xl font-bold mb-4">Edit Employee</h2>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
                         onSubmit={onSubmit}
                     >
                         <Form>
-                            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
-                                <div className="flex-1">
-                                    <label htmlFor="fname" className="block text-sm font-medium text-gray-700">
-                                        First name
-                                    </label>
-                                    <Field
-                                        type="text"
-                                        id="fname"
-                                        name="fname"
-                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                    />
-                                    <ErrorMessage name="fname" component="div" className="text-red-500" />
-                                </div>
-
-                                <div className="flex-1">
-                                    <label htmlFor="lname" className="block text-sm font-medium text-gray-700">
-                                        Last name
-                                    </label>
-                                    <Field
-                                        type="text"
-                                        id="lname"
-                                        name="lname"
-                                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                    />
-                                    <ErrorMessage name="lname" component="div" className="text-red-500" />
-                                </div>
-                            </div>
-
-                            <div className="mb-4">
-                                <label htmlFor="religion" className="block text-sm font-medium text-gray-700">
-                                    Religion
-                                </label>
-                                <Field
-                                    as="select"
-                                    id="religion"
-                                    name="religion"
-                                    className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                >
-                                    <option value="" disabled>Select religion</option>
-                                    {religions.map(religion => (
-                                        <option key={religion.label} value={religion.value}>{religion.label}</option>
-                                    ))}
-                                </Field>
-                                <ErrorMessage name="religion" component="div" className="text-red-500" />
-                            </div>
-
-
-
-                            <div className="mb-4">
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                    Email
-                                </label>
-                                <Field
-                                    type="text"
-                                    id="email"
-                                    name="email"
-                                    className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                />
-                                <ErrorMessage name="email" component="div" className="text-red-500" />
-                            </div>
-
-                            <div className="mb-4">
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                                    Password
-                                </label>
-                                <Field
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                />
-                                <ErrorMessage name="password" component="div" className="text-red-500" />
-                            </div>
-
-
+                            <EmployeeForm />
                             <div className="flex items-center mt-4">
-                                <div >   
-                                        <figure className="mr-3 item-rtl">
-                                            <img
-                                                src={imagePreview}
-                                                className="rounded-circle lg:w-64 lg:h-64 w-60 h-40 object-cover"
-                                                alt="Avatar Preview"
-                                            />
-                                        </figure>
+                                <div >
+                                    <figure className="mr-3 item-rtl">
+                                        <img
+                                            src={imagePreview}
+                                            className="rounded-circle lg:w-64 lg:h-64 w-60 h-40 object-cover"
+                                            alt="Avatar Preview"
+                                        />
+                                    </figure>
                                 </div>
                                 <div className="custom-file">
-                                    <Field
+                                    <input
                                         type="file"
                                         name="image"
                                         className="custom-file-input"
