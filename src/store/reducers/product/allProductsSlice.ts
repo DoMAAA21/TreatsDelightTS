@@ -50,6 +50,30 @@ export const fetchAllProducts = createAsyncThunk<Product[], void, { state: RootS
     }
 );
 
+export const fetchAllMeals = createAsyncThunk<Product[], void, { state: RootState }>(
+  'allProducts/fetchAllProducts',
+  async (_, { rejectWithValue, dispatch, getState }) => {
+      try {
+          dispatch(allProductsRequest());
+          const authState = getState().auth;
+          const storeId = authState.user?.store?.storeId;
+          if (!storeId) {
+              return dispatch(allProductsFail('Store not found'));
+          }
+          const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/store/${storeId}/meals`, { withCredentials: true });
+          dispatch(allProductsSuccess(data.products));
+          return data.products;
+      } catch (error) {
+          if (axios.isAxiosError(error)) {
+              dispatch(allProductsFail(error.response?.data?.message || 'An error occurred'));
+              return rejectWithValue(error.response?.data?.message || 'An error occurred');
+          }
+          dispatch(allProductsFail('An error occurred'));
+          return rejectWithValue('An error occurred');
+      }
+  }
+);
+
 
 const allProductsSlice = createSlice({
   name: 'allProducts',

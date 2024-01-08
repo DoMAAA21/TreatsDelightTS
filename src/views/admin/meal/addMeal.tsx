@@ -9,18 +9,18 @@ import { newProduct, newProductReset } from '../../../store/reducers/product/new
 import { successMsg, errorMsg } from '../../../components/toast';
 import blankLogo from '../../../assets/blanklogo.png';
 import NutritionForm from './nutritionForm';
-import ProductForm from './productForm';
+import MealForm from './mealForm';
 
 interface FormData {
     name: string;
     description: string;
     costPrice: number;
     sellPrice: number;
-    stock: number;
     category: string;
+    stock?: number;
     active: boolean | string;
     portion: boolean;
-    calories: number;
+    calories: number;    
     protein: number;
     carbs: number;
     fat: number;
@@ -37,8 +37,6 @@ const validationSchema = Yup.object({
     description: Yup.string().required('Description is required').min(1, 'Minimum of 1').max(100, 'Maximum of 100 characters'),
     costPrice: Yup.number().required('Cost price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
     sellPrice: Yup.number().required('Sell price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
-    stock: Yup.number().required('Stock is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999').integer('Stock cannot be decimal'),
-    category: Yup.string().required('Category is required'),
     active: Yup.boolean().required('Active or Not'),
     calories: Yup.number().required('Calorie is required').min(0, 'Minimum of 0'),
     protein: Yup.number().required('Protein is required').min(0, 'Minimum of 0'),
@@ -49,7 +47,7 @@ const validationSchema = Yup.object({
     sodium: Yup.number().required('Sodium is required').min(0, 'Minimum of 0'),
 });
 
-const AddProductPage = () => {
+const AddMealPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { loading, error, success } = useAppSelector((state) => state.newProduct);
@@ -69,7 +67,6 @@ const AddProductPage = () => {
             sellPrice: 0,
             portion: false,
             stock: 0,
-            category: '',
             active: '',
             calories: 0,
             protein: 0,
@@ -89,9 +86,9 @@ const AddProductPage = () => {
                 description: values.description,
                 costPrice: values.costPrice,
                 sellPrice: values.sellPrice,
-                category: values.category,
-                stock: values.stock,
-                portion: false,
+                category: 'Meals',
+                stock: 0,
+                portion: true,
                 active: isActive,
                 calories: values.calories,
                 protein: values.protein,
@@ -115,9 +112,9 @@ const AddProductPage = () => {
         }
 
         if (success) {
-            navigate('/admin/product-all');
+            navigate('/admin/meal-all');
             dispatch(newProductReset());
-            successMsg('Product created successfully');
+            successMsg('Meal created successfully');
         }
     }, [dispatch, error, success, navigate ]);
 
@@ -152,10 +149,10 @@ const AddProductPage = () => {
         <div className="flex justify-center">
             <div className="lg:w-100 w-11/12 mt-6">
                 <div className="bg-white p-6 rounded-lg shadow">
-                    <h2 className="text-2xl font-bold mb-4">Add Product</h2>
+                    <h2 className="text-2xl font-bold mb-4">Add Meal</h2>
                     <form onSubmit={formik.handleSubmit}>
 
-                        <ProductForm formik={formik}/>
+                        <MealForm formik={formik}/>
                        
                         <NutritionForm formik={formik}/>
 
@@ -234,5 +231,5 @@ const AddProductPage = () => {
         </div>
     );
 };
-export default AddProductPage;
+export default AddMealPage;
 

@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Compressor from 'compressorjs';
+import NutritionForm from './nutritionForm';
+import MealForm from './mealForm';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { colors } from '../../../components/theme';
-import { newProduct, newProductReset } from '../../../store/reducers/product/newProductSlice';
+import { getProductDetails, clearProduct } from '../../../store/reducers/product/productDetailsSlice';
+import { updateProduct, updateProductReset, clearErrors } from '../../../store/reducers/product/productSlice';
 import { successMsg, errorMsg } from '../../../components/toast';
 import blankLogo from '../../../assets/blanklogo.png';
-import NutritionForm from './nutritionForm';
-import ProductForm from './productForm';
+import FormSkeletonLoader from '../../../components/FormLoader';
+
+
+type ProductImage = {
+    index?: number;
+    url?: string;
+};
 
 interface FormData {
     name: string;
@@ -49,78 +57,74 @@ const validationSchema = Yup.object({
     sodium: Yup.number().required('Sodium is required').min(0, 'Minimum of 0'),
 });
 
-const AddProductPage = () => {
+const EditProductPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { loading, error, success } = useAppSelector((state) => state.newProduct);
+    const { id } = useParams();
+    const { product, loading: productLoading } = useAppSelector((state) => state.productDetails)
+    const { loading, isUpdated, error } = useAppSelector((state) => state.product);
     const [firstImagePrev, setFirstImagePrev] = useState<string>(blankLogo);
     const [secondImagePrev, setSecondImagePrev] = useState<string>(blankLogo);
     const [thirdImagePrev, setThirdImagePrev] = useState<string>(blankLogo);
     const [firstImage, setFirstImage] = useState<File | null>(null);
     const [secondImage, setSecondImage] = useState<File | null>(null);
     const [thirdImage, setThirdImage] = useState<File | null>(null);
-    
 
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            description: '',
-            costPrice: 0,
-            sellPrice: 0,
-            portion: false,
-            stock: 0,
-            category: '',
-            active: '',
-            calories: 0,
-            protein: 0,
-            carbs: 0,
-            fat: 0,
-            fiber: 0,
-            sugar: 0,
-            sodium: 0,
-            firstImage: '',
-        },
-        validationSchema: validationSchema,
-        onSubmit: (values) => {
-            const isActive = values.active === 'True' ? true : false;
-
-            const formData: FormData = {
-                name: values.name,
-                description: values.description,
-                costPrice: values.costPrice,
-                sellPrice: values.sellPrice,
-                category: values.category,
-                stock: values.stock,
-                portion: false,
-                active: isActive,
-                calories: values.calories,
-                protein: values.protein,
-                carbs: values.carbs,
-                fat: values.fat,
-                fiber: values.fiber,
-                sugar: values.sugar,
-                sodium: values.sodium,
-                firstImage: firstImage,
-                secondImage: secondImage ? secondImage : null,
-                thirdImage: thirdImage ? thirdImage : null,
-            };
-            dispatch(newProduct(formData));
-        },
-    });
 
     useEffect(() => {
-        if (error ) {
+
+        if (id !== undefined && product && product._id !== id) {
+            dispatch(getProductDetails(id));
+
+        }
+
+        if (product) {
+            const formValues: (keyof typeof product)[] = ['name', 'description', 'costPrice', 'sellPrice', 'stock', 'category', 'active'];
+            formValues.forEach((property) => {
+                let value = product[property];
+                if (property === 'active') {
+                    value = product?.active === true ? 'True' : 'False';
+                }
+                formik.setFieldValue(property, value);
+            });
+            const nutritionProperties: (keyof typeof product.nutrition)[] = ['calories', 'protein', 'carbs', 'fat', 'fiber', 'sugar', 'sodium'];
+            nutritionProperties.forEach((property) => {
+                formik.setFieldValue(property, product?.nutrition[property] || 0);
+            });
+
+        }
+
+
+
+        if (product && product.images && product.images.length > 0 && !loading) {
+            const productImages: (string | ProductImage)[] = product.images;
+            const imagePreviews: (string | null)[] = Array(3).fill(null);
+
+            productImages.forEach((image) => {
+                if (typeof image === 'object' && image.index !== undefined && image.index >= 0 && image.index < 3 && image.url) {
+                    imagePreviews[image.index] = image.url;
+                }
+            });
+
+            setFirstImagePrev(imagePreviews[0] || blankLogo);
+            setSecondImagePrev(imagePreviews[1] || blankLogo);
+            setThirdImagePrev(imagePreviews[2] || blankLogo);
+        }
+
+
+        if (error) {
             errorMsg(error);
-            dispatch(newProductReset());
+            dispatch(clearErrors());
         }
 
-        if (success) {
-            navigate('/admin/product-all');
-            dispatch(newProductReset());
-            successMsg('Product created successfully');
+        if (isUpdated) {
+            successMsg('Meal updated successfully');
+            navigate('/admin/meal-all');
+            dispatch(updateProductReset());
+            dispatch(clearProduct());
         }
-    }, [dispatch, error, success, navigate ]);
 
+    }, [dispatch, id, product, isUpdated]);
 
 
     const selectImage = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,16 +152,70 @@ const AddProductPage = () => {
         });
     };
 
+    const formik = useFormik({
+        initialValues: {
+            name: product.name || '',
+            description: '',
+            costPrice: 0,
+            sellPrice: 0,
+            portion: false,
+            stock: 0,
+            category: '',
+            active: '',
+            calories: 0,
+            protein: 0,
+            carbs: 0,
+            fat: 0,
+            fiber: 0,
+            sugar: 0,
+            sodium: 0,
+            firstImage: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+            console.log('hatodg')
+            const isActive = values.active === 'True' ? true : false;
+
+            const productData: FormData = {
+                name: values.name,
+                description: values.description,
+                costPrice: values.costPrice,
+                sellPrice: values.sellPrice,
+                category: values.category,
+                stock: 0,
+                portion: true,
+                active: isActive,
+                calories: values.calories,
+                protein: values.protein,
+                carbs: values.carbs,
+                fat: values.fat,
+                fiber: values.fiber,
+                sugar: values.sugar,
+                sodium: values.sodium,
+                firstImage: firstImage,
+                secondImage: secondImage ? secondImage : null,
+                thirdImage: thirdImage ? thirdImage : null,
+            };
+            if (id) {
+                dispatch(updateProduct({ id, productData }));
+            }
+        },
+    });
+
+    if (productLoading) {
+        return <FormSkeletonLoader />
+    }
+
     return (
         <div className="flex justify-center">
             <div className="lg:w-100 w-11/12 mt-6">
                 <div className="bg-white p-6 rounded-lg shadow">
-                    <h2 className="text-2xl font-bold mb-4">Add Product</h2>
+                    <h2 className="text-2xl font-bold mb-4">Edit Meal</h2>
                     <form onSubmit={formik.handleSubmit}>
 
-                        <ProductForm formik={formik}/>
-                       
-                        <NutritionForm formik={formik}/>
+                        <MealForm formik={formik} />
+
+                        <NutritionForm formik={formik} />
 
                         <div className="space-y-2">
                             <div>Images (Leftmost is required)</div>
@@ -234,5 +292,5 @@ const AddProductPage = () => {
         </div>
     );
 };
-export default AddProductPage;
+export default EditProductPage;
 

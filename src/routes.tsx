@@ -18,6 +18,9 @@ import EditEmployeePage from './views/admin/employee/editEmployee';
 import ProductPage from './views/admin/product';
 import AddProductPage from './views/admin/product/addProduct';
 import EdiProductPage from './views/admin/product/editProduct';
+import MealPage from './views/admin/meal';
+import AddMealPage from './views/admin/meal/addMeal';
+import EdiMealPage from './views/admin/meal/editMeal';
 
 
 
@@ -41,6 +44,9 @@ const AppRoutes: FC = () => {
         { path: 'product-all', element: <ProductPage /> },
         { path: 'product-add', element: <AddProductPage /> },
         { path: 'product/:id', element: <EdiProductPage /> },
+        { path: 'meal-all', element: <MealPage /> },
+        { path: 'meal-add', element: <AddMealPage /> },
+        { path: 'meal/:id', element: <EdiMealPage /> },
       ] 
     },
     {

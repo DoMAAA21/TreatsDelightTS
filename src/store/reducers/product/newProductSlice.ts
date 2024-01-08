@@ -37,7 +37,7 @@ interface NewProductData {
     description: string;
     costPrice: number;
     sellPrice: number;
-    stock: number;
+    stock?: number;
     category: string;
     active: boolean | string;
     calories: number;

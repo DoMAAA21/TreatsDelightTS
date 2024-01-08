@@ -13,10 +13,6 @@ import defaultAvatar from '../../../assets/defaultavatar.png';
 import { successMsg, errorMsg } from '../../../components/toast';
 
 
-
-
-
-
 interface StoreFormData {
     name: string;
     slogan: string;

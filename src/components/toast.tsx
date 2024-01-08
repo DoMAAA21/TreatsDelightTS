@@ -2,14 +2,14 @@ import Swal from "sweetalert2";
 
 export const successMsg = (message: string) =>
     Swal.fire({
-        // title: `Success`,  //Uncomment this if you like
         text: `${message}`,
         icon: 'success',
+        iconColor: 'white',
         timer: 3500,
         timerProgressBar: true,
         toast: true,
         position: 'bottom-end',
-        background: 'green',
+        background: '#09b063',
         color: 'white',
         showConfirmButton: false,
         customClass: {
