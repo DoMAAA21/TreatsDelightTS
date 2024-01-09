@@ -4,5 +4,4 @@ export const colors = {
     warning: 'bg-yellow-500 text-gray-100 hover:bg-yellow-700',
     dark: 'bg-gray-700 text-white hover:bg-gray-900',
     info: 'bg-blue-500 text-white hover:bg-blue-700',
-
 };

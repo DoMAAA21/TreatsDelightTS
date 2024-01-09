@@ -82,11 +82,11 @@ const MealPage: FC = () => {
             category: product.category,
             active: product.active ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
-                  Yes
+                  Available
                 </span>
               ) : (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-red-600 text-white">
-                  No
+                  Unavailable
                 </span>
               ),
             actions: (

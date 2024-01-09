@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
+import BlankLogo from '../../assets/icons/openAi.svg';
+import DashboardLogo from '../../assets/icons/dashboard.svg';
+import OwnerLogo from '../../assets/icons/owner.svg';
+import StoreLogo from '../../assets/icons/store.svg';
+import EmployeeLogo from '../../assets/icons/employees.svg';
+import MealLogo from '../../assets/icons/meal.svg';
+import ProductLogo from '../../assets/icons/product.svg';
 
 interface NavItem {
   title: string;
   path: string;
+  icon?:  string ;
 }
 
 export const useNav = () => {
@@ -14,26 +22,32 @@ export const useNav = () => {
       {
         title: 'Dashboard',
         path: '/admin/dashboard',
+        icon: DashboardLogo
       },
       {
         title: 'Owners',
         path: '/admin/owner-all',
+        icon: OwnerLogo
       },
       {
         title: 'Stores',
         path: '/admin/store-all',
+        icon: StoreLogo
       },
       {
         title: 'Employees',
         path: '/admin/employee-all',
+        icon: EmployeeLogo
       },
       {
         title: 'Products',
         path: '/admin/product-all',
+        icon: ProductLogo
       },
       {
         title: 'Meals',
         path: '/admin/meal-all',
+        icon: MealLogo
       },
     ];
 
