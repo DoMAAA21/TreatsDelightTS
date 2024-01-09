@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
 import { useNav } from './config';
-import BlankLogo from '../../assets/icons/openAi.svg';
 
 interface SidebarProps {
   isMobileMenuOpen: boolean;
@@ -44,8 +43,9 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
           {navConfig.map((item) => (
             <Link key={item.title} to={item.path} className={`block hover:bg-indigo-500 p-2 mb-1 rounded text-gray-600 hover:text-white ${isLinkActive(item.path) ? 'bg-indigo-500 text-white' : ''}`}>
               <li className={`flex items-center py-2 px-4 ${isLinkActive(item.path) ? 'font-bold text-white' : ''}`}>
-                {item.icon && <img src={item.icon} className={`w-6 h-6 mr-3`} alt="icon" />}
-                <span>{item.title}</span>
+                {/* {item.icon && <img src={item.icon} className={`w-6 h-6 mr-3`} alt="icon" />} */}
+                {isLinkActive(item.path) ? item.activeIcon : item.defaultIcon}
+                <span className="ml-3">{item.title}</span>
               </li>
             </Link>
           ))}

@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import BlankLogo from '../../assets/icons/openAi.svg';
-import DashboardLogo from '../../assets/icons/dashboard.svg';
-import OwnerLogo from '../../assets/icons/owner.svg';
-import StoreLogo from '../../assets/icons/store.svg';
-import EmployeeLogo from '../../assets/icons/employees.svg';
-import MealLogo from '../../assets/icons/meal.svg';
-import ProductLogo from '../../assets/icons/product.svg';
+import DashboardIcon from '../../components/icons/DashboardIcon';
+import StoreIcon from '../../components/icons/StoreIcon';
+import OwnerIcon from '../../components/icons/OwnerIcon';
+import ProductIcon from '../../components/icons/ProductIcon';
+import MealIcon from '../../components/icons/MealIcon';
+import EmployeeIcon from '../../components/icons/EmployeeIcon';
 
 interface NavItem {
   title: string;
   path: string;
-  icon?:  string ;
+  defaultIcon?:  string | React.ReactNode;
+  activeIcon?:  string | React.ReactNode;
 }
 
 export const useNav = () => {
@@ -22,32 +22,39 @@ export const useNav = () => {
       {
         title: 'Dashboard',
         path: '/admin/dashboard',
-        icon: DashboardLogo
+        defaultIcon: <DashboardIcon color="#000" />,
+        activeIcon: <DashboardIcon color="#fff" />
       },
       {
         title: 'Owners',
         path: '/admin/owner-all',
-        icon: OwnerLogo
+        defaultIcon: <OwnerIcon color="#000" />,
+        activeIcon: <OwnerIcon color="#fff" />
       },
       {
         title: 'Stores',
         path: '/admin/store-all',
-        icon: StoreLogo
+        defaultIcon: <StoreIcon color="#000" />,
+        activeIcon: <StoreIcon color="#fff" />
       },
       {
         title: 'Employees',
         path: '/admin/employee-all',
-        icon: EmployeeLogo
+        defaultIcon: <EmployeeIcon color="#000" />,
+        activeIcon: <EmployeeIcon color="#fff" />
       },
       {
         title: 'Products',
         path: '/admin/product-all',
-        icon: ProductLogo
+        defaultIcon: <ProductIcon color="#000" />,
+        activeIcon: <ProductIcon color="#fff" />
       },
       {
         title: 'Meals',
         path: '/admin/meal-all',
-        icon: MealLogo
+        defaultIcon: <MealIcon color="#000" />,
+        activeIcon: <MealIcon color="#fff" />
+
       },
     ];
 
