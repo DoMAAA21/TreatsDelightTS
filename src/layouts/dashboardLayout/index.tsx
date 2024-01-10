@@ -2,6 +2,8 @@ import {useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const DashboardLayout = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -15,6 +17,7 @@ const DashboardLayout = () => {
   };
 
   useEffect(() => {
+    AOS.init();
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setMobileMenuOpen(false);
@@ -25,6 +28,7 @@ const DashboardLayout = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+    console.log('hatdog')
   }, [isMobileMenuOpen]);
 
   return (
