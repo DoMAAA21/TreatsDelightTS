@@ -10,7 +10,6 @@ interface NutritionFacts {
   fiber: number;
   sugar: number;
   sodium: number;
-  // [key: string]: number;
 }
 
 interface UseNutritionFactsProps {
@@ -84,7 +83,7 @@ const useFetchNutritionFacts = ({ formik }: UseNutritionFactsProps, item : strin
         ) {
           const nutritionKeys: (keyof NutritionFacts)[] = ['calories', 'protein', 'carbs', 'fat', 'fiber', 'sugar', 'sodium'];
             nutritionKeys.forEach((key: keyof NutritionFacts) => {
-              formik.setFieldValue(key, String(parsedNutrition[key as keyof typeof parsedNutrition]));
+              formik.setFieldValue(key, parseFloat(String(parsedNutrition[key as keyof typeof parsedNutrition])));
             });
 
 

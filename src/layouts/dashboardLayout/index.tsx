@@ -1,4 +1,4 @@
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
@@ -28,16 +28,21 @@ const DashboardLayout = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-    console.log('hatdog')
   }, [isMobileMenuOpen]);
 
   return (
     <>
-      <Navbar isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
+      <div className="top-0 z-50 sticky">
+        <Navbar isMobileMenuOpen={isMobileMenuOpen} toggleMobileMenu={toggleMobileMenu} />
+      </div>
       <div className="flex w-full h-screen">
-        <div className="lg:ml-64 px-4 pt-2 w-full h-full bg-gray-50">
+        <div className="lg:ml-64 w-full h-full">
           <Sidebar isMobileMenuOpen={isMobileMenuOpen} closeMobileMenu={closeMobileMenu} />
-          <Outlet/>
+          <div className="bg-[#ebf0f7] min-h-screen">
+            <div className="px-4 pt-2">
+              <Outlet />
+            </div>
+          </div>
         </div>
       </div>
     </>

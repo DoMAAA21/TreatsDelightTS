@@ -5,6 +5,7 @@ import type { RouteObject } from 'react-router';
 import  DashboardLayout from './layouts/dashboardLayout';
 import DefaultLayout from './layouts/defaultLayout';
 //Views
+import DashboardPage from './views/admin/dashboard';
 import LoginPage from './views/auth/login';
 import UserPage from './views/admin/owner';
 import AddOwnerPage from './views/admin/owner/addOwner';
@@ -32,6 +33,7 @@ const AppRoutes: FC = () => {
       path: '/admin',
       element: <DashboardLayout/>,
       children: [
+        { path: 'dashboard', element: <DashboardPage /> },
         { path: 'owner-all', element: <UserPage /> },
         { path: 'owner-add', element: <AddOwnerPage /> },
         { path: 'owner/:id', element: <EditOwnerPage /> },
