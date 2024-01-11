@@ -38,7 +38,7 @@ const DashboardLayout = () => {
       <div className="flex w-full h-screen">
         <div className="lg:ml-64 w-full h-full">
           <Sidebar isMobileMenuOpen={isMobileMenuOpen} closeMobileMenu={closeMobileMenu} />
-          <div className="bg-[#ebf0f7] min-h-screen">
+          <div className="bg-[#ebf0f7] lg:min-h-screen ">
             <div className="px-4 pt-2">
               <Outlet />
             </div>
