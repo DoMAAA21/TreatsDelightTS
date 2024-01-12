@@ -2,6 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../index';
 import axios from 'axios';
 
+interface ProductImage {
+  index?: number;
+  url?: string;
+}
 interface Product {
     _id: number | string;
     name: string;
@@ -11,17 +15,20 @@ interface Product {
     stock: number;
     category: string;
     active: boolean | string;
+    images: ProductImage[]; //Todo: Check if there is an error 
 }
 
 
 interface AllProductsState {
   products: Product[];
+  items: Product[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: AllProductsState = {
   products: [],
+  items: [],
   loading: false,
   error: null,
 };
@@ -74,6 +81,26 @@ export const fetchAllMeals = createAsyncThunk<Product[], void, { state: RootStat
   }
 );
 
+export const fetchAllItems = createAsyncThunk<Product[], void, { state: RootState }>(
+  'allItems/fetchAllItems',
+  async (_, { rejectWithValue, dispatch }) => {
+      try {
+          dispatch(allItemsRequest());
+  
+          const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/allItems`);
+          dispatch(allItemsSuccess(data.products));
+          return data.products;
+      } catch (error) {
+          if (axios.isAxiosError(error)) {
+              dispatch(allItemsFail(error.response?.data?.message || 'An error occurred'));
+              return rejectWithValue(error.response?.data?.message || 'An error occurred');
+          }
+          dispatch(allItemsFail('An error occurred'));
+          return rejectWithValue('An error occurred');
+      }
+  }
+);
+
 
 const allProductsSlice = createSlice({
   name: 'allProducts',
@@ -90,6 +117,17 @@ const allProductsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    allItemsRequest: (state) => {
+      state.loading = true;
+    },
+    allItemsSuccess: (state, action) => {
+      state.loading = false;
+      state.items = action.payload;
+    },
+    allItemsFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     clearErrors: (state) => {
       state.error = null;
     },
@@ -100,6 +138,9 @@ export const {
   allProductsRequest,
   allProductsSuccess,
   allProductsFail,
+  allItemsRequest,
+  allItemsSuccess,
+  allItemsFail,
   clearErrors,
 } = allProductsSlice.actions;
 

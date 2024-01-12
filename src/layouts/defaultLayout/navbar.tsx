@@ -32,10 +32,19 @@ const Navbar: React.FC = () => {
         setMobileMenuOpen(false);
       }
     };
+
+    const handleScroll = () => {
+      if (isMobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isMobileMenuOpen]);
 
