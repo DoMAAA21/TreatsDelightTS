@@ -12,15 +12,15 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
   const { navConfig } = useNav();
-
+  const location = useLocation();
   const isLinkActive = (path: string) => {
-    const location = useLocation();
-    const isAdminUser = location.pathname.startsWith(path);
-    return isAdminUser;
+    
+    const isActiveRoute = location.pathname.startsWith(path);
+    return isActiveRoute;
   };
 
   useEffect(() => {
-    AOS.refresh(); // Refresh AOS when the sidebar state changes
+    AOS.refresh(); 
   }, [isMobileMenuOpen]);
 
   return (

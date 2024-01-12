@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useNav } from './config';
 import Logo from '../../assets/logo.png';
 
-interface Page {
-  name: string;
-}
+
+
 
 const Navbar: React.FC = () => {
+  const { navConfig } = useNav();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState<string>('home');
+  const location = useLocation();
+  const isLinkActive = (path: string) => {
+
+    const isActiveRoute = location.pathname.startsWith(path);
+    return isActiveRoute;
+  };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -17,10 +24,7 @@ const Navbar: React.FC = () => {
     setMobileMenuOpen(false);
   };
 
-  const handlePageChange = (page: Page) => {
-    setCurrentPage(page.name);
-    closeMobileMenu();
-  };
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -84,28 +88,20 @@ const Navbar: React.FC = () => {
               id="mobile-menu-2"
             >
               <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-2 lg:mt-0">
-                <li>
-                  <a
-                    href="#"
-                    className={`block py-2 pr-4 pl-4 text-xl ${
-                      currentPage === 'home' ? 'text-violet-700' : ' text-gray-700'
-                    } hover:text-violet-700`}
-                    onClick={() => handlePageChange({ name: 'home' })}
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className={`block py-2 pr-4 pl-4 text-xl ${
-                      currentPage === 'about' ? 'text-violet-700' : ' text-gray-700'
-                    } hover:text-violet-700`}
-                    onClick={() => handlePageChange({ name: 'about' })}
-                  >
-                    About
-                  </a>
-                </li>
+
+
+                {navConfig.map((item) => (
+                  <li key={item.title}>
+                    <Link
+                      to={item.path}
+                      className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-violet-700' : 'text-gray-700'}
+                      } hover:text-violet-700`}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+
+                ))}
               </ul>
             </div>
           </div>
@@ -123,32 +119,18 @@ const Navbar: React.FC = () => {
             id="mobile-menu-2"
           >
             <ul className="flex flex-col font-medium">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-800 hover:bg-gray-50 dark:text-white"
-                  aria-current="page"
-                  onClick={closeMobileMenu}
-                >
-                  Home
-                </a>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3 text-gray-800 hover:bg-gray-50 dark:text-white"
-                  aria-current="page"
-                  onClick={closeMobileMenu}
-                >
-                  Home
-                </a>
-                <a
-                  href="#"
-                  className="block py-2 pr-4 pl-3  text-gray-800 hover:bg-gray-50 dark:text-white"
-                  aria-current="page"
-                  onClick={closeMobileMenu}
-                >
-                  Home
-                </a>
-              </li>
+              {navConfig.map((item) => (
+                <li key={item.title}>
+                  <Link
+                    to={item.path}
+                    className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-violet-700' : 'text-gray-700'}
+                      } hover:text-violet-700`}
+                  >
+                    {item.title}
+                  </Link>
+
+                </li>
+              ))}
             </ul>
           </div>
         </>

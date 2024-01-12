@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+
 
 const DashboardLayout = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
