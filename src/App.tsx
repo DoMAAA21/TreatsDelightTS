@@ -5,6 +5,7 @@ import { store, persistor } from './store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import 'aos/dist/aos.css';
+import ScrollToTop from './helpers/scrollToTop';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <PersistGate loading={null} persistor={persistor}>
           <HelmetProvider>
             <Router>
+              <ScrollToTop/>
               <AppRoutes />
             </Router>
           </HelmetProvider>

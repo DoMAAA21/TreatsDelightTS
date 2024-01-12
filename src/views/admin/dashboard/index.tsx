@@ -24,7 +24,7 @@ const DashboardPage = () => {
                 </div>
 
                 <div className="w-full lg:w-4/6 mb-4 lg:mb-0 lg:mr-4 "
-                  data-aos="fade-up"
+                  data-aos="fade-right"
                   data-aos-delay={100}
                 >
                     <WidgetNav />
