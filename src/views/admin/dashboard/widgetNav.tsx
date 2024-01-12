@@ -1,36 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllUsers } from '../../../store/reducers/user/allUsersSlice';
 import FinanceLogo from '../../../assets/svg/finance.svg';
 import UsersLogo from '../../../assets/svg/users.svg';
+import SalesLogo from '../../../assets/svg/sales.svg';
 
 const WidgetNav = () => {
     const dispatch = useAppDispatch();
-    const [count, setCount] = useState(0);
 
-    const { users, loading } = useAppSelector((state) => state.allUsers);
+
+    const { users } = useAppSelector((state) => state.allUsers);
 
     const userCount = users.length;
 
     useEffect(() => {
         dispatch(fetchAllUsers());
 
-        const interval = setInterval(() => {
-            setCount((prevCount) => {
-                const newCount = prevCount + 1;
-                return newCount <= userCount ? newCount : userCount;
-            });
-        }, 10);
-
-        console.log('hatdog')
-
-        return () => clearInterval(interval);
-    }, [dispatch, userCount]);
+        
+    }, [dispatch]);
 
     const dashboardnavs = [
-        { title: 'Total Users', qty: count, icon: UsersLogo, subtitle: 'Using this app.' },
-        { title: 'Clickable Box 2', qty: '', icon: FinanceLogo, subtitle: 'Subtitle or description 2' },
-        { title: 'Clickable Box 3', qty: '', icon: FinanceLogo, subtitle: 'Subtitle or description 3' },
+        { title: 'Total Users', qty: userCount, icon: UsersLogo, subtitle: 'Using this app.' },
+        { title: 'Total Sales', qty: '$50000', icon: SalesLogo, subtitle: 'Using this app' },
+        { title: 'Total Orders', qty: 125, icon: UsersLogo, subtitle: 'Made in this app' },
     ];
 
     return (

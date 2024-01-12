@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Logo from '../../assets/logo.png';
 import { useNav } from './config';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+
 
 interface SidebarProps {
   isMobileMenuOpen: boolean;

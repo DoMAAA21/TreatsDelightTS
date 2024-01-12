@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { store, persistor } from './store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-
+import 'aos/dist/aos.css';
 
 
 function App() {
