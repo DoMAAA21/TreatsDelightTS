@@ -26,7 +26,7 @@ interface ProductDetails {
             sugar: number;
             sodium: number;
         }
-        images?: ProductImage[] | string[];
+        images: ProductImage[] ;
 
     };
     loading: boolean;
@@ -42,6 +42,7 @@ const initialState: ProductDetails = {
         stock: 0,
         category: '',
         active: '',
+        images: [],
         nutrition:{
             calories: 0,
             protein: 0,
@@ -118,6 +119,7 @@ const productDetailsSlice = createSlice({
                 stock: 0,
                 category: '',
                 active: '',
+                images: [],
                 nutrition:{
                     calories: 0,
                     protein: 0,
