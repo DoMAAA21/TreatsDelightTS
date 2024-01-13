@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from './productCard';
-
+import QuestionSVG from '../../../assets/svg/question.svg';
 
 interface ProductImage {
     index?: number;
@@ -25,10 +25,20 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-                <ProductCard key={product._id} {...product} />
-            ))}
+        <div>
+            {products.length === 0 ? (
+               <div className="flex flex-col items-center h-screen p-10">
+               <img src={QuestionSVG} className="w-2/4 h-2/4" alt="Product Not Found Img" />
+               <h2 className="mt-4 font-semibold text-2xl text-center ">No results found.</h2>
+           </div>
+           
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                    {products.map((product) => (
+                        <ProductCard key={product._id} {...product} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

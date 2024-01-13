@@ -8,7 +8,7 @@ import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import { colors } from '../../../components/theme';
 import { successMsg } from '../../../components/toast';
-import TableLoader from '../../../components/TableLoader';
+import TableLoader from '../../../components/loaders/TableLoader';
 import { categories } from '../../../components/inputs';
 import EditIcon from '../../../assets/icons/edit.svg';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';

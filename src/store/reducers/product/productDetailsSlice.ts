@@ -73,6 +73,23 @@ export const getProductDetails = createAsyncThunk('productDetails/getProductDeta
     }
 });
 
+export const getItemDetails = createAsyncThunk('itemDetails/getItemDetails', async (id: string | undefined, { dispatch, rejectWithValue }) => {
+    try {
+        dispatch(productDetailsRequest());
+
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`);
+        dispatch(productDetailsSuccess(data.product));
+        return data.product;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            dispatch(productDetailsFail(error.response?.data?.message || 'An error occurred'));
+            return rejectWithValue(error.response?.data?.message || 'An error occurred');
+        }
+        dispatch(productDetailsFail('An error occurred'));
+        return rejectWithValue('An error occurred');
+    }
+});
+
 const productDetailsSlice = createSlice({
     name: 'productDetails',
     initialState,

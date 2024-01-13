@@ -11,7 +11,7 @@ import { getProductDetails, clearProduct } from '../../../store/reducers/product
 import { updateProduct, updateProductReset, clearErrors } from '../../../store/reducers/product/productSlice';
 import { successMsg, errorMsg } from '../../../components/toast';
 import blankLogo from '../../../assets/svg/blank.svg';
-import FormSkeletonLoader from '../../../components/FormLoader';
+import FormSkeletonLoader from '../../../components/loaders/FormLoader';
 
 type ProductImage = {
     index?: number;

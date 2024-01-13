@@ -8,7 +8,7 @@ import { updateStore, updateStoreReset, clearErrors } from '../../../store/reduc
 import { Formik, Form } from 'formik';
 import StoreForm from './storeForm';
 import { colors } from '../../../components/theme';
-import FormSkeletonLoader from '../../../components/FormLoader';
+import FormSkeletonLoader from '../../../components/loaders/FormLoader';
 import defaultAvatar from '../../../assets/defaultavatar.png';
 import { successMsg, errorMsg } from '../../../components/toast';
 

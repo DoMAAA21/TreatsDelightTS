@@ -24,6 +24,7 @@ import AddMealPage from './views/admin/meal/addMeal';
 import EdiMealPage from './views/admin/meal/editMeal';
 //Client
 import ShoppingPage from './views/client/shop';
+import ProductDetails from './views/client/shop/productDetails';
 
 
 
@@ -58,6 +59,7 @@ const AppRoutes: FC = () => {
       element: <DefaultLayout/>,
       children: [
         { path: 'shop', element: <ShoppingPage /> },
+        { path: 'shop/product/:id', element: <ProductDetails/> },
       ] 
     },
     { path: '/login',element: <LoginPage/>},

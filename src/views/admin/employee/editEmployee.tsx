@@ -8,7 +8,7 @@ import { getEmployeeDetails, clearEmployee } from '../../../store/reducers/emplo
 import { updateEmployee, updateEmployeeReset, clearErrors } from '../../../store/reducers/employee/employeeSlice';
 import { Formik, Form } from 'formik';
 import { colors } from '../../../components/theme';
-import FormSkeletonLoader from '../../../components/FormLoader';
+import FormSkeletonLoader from '../../../components/loaders/FormLoader';
 import defaultAvatar from '../../../assets/defaultavatar.png';
 import { successMsg, errorMsg } from '../../../components/toast';
 
