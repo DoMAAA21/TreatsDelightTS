@@ -46,7 +46,7 @@ const ProductDetails = () => {
   return (
 
     <>
-      <div className="hidden lg:flex md:flex lg:mx-20 md:mx-8 md:px-8 lg:px-20 mt-8 h-full">
+      <div className="hidden lg:flex md:flex lg:mx-20 md:mx-8 md:px-8 lg:px-20 mt-8 h-full ">
         <div className="w-4/6 rounded-bl-2xl rounded-tl-2xl overflow-hidden shadow-md lg:h-[600px]">
           <Slider useCSS>
             {images.map((image, index) => (
@@ -60,7 +60,7 @@ const ProductDetails = () => {
             ))}
           </Slider>
         </div>
-        <div className="w-2/6 bg-white shadow-md p-4 text-justify flex flex-col rounded-tr-2xl rounded-br-2xl">
+        <div className="w-2/6 bg-white shadow-md p-4 text-justify flex flex-col rounded-tr-2xl rounded-br-2xl border border-gray-200">
           <div className="flex-grow mt-20">
             <h2 className="text-3xl font-bold mb-4">{product.name}</h2>
             <p className="text-gray-600 text-xl mb-4">{product.description}</p>
@@ -101,7 +101,7 @@ const ProductDetails = () => {
           ))}
         </Slider>
       </div>
-      <div className="lg:hidden md:hidden mt-4 shadow-lg p-4 rounded-lg">
+      <div className="lg:hidden md:hidden mt-4 shadow-lg p-4 rounded-lg border-t border-gray-100">
         <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
         <p className="text-gray-600 mb-4">{product.description}</p>
         <p className="text-gray-800 font-semibold mb-4">₱{product?.sellPrice.toFixed(2)}</p>
