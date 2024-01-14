@@ -48,7 +48,7 @@ const ProductDetails = () => {
     <>
       <div className="hidden lg:flex md:flex lg:mx-20 md:mx-8 md:px-8 lg:px-20 mt-8 h-full ">
         <div className="w-4/6 rounded-bl-2xl rounded-tl-2xl overflow-hidden shadow-md lg:h-[600px]">
-          <Slider useCSS>
+          <Slider {...settings} useCSS>
             {images.map((image, index) => (
               <div key={index} className="lg:h-[600px] md:h-full w-full">
               <img
