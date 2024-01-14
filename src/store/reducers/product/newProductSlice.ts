@@ -67,9 +67,6 @@ export const newProduct = createAsyncThunk<NewProductResponse, NewProductData, {
             ...storeDetails
         }
 
-        console.log(formProductData)
-
-    
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',
