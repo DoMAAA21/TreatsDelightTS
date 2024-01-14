@@ -50,7 +50,7 @@ const ProductDetails = () => {
         <div className="w-4/6 rounded-bl-2xl rounded-tl-2xl overflow-hidden shadow-md lg:h-[600px]">
           <Slider useCSS>
             {images.map((image, index) => (
-              <div key={index} className='lg:h-[600px] md:h-full w-full'>
+              <div key={index} className="lg:h-[600px] md:h-full w-full">
               <img
                 src={image.url}
                 alt={`Image ${index + 1}`}
@@ -95,7 +95,7 @@ const ProductDetails = () => {
       <div className="lg:hidden md:hidden" >
         <Slider {...settings}>
           {images.map((image, index) => (
-            <div key={index} className='h-[200px] md:h-full w-full'>
+            <div key={index} className="h-[200px] md:h-full w-full">
             <img src={image?.url} alt={`Image ${index + 1}`} className="w-full h-full"/>
             </div>
           ))}
