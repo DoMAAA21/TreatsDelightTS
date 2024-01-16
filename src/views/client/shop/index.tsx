@@ -21,7 +21,6 @@ const ShoppingPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-  
     if (debouncedSearchQueryRef.current !== '' && debouncedSearchQuery.trim() === '') {
       dispatch(fetchAllItems({ page: 1, searchQuery: '' }));
     }
@@ -30,16 +29,6 @@ const ShoppingPage = () => {
     }
     debouncedSearchQueryRef.current = debouncedSearchQuery;
   }, [ debouncedSearchQuery]);
-
- 
-  
-
-  
-
-
-
- 
-
 
   const fetchMoreItems = () => {
     if (hasMore) {

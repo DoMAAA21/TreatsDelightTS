@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getItemDetails } from '../../../store/reducers/product/productDetailsSlice';
 import { colors } from '../../../components/theme';
 import ProductDetailsLoader from '../../../components/loaders/ProductDetailsLoader';
-import { clearItems } from '../../../store/reducers/product/allProductsSlice';
 
 interface ProductImage {
   index?: number;
@@ -21,7 +20,6 @@ const ProductDetails = () => {
   const [fetchLoading, setFetchLoading] = useState(true);
 
   useEffect(() => {
-    // dispatch(clearItems());
     dispatch(getItemDetails(id))
       .then(() => {
         setImages(product.images);
