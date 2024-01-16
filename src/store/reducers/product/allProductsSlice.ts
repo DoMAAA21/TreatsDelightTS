@@ -86,18 +86,24 @@ export const fetchAllMeals = createAsyncThunk<Product[], void, { state: RootStat
   }
 );
 
-export const fetchAllItems = createAsyncThunk<Product[], { page: number }, { state: RootState }>(
+
+export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string }, { state: RootState }>(
   'allItems/fetchAllItems',
-  async ({ page }, { rejectWithValue, dispatch }) => {
+  async ({ page, searchQuery }, { rejectWithValue, dispatch }) => {
     try {
       dispatch(allItemsRequest());
 
-      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}`);
-      console.log(data)
-      dispatch(page === 1 ? allItemsSuccess(data) : concatItems(data));
-      dispatch(setCurrentPage(page))
+      const url = `${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}${searchQuery ? `&searchQuery=${searchQuery}` : ''}`;
 
+      const { data } = await axios.get(url);
+   
+      if (page === 1) {
+        dispatch(allItemsSuccess(data));
+      } else {
+        dispatch(concatItems(data));
+      }
 
+      dispatch(setCurrentPage(page));
 
       return data.products;
     } catch (error) {
@@ -110,7 +116,6 @@ export const fetchAllItems = createAsyncThunk<Product[], { page: number }, { sta
     }
   }
 );
-
 
 const allProductsSlice = createSlice({
   name: 'allProducts',
@@ -151,6 +156,9 @@ const allProductsSlice = createSlice({
       state.items = state.items.concat(action.payload.products);
       state.hasMore = action.payload.hasMore;
     },
+    clearItems: (state) => {
+      state.items = [];
+    },
     clearErrors: (state) => {
       state.error = null;
     },
@@ -167,7 +175,8 @@ export const {
   clearErrors,
   setHasMore,
   setCurrentPage,
-  concatItems
+  concatItems,
+  clearItems
 } = allProductsSlice.actions;
 
 export default allProductsSlice.reducer;

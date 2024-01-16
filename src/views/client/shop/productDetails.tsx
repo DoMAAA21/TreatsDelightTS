@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getItemDetails } from '../../../store/reducers/product/productDetailsSlice';
 import { colors } from '../../../components/theme';
 import ProductDetailsLoader from '../../../components/loaders/ProductDetailsLoader';
+import { clearItems } from '../../../store/reducers/product/allProductsSlice';
 
 interface ProductImage {
   index?: number;
@@ -20,7 +21,7 @@ const ProductDetails = () => {
   const [fetchLoading, setFetchLoading] = useState(true);
 
   useEffect(() => {
-    // setImages([]);
+    // dispatch(clearItems());
     dispatch(getItemDetails(id))
       .then(() => {
         setImages(product.images);
@@ -29,7 +30,6 @@ const ProductDetails = () => {
   }, [id, fetchLoading]);
 
   const settings = {
-    // dots: true,
     infinite: true,
     speed: 1500,
     slidesToShow: 1,
@@ -92,7 +92,7 @@ const ProductDetails = () => {
 
 
         {/* Mobile View */}
-        <div className="lg:hidden md:hidden" >
+        <div className="lg:hidden md:hidden mt-24">
           <Slider {...settings}>
             {images.map((image, index) => (
               <div key={index} className="h-[200px] md:h-full w-full">
