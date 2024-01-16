@@ -16,6 +16,7 @@ import allProductsReducer from './product/allProductsSlice';
 import productReducer from './product/productSlice';
 import newProductReducer from './product/newProductSlice';
 import productDetailsReducer from './product/productDetailsSlice';
+import cartReducer from './cart/cartSlice';
 
 
 
@@ -36,7 +37,8 @@ const rootReducer = combineReducers({
     allProducts : allProductsReducer,
     product : productReducer,
     newProduct : newProductReducer,
-    productDetails : productDetailsReducer
+    productDetails : productDetailsReducer,
+    cart : cartReducer
 })
 
 export default rootReducer;

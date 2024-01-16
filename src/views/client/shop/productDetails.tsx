@@ -4,7 +4,9 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getItemDetails } from '../../../store/reducers/product/productDetailsSlice';
 import { colors } from '../../../components/theme';
+import { addItemToCart } from '../../../store/reducers/cart/cartSlice';
 import ProductDetailsLoader from '../../../components/loaders/ProductDetailsLoader';
+import { errorMsg, successMsg } from '../../../components/toast';
 
 interface ProductImage {
   index?: number;
@@ -15,6 +17,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { product } = useAppSelector(state => state.productDetails);
+  const { cartItems } = useAppSelector(state => state.cart);
   const [quantity, setQuantity] = useState(1);
   const [images, setImages] = useState<ProductImage[]>([]);
   const [fetchLoading, setFetchLoading] = useState(true);
@@ -25,6 +28,7 @@ const ProductDetails = () => {
         setImages(product.images);
         setFetchLoading(false)
       });
+      console.log(cartItems)
   }, [id, fetchLoading]);
 
   const settings = {
@@ -37,8 +41,15 @@ const ProductDetails = () => {
   }
 
   const handleAddToCart = () => {
-    // Implement your add to cart logic here
-    console.log(`Added ${quantity} ${product.name}(s) to cart`);
+    if(!id){
+      errorMsg('Product not available');
+    }
+    if(id){
+      dispatch(addItemToCart({ id: id, quantity })).then(() => {
+        successMsg('Added to Cart')
+      });
+      console.log(cartItems)
+    }
   };
 
   return (

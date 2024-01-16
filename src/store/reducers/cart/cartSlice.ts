@@ -15,13 +15,23 @@ interface CartItem {
 interface Order {
   orderItems: CartItem[];
   totalPrice: number;
+  user: {
+    id?: string;
+    name?: string;
+  }
 }
 
 interface CartState {
   cartItems: CartItem[];
-  receipt: any[]; // Adjust the type based on your backend structure
+  receipt: CartItem[];
   success: boolean;
   loading: boolean;
+}
+
+
+interface CheckoutCartPayload {
+  cartItems: CartItem[];
+  totalPrice: number;
 }
 
 const initialState: CartState = {
@@ -35,7 +45,7 @@ export const addItemToCart = createAsyncThunk(
   'cart/addItemToCart',
   async ({ id, quantity }: { id: string; quantity: number }, { dispatch }) => {
     try {
-      const { data } = await axios.get(`/api/v1/product/${id}`);
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`);
       const cartItem: CartItem = {
         id: data.product._id,
         name: data.product.name,
@@ -48,35 +58,49 @@ export const addItemToCart = createAsyncThunk(
       dispatch(addToCart(cartItem));
       return cartItem;
     } catch (error) {
-      throw error.response.message;
+      if (axios.isAxiosError(error)) {
+        throw error.response?.data?.message || 'An error occured';
+      }
+      throw 'An error occured';
     }
   }
 );
 
-export const checkoutCart = createAsyncThunk(
-  'cart/createOrder',
-  async ({ cartItems, totalPrice }: { cartItems: CartItem[]; totalPrice: number }, { dispatch }) => {
+
+
+export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartPayload, { state: RootState }>('cart/checkoutCart',
+  async (payload, { dispatch, getState }) => {
     try {
       dispatch(checkoutRequest());
+
+      const authState = getState().auth;
+      const userName = `${authState.user?.fname} ${authState.user?.lname}`;
+      const userId = authState?.user?.id;
+
       const order: Order = {
-        orderItems: cartItems,
-        totalPrice,
+        orderItems: payload.cartItems,
+        user: {
+          id: userId,
+          name: userName
+        },
+        totalPrice: payload.totalPrice,
       };
-      const { data } = await axios.post('/api/v1/order/new', order);
+
+      const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/order/new`, order);
+
       dispatch(showReceipt(data.order));
       dispatch(checkoutSuccess(data.success));
       dispatch(clearCart());
+
       return data;
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            dispatch(allEmployeesFail(error.response?.data?.message || 'An error occurred'));
-            return rejectWithValue(error.response?.data?.message || 'An error occurred');
-        }
-        dispatch(allEmployeesFail('An error occurred'));
-        return rejectWithValue('An error occurred');
+      if (axios.isAxiosError(error)) {
+        throw error.response?.data?.message || 'An error occurred';
+      }
+      throw 'An error occurred';
     }
-  }
-);
+  });
+
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -93,7 +117,7 @@ const cartSlice = createSlice({
       const isItemExist = state.cartItems.find((i) => i.id === item.id);
 
       if (isItemExist) {
-        state.cartItems = state.cartItems.map((i) => (i.id === isItemExist.id ? { ...i, quantity: i.quantity + 1 } : i));
+        state.cartItems = state.cartItems.map((i) => (i.id === isItemExist.id ? { ...i, quantity: i.quantity + item.quantity} : i));
       } else {
         state.cartItems = [...state.cartItems, item];
       }
@@ -126,6 +150,6 @@ const cartSlice = createSlice({
 });
 
 export const { clearCart, removeItemFromCart, addToCart, increaseItemQuantity, decreaseItemQuantity,
-checkoutRequest, checkoutSuccess, showReceipt } = cartSlice.actions;
+  checkoutRequest, checkoutSuccess, showReceipt } = cartSlice.actions;
 
 export default cartSlice.reducer;
