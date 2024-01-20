@@ -18,6 +18,11 @@ export const useNav = () => {
         path: '/shop',
 
       }, 
+      {
+        title: 'Cart',
+        path: '/cart',
+
+      }, 
     ];
     return defaultConfig;
   });

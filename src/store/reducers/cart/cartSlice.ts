@@ -34,8 +34,12 @@ interface CheckoutCartPayload {
   totalPrice: number;
 }
 
+
+const persistedCartItems = localStorage.getItem('cartItems');
+const initialCartItems = persistedCartItems ? JSON.parse(persistedCartItems) : [];
+
 const initialState: CartState = {
-  cartItems: [],
+  cartItems: initialCartItems,
   receipt: [],
   success: false,
   loading: false,
@@ -108,25 +112,29 @@ const cartSlice = createSlice({
   reducers: {
     clearCart: (state) => {
       state.cartItems = [];
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     removeItemFromCart: (state, action: PayloadAction<string>) => {
       state.cartItems = state.cartItems.filter((i) => i.id !== action.payload);
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
     },
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const item = action.payload;
       const isItemExist = state.cartItems.find((i) => i.id === item.id);
 
       if (isItemExist) {
-        state.cartItems = state.cartItems.map((i) => (i.id === isItemExist.id ? { ...i, quantity: i.quantity + item.quantity} : i));
+        state.cartItems = state.cartItems.map((i) => (i.id === isItemExist.id ? { ...i, quantity: i.quantity + item.quantity } : i));
       } else {
         state.cartItems = [...state.cartItems, item];
       }
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
     },
     increaseItemQuantity: (state, action: PayloadAction<string>) => {
       const id = action.payload;
       state.cartItems = state.cartItems.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity + 1 } : item
       );
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     decreaseItemQuantity: (state, action: PayloadAction<string>) => {
       const id = action.payload;
@@ -135,6 +143,7 @@ const cartSlice = createSlice({
           item.id === id ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
         )
         .filter((item) => item.quantity > 0);
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     checkoutRequest: (state) => {
       state.loading = true;

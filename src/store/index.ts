@@ -6,7 +6,7 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'auth',
   storage: storage,
-  whitelist: ['auth','cart'], 
+  whitelist: ['auth'], 
   blacklist: ['loading', 'error'],
 };
 

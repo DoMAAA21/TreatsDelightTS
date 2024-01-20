@@ -25,47 +25,47 @@ const CartPage = () => {
             <div className="w-full lg:w-5/6 flex flex-col md:flex-row ">
                 <div className="w-full md:w-2/3 sm:w-full shadow-md p-8 rounded-xl mb-4 md:mb-0 border border-gray-200">
                     <h2 className="text-2xl font-semibold mb-4">Cart</h2>
-                    
-                   
+
+
                     <div>
-    {cartItems.length === 0 ? (
-        <div className="text-center text-gray-600">
-            <img src={EmptyCart} alt="Empty Cart" />
-        </div>
-    ) : (
-        <div>
-            <div className="flex mt-10 mb-5">
-                <h3 className="font-semibold text-gray-600 text-xs uppercase w-3/6">Product Details</h3>
-                <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-2/5 ">Quantity</h3>
-                <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-2/6 ">Price</h3>
-            </div>
+                        {cartItems.length === 0 ? (
+                            <div className="text-center text-gray-600">
+                                <img src={EmptyCart} alt="Empty Cart" />
+                            </div>
+                        ) : (
+                            <>
+                                <div className="flex mt-10 mb-5">
+                                    <h3 className="font-semibold text-gray-600 text-xs uppercase w-3/6">Product Details</h3>
+                                    <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-2/5 ">Quantity</h3>
+                                    <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-2/6 ">Price</h3>
+                                </div>
 
-            {cartItems.map((item) => (
-                <div key={item.id} className="flex p-6 mb-2 border border-gray-200 shadow-md rounded">
-                    <div className="flex flex-col w-4/5">
-                        <span className="text-red-800 text-lg font-semibold mb-2">{item.name}</span>
-                        <span className="text-gray-500 text-sm">{item.name}</span>
-                    </div>
-                    <div className="flex items-center w-2/6">
-                        <button className="p-3 py-1 bg-red-500 text-white rounded-3xl" onClick={() => decrementQty(item.id)}>-</button>
-                        <span className="w-10 text-center">{item.quantity}</span>
-                        <button className="p-3 py-1 bg-blue-500 text-white rounded-3xl" onClick={() => incrementQty(item.id)}>+</button>
-                    </div>
-                    <div className="flex items-center w-2/12">
-                        <span className="font-bold text-2xl">*</span>
-                    </div>
-                    <div className="flex items-center w-1/6">
-                        <span>₱{item.price}</span>
-                    </div>
+                                {cartItems.map((item) => (
+                                    <div key={item.id} className="flex p-6 mb-2 border border-gray-200 shadow-md rounded">
+                                        <div className="flex flex-col w-4/5">
+                                            <span className="text-red-800 text-lg font-semibold mb-2">{item.name}</span>
+                                            <span className="text-gray-500 text-sm">{item.name}</span>
+                                        </div>
+                                        <div className="flex items-center w-2/6">
+                                            <button className="p-3 py-1 bg-red-500 text-white rounded-3xl" onClick={() => decrementQty(item.id)}>-</button>
+                                            <span className="w-10 text-center">{item.quantity}</span>
+                                            <button className="p-3 py-1 bg-blue-500 text-white rounded-3xl" onClick={() => incrementQty(item.id)}>+</button>
+                                        </div>
+                                        <div className="flex items-center w-2/12">
+                                            <span className="font-bold text-2xl">*</span>
+                                        </div>
+                                        <div className="flex items-center w-1/6">
+                                            <span>₱{item.price}</span>
+                                        </div>
 
-                    <div className="flex items-center">
-                        <button className="p-2 py-1 bg-red-500 text-white rounded" onClick={() => removeItem(item.id)}>_</button>
+                                        <div className="flex items-center">
+                                            <button className="p-2 py-1 bg-red-500 text-white rounded" onClick={() => removeItem(item.id)}>_</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        )}
                     </div>
-                </div>
-            ))}
-        </div>
-    )}
-</div>
 
 
                 </div>
