@@ -73,21 +73,21 @@ export const addItemToCart = createAsyncThunk(
 
 
 export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartPayload, { state: RootState }>('cart/checkoutCart',
-  async (payload, { dispatch, getState }) => {
+  async ({cartItems,totalPrice}, { dispatch, getState }) => {
     try {
       dispatch(checkoutRequest());
 
       const authState = getState().auth;
       const userName = `${authState.user?.fname} ${authState.user?.lname}`;
-      const userId = authState?.user?.id;
+      const userId = authState?.user?._id;
 
       const order: Order = {
-        orderItems: payload.cartItems,
+        orderItems: cartItems,
         user: {
           id: userId,
           name: userName
         },
-        totalPrice: payload.totalPrice,
+        totalPrice: totalPrice,
       };
 
       const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/order/new`, order);
@@ -112,7 +112,7 @@ const cartSlice = createSlice({
   reducers: {
     clearCart: (state) => {
       state.cartItems = [];
-      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      localStorage.removeItem('cartItems');
     },
     removeItemFromCart: (state, action: PayloadAction<string>) => {
       state.cartItems = state.cartItems.filter((i) => i.id !== action.payload);

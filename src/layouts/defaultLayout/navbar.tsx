@@ -1,15 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useNav } from './config';
 import Logo from '../../assets/logo.png';
-
-
+import { successMsg } from '../../components/toast';
+import { logout } from '../../store/reducers/auth/authenticationSlice';
 
 
 const Navbar: React.FC = () => {
   const { navConfig } = useNav();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const [isOptionsOpen, setOptionsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const toggleDropdown = () => {
+    setOptionsOpen(!isOptionsOpen);
+  };
+
+  const closeDropdown = () => {
+    setOptionsOpen(false);
+  };
+
+  const logoutHandler = async () => {
+    await dispatch(logout());
+    navigate('/login')
+    successMsg("Logged Out Successfully");
+  };
+
   const isLinkActive = (path: string) => {
 
     const isActiveRoute = location.pathname.startsWith(path);
@@ -24,6 +45,17 @@ const Navbar: React.FC = () => {
     setMobileMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        closeDropdown();
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [setOptionsOpen]);
 
 
   useEffect(() => {
@@ -112,9 +144,35 @@ const Navbar: React.FC = () => {
 
                 ))}
               </ul>
+
+            </div>
+
+          </div>
+          <div className="absolute hidden lg:flex right-3 top-2 h-16  items-center z-10" ref={dropdownRef}>
+            <div className="relative">
+              <button
+                onClick={toggleDropdown}
+                type="button"
+                className="h-10 w-10 rounded-full overflow-hidden focus:outline-none"
+              >
+                {isAuthenticated ? (<img src={user?.avatar?.url} alt="User Avatar" className="h-full w-full object-cover" />) : null}
+              </button>
+              {isOptionsOpen && (
+                <div className="absolute top-full w-32 right-0 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <ul className="py-2 text-center">
+                    <li className="mb-2">
+                      <a className="hover:text-indigo-500 cursor-pointer">Profile</a>
+                    </li>
+                    <li>
+                      <a className="hover:text-indigo-500 cursor-pointer" onClick={logoutHandler}>Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </nav>
+
       </header>
 
       {isMobileMenuOpen && (
@@ -140,6 +198,10 @@ const Navbar: React.FC = () => {
 
                 </li>
               ))}
+              <li>
+                <a className="block py-2 pr-4 pl-4 text-xl text-gray-700 hover:text-violet-700" onClick={logoutHandler}>Logout</a>
+              </li>
+
             </ul>
           </div>
         </>

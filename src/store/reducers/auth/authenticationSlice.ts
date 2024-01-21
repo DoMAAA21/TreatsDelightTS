@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface User {
-  id: string;
+  _id: string;
   email: string;
   avatar: {
     url: string;
@@ -66,7 +66,10 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
   try {
     const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, { withCredentials: true });
 
-    return dispatch(logoutSuccess(data.success))
+
+    localStorage.removeItem('cartItems');
+    return dispatch(logoutSuccess(data.success));
+
   } catch (error) {
     if (axios.isAxiosError(error)) {
       dispatch(logoutFail(error.response?.data?.message || 'An error occurred'));
