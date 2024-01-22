@@ -1,0 +1,471 @@
+.index {
+  background-color: #a9d18f;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.index .div {
+  background-color: #a9d18f;
+  height: 2481px;
+  overflow: hidden;
+  position: relative;
+  width: 1440px;
+}
+
+.index .navbar {
+  height: 101px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1444px;
+}
+
+.index .overlap-group {
+  background-color: #2b4836;
+  height: 101px;
+  position: relative;
+  width: 1440px;
+}
+
+.index .text-wrapper {
+  color: #ffffff;
+  font-family: "Inter", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1163px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 40px;
+  white-space: nowrap;
+  width: 153px;
+}
+
+.index .text-wrapper-2 {
+  color: #ffffff;
+  font-family: "Inter", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1010px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 40px;
+  white-space: nowrap;
+  width: 153px;
+}
+
+.index .capstone-logo {
+  height: 75px;
+  left: 64px;
+  object-fit: cover;
+  position: absolute;
+  top: 13px;
+  width: 94px;
+}
+
+.index .main-heading {
+  height: 754px;
+  left: 0;
+  position: absolute;
+  top: 101px;
+  width: 1448px;
+}
+
+.index .overlap {
+  background-image: url(https://cdn.animaapp.com/projects/6543a2d33a69872920c03d1c/releases/65abbd4440ec8d74c3e49952/img/copy-of-invitation-for-seminar--1.png);
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 754px;
+  position: relative;
+  width: 1440px;
+}
+
+.index .overlap-group-2 {
+  height: 573px;
+  left: 188px;
+  position: absolute;
+  top: 90px;
+  width: 1147px;
+}
+
+.index .p {
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 700;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 337px;
+  white-space: nowrap;
+  width: 442px;
+}
+
+.index .treats-delight {
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 100px;
+  font-weight: 800;
+  left: 11px;
+  letter-spacing: 0;
+  line-height: 100px;
+  position: absolute;
+  top: 111px;
+  width: 556px;
+}
+
+.index .img {
+  height: 573px;
+  left: 532px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 615px;
+}
+
+.index .button-1{
+  background-color: #306844b2;
+  border-radius: 40px;
+  height: 62px;
+  left: 205px;
+  position: absolute;
+  top: 491px;
+  width: 204px;
+}
+
+.index .button-2 {
+  border: 1px solid;
+  border-color: #ffffff;
+  border-radius: 40px;
+  height: 62px;
+  left: 426px;
+  position: absolute;
+  top: 491px;
+  width: 204px;
+}
+
+.index .button-text {
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 28px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 16px;
+  white-space: nowrap;
+  width: 148px;
+}
+
+.index .functionalities {
+  height: 847px;
+  left: 1px;
+  position: absolute;
+  top: 855px;
+  width: 1460px;
+}
+
+.index .functional-sub {
+  background-color: #668456;
+  height: 847px;
+  position: relative;
+  width: 1440px;
+}
+
+.index .heading-2{
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 96px;
+  font-weight: 600;
+  left: 321px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 50px;
+  width: 795px;
+}
+
+.index .text-wrapper-6 {
+  color: #002f15;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 34px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 45px;
+  white-space: nowrap;
+  width: 211px;
+}
+
+.index .function-icon {
+  height: 94px;
+  left: 230px;
+  position: absolute;
+  top: 25px;
+  width: 99px;
+}
+
+.index .box-1 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 187px;
+  position: absolute;
+  top: 215px;
+  width: 345px;
+}
+
+.index .box-2 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 547px;
+  position: absolute;
+  top: 215px;
+  width: 345px;
+}
+
+.index .box-3 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 907px;
+  position: absolute;
+  top: 215px;
+  width: 345px;
+}
+
+.index .box-4 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 187px;
+  position: absolute;
+  top: 408px;
+  width: 345px;
+}
+
+.index .box-5 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 547px;
+  position: absolute;
+  top: 408px;
+  width: 345px;
+}
+
+.index .box-6 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 907px;
+  position: absolute;
+  top: 408px;
+  width: 345px;
+}
+
+.index .box-7 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 186px;
+  position: absolute;
+  top: 601px;
+  width: 345px;
+}
+
+.index .box-8 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 546px;
+  position: absolute;
+  top: 601px;
+  width: 345px;
+}
+
+.index .box-9 {
+  background-color: #a9d18f;
+  border-radius: 20px;
+  height: 144px;
+  left: 906px;
+  position: absolute;
+  top: 601px;
+  width: 345px;
+}
+
+.index .members-team {
+  height: 459px;
+  left: 187px;
+  position: absolute;
+  top: 1784px;
+  width: 1076px;
+}
+
+.index .heading-3{
+  color: #002f15;
+  font-family: "Poppins", Helvetica;
+  font-size: 96px;
+  font-weight: 600;
+  left: 242px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 581px;
+}
+
+.index .ellipse-1 {
+  background-color: #fff0d4;
+  border-radius: 128px/123.5px;
+  height: 247px;
+  left: 0;
+  position: absolute;
+  top: 163px;
+  width: 256px;
+}
+
+.index .ellipse-2 {
+  background-color: #fff0d4;
+  border-radius: 128px/123.5px;
+  height: 247px;
+  left: 270px;
+  position: absolute;
+  top: 163px;
+  width: 256px;
+}
+
+.index .ellipse-3{
+  background-color: #fff0d4;
+  border-radius: 128px/123.5px;
+  height: 247px;
+  left: 540px;
+  position: absolute;
+  top: 167px;
+  width: 256px;
+}
+
+.index .ellipse-4 {
+  background-color: #fff0d4;
+  border-radius: 128px/123.5px;
+  height: 247px;
+  left: 810px;
+  position: absolute;
+  top: 163px;
+  width: 256px;
+}
+
+.index .ellipse-pic {
+  height: 204px;
+  left: 22px;
+  object-fit: cover;
+  position: absolute;
+  top: 22px;
+  width: 211px;
+}
+
+.index .text-ellipse-1{
+  color: #002f15;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 1px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 435px;
+  white-space: nowrap;
+  width: 255px;
+}
+
+.index .text-ellipse-2 {
+  color: #002f15;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 271px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 436px;
+  white-space: nowrap;
+  width: 255px;
+}
+
+.index .text-ellipse-3 {
+  color: #002f15;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 541px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 434px;
+  white-space: nowrap;
+  width: 255px;
+}
+
+.index .text-ellipse-4 {
+  color: #002f15;
+  font-family: "Poppins", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  left: 811px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 433px;
+  white-space: nowrap;
+  width: 255px;
+}
+
+.index .footer {
+  background-color: transparent;
+  height: 101px;
+  left: 0;
+  position: absolute;
+  top: 2380px;
+  width: 1442px;
+}
+
+.index .footer-text {
+  color: #ffffff;
+  font-family: "Poppins", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  left: 177px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 34px;
+  white-space: nowrap;
+  width: 421px;
+}
+
+.index .footer-icon {
+  height: 43px;
+  left: 154px;
+  position: absolute;
+  top: 31px;
+  width: 36px;
+}

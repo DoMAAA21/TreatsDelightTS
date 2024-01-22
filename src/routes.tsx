@@ -5,6 +5,7 @@ import type { RouteObject } from 'react-router';
 import  DashboardLayout from './layouts/dashboardLayout';
 import DefaultLayout from './layouts/defaultLayout';
 //Views
+import Home from './views/home/home';
 import DashboardPage from './views/admin/dashboard';
 import LoginPage from './views/auth/login';
 import UserPage from './views/admin/owner';
@@ -62,6 +63,7 @@ const AppRoutes: FC = () => {
         { path: 'shop', element: <ShoppingPage /> },
         { path: 'shop/product/:id', element: <ProductDetails/> },
         { path: 'cart', element: <CartPage/> },
+        { path: 'home', element: <Home /> },
       ] 
     },
     { path: '/login',element: <LoginPage/>},

@@ -14,7 +14,7 @@ export const useNav = () => {
        
       },
       {
-        title: 'Shop',
+        title: 'Order',
         path: '/shop',
 
       }, 

@@ -3,9 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { useNav } from './config';
 import Logo from '../../assets/logo.png';
 
-
-
-
 const Navbar: React.FC = () => {
   const { navConfig } = useNav();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
