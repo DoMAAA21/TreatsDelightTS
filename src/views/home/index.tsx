@@ -1,10 +1,6 @@
-import React from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import './home.css';
 import Logo from '../../assets/logo.png';
 
-AOS.init();
 
 const HomePage = () => {
   return (
