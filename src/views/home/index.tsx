@@ -14,18 +14,27 @@ const HomePage = () => {
     >
       <div className="container mx-auto px-4">
         <div className="lg:flex items-center">
-        <div className="flex-shrink-0" data-aos="fade-left" data-aos-delay={300}>
+          {/* Logo for mobile */}
+          <div className="flex-shrink-0 lg:hidden mb-4">
             <img
               src={Logo}
               alt="Your Logo"
-              className="w-80 h-80 lg:h-full lg:w-auto"
+              className="h-16 w-auto"
             />
           </div>
+         
           <div className="text-white mr-8" data-aos="fade-right" data-aos-delay={300}>
             <h1 className="text-9xl font-bold lg:text-9xl">Treats Delight</h1>
             <p className="text-2xl lg:text-2xl">A Digital Transformation of TUP-T Canteen</p>
           </div>
-          
+          {/* Logo for larger screens */}
+          <div className="flex-shrink-0 hidden lg:block" data-aos="fade-left" data-aos-delay={300}>
+            <img
+              src={Logo}
+              alt="Your Logo"
+              className="h-full lg:w-auto"
+            />
+          </div>
         </div>
       </div>
     </div>
