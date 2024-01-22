@@ -4,7 +4,6 @@ import Navbar from './navbar';
 import Sidebar from './sidebar';
 
 
-
 const DashboardLayout = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
