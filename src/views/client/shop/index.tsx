@@ -40,7 +40,7 @@ const ShoppingPage = () => {
   return (
     <>
       <MetaData title={'Shop'} />
-      <div className="container mx-auto">
+      <div className="container mx-auto p-4">
         <div className="mx-4">
           <input
             type="text"

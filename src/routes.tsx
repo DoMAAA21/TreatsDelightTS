@@ -27,6 +27,8 @@ import ShoppingPage from './views/client/shop';
 import ProductDetails from './views/client/shop/productDetails';
 import CartPage from './views/client/shop/cart';
 
+//HomePage
+import HomePage from './views/home';
 
 
 
@@ -62,6 +64,7 @@ const AppRoutes: FC = () => {
         { path: 'shop', element: <ShoppingPage /> },
         { path: 'shop/product/:id', element: <ProductDetails/> },
         { path: 'cart', element: <CartPage/> },
+        { path: 'home', element: <HomePage/> },
       ] 
     },
     { path: '/login',element: <LoginPage/>},
