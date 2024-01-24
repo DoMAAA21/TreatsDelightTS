@@ -15,7 +15,7 @@ import Soup from '../../assets/home/soup.svg';
 const HomePage = () => {
     return (
         <div className="overflow-x-hidden">
-            <div className="w-full max-w-full">
+            <div className="w-full max-w-full" id="heading">
                 <div
                     className="relative bg-cover bg-center h-screen flex flex-col lg:flex-row items-center homepage-container"
                     style={{ backgroundImage: `url(https://cdn.animaapp.com/projects/6543a2d33a69872920c03d1c/releases/65abbd4440ec8d74c3e49952/img/copy-of-invitation-for-seminar--1.png)` }}
@@ -60,7 +60,7 @@ const HomePage = () => {
             </div>
 
 
-            <div className="flex flex-col items-center max-w-full mt-10 p-4">
+            <div className="flex flex-col items-center max-w-full mt-10 p-4" id="aboutme">
                 <h2 className="text-4xl font-semibold text-center pt-4 text-indigo-600">About Us</h2>
                 <div className="container flex items-center justify-center">
 
@@ -103,7 +103,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center p-4 bg-green-100">
+            <div className="flex flex-col items-center justify-center p-4 bg-green-100" id="functionalities">
                 <h2 className="text-4xl font-semibold text-center pt-4 text-indigo-600 mb-4">Functionalities</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-32 gap-y-10 p-4 justify-center ">
                     <div className="bg-white shadow h-40 w-72 p-4 flex items-center justify-center rounded-3xl" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>

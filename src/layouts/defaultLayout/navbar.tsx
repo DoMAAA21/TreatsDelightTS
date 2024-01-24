@@ -17,6 +17,9 @@ const Navbar: React.FC = () => {
   const [isOptionsOpen, setOptionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const closeMenu = () =>{
+    setMobileMenuOpen(!isMobileMenuOpen);
+  }
   const toggleDropdown = () => {
     setOptionsOpen(!isOptionsOpen);
   };
@@ -192,6 +195,7 @@ const Navbar: React.FC = () => {
                     to={item.path}
                     className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-violet-700' : 'text-gray-700'}
                       } hover:text-violet-700`}
+                      onClick={closeMenu}
                   >
                     {item.title}
                   </Link>
