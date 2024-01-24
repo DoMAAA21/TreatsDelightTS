@@ -1,11 +1,12 @@
 import './home.css';
 import Logo from '../../assets/logo.png';
 import MobileGrocery from '../../assets/home/mobilegrocery.svg';
+import OrderConfirmed from '../../assets/home/orderconfirmed.svg';
 
 const HomePage = () => {
     return (
-        <div>
-            <div className='w-full'>
+        <div className="overflow-x-hidden">
+            <div className="w-full max-w-full">
                 <div
                     className="relative bg-cover bg-center h-screen flex flex-col lg:flex-row items-center homepage-container"
                     style={{ backgroundImage: `url(https://cdn.animaapp.com/projects/6543a2d33a69872920c03d1c/releases/65abbd4440ec8d74c3e49952/img/copy-of-invitation-for-seminar--1.png)` }}
@@ -49,58 +50,50 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="container  flex justify-center h-screen ">
-                <div className="mx-1 my-2">
-                    <div className="flex flex-col md:flex-row max-w-8xl max-h-sm mb-4">
-                     
-                        <div className="w-full p-4 bg-white shadow-lg rounded-lg overflow-hidden mr-10" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
-                            <h2 className="text-xl font-bold mb-2">Card Title</h2>
-                            <p className="text-gray-600">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </p>
-                        </div>
-                        <div className="w-full p-4" data-aos="fade-left" data-aos-delay={300} data-aos-duration={800}>
-                            <img src={MobileGrocery} alt="Mobile Grocery" className="w-64 h-full object-cover rounded-lg" />
+
+            <div className="flex flex-col items-center h-screen max-h-screen max-w-full mt-10">
+                <h2 className="text-2xl font-semibold text-center pt-4 text-indigo-600">About Us</h2>
+                <div className="container flex items-center justify-center">
+
+                    <div className="mx-1 my-2 p-4">
+                        <div className="flex flex-col lg:flex-row max-w-8xl max-h-sm mb-4">
+                            <div className="w-full p-4 bg-white shadow-lg rounded-lg overflow-hidden" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
+                                <h2 className="text-2xl font-semibold italic mb-12 text-indigo-600">Canteen Inventory</h2>
+
+                                <p className="text-gray-600">
+                                    Welcome to our TreatsDelight Web! This web allows you to manage and track the stock of various items in your canteen with ease.
+                                    Whether you're restocking snacks, managing beverages, or keeping track of kitchen supplies, our app has you covered.
+                                    Take control of your inventory, streamline ordering processes, and ensure that your canteen operates smoothly.
+                                </p>
+                            </div>
+
+                            <div className="w-full p-4 flex justify-center order-first lg:order-last" data-aos="fade-left" data-aos-delay={300} data-aos-duration={800}>
+                                <img src={MobileGrocery} alt="Mobile Grocery" className="w-64 h-full object-cover rounded-lg" />
+                            </div>
                         </div>
 
-                        
+
+                        <div className="flex flex-col lg:flex-row max-w-8xl max-h-md mb-4">
+                            <div className="w-full p-4 flex justify-center mr-16" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
+                                <img src={OrderConfirmed} alt="Mobile Grocery" className="w-64 h-full object-cover rounded-lg" />
+                            </div>
+
+                            <div className="w-full p-4 bg-white shadow-lg rounded-lg overflow-hidden" data-aos="fade-left" data-aos-delay={300} data-aos-duration={800}>
+                                <h2 className="text-2xl font-semibold italic mb-12 text-indigo-600">Ordering App</h2>
+                                <p className="text-gray-600">
+                                    Experience the convenience of smooth and efficient ordering, right at your fingertips.
+                                    Explore a wide variety of dishes and place your orders effortlessly. Our app ensures a seamless process from selection to delivery.
+                                    Dive into the world of nutrition with detailed facts provided for each dish. Make informed choices and prioritize your well-being.
+                                </p>
+                            </div>
+                        </div>
+
+
                     </div>
 
-                    <div className="flex flex-col md:flex-row max-w-8xl max-h-md mb-4">
-                     
-                        <div className="w-full p-4 bg-white shadow-lg rounded-lg overflow-hidden mr-10" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
-                            <h2 className="text-xl font-bold mb-2">Card Title</h2>
-                            <p className="text-gray-600">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </p>
-                        </div>
-                        <div className="w-full p-4" data-aos="fade-left" data-aos-delay={300} data-aos-duration={800}>
-                            <img src={MobileGrocery} alt="Mobile Grocery" className="w-64 h-full object-cover rounded-lg" />
-                        </div>
-
-                        
-                    </div>
-
-
-                    <div className="flex flex-col md:flex-row max-w-8xl max-h-md mb-4">
-                     
-                        <div className="w-full p-4 bg-white shadow-lg rounded-lg overflow-hidden mr-10" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
-                            <h2 className="text-xl font-bold mb-2">Card Title</h2>
-                            <p className="text-gray-600">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            </p>
-                        </div>
-                        <div className="w-full p-4" data-aos="fade-left" data-aos-delay={300} data-aos-duration={800}>
-                            <img src={MobileGrocery} alt="Mobile Grocery" className="w-64 h-full object-cover rounded-lg" />
-                        </div>
-
-                        
-                    </div>
-
-                
                 </div>
-
             </div>
+
         </div>
 
     );
