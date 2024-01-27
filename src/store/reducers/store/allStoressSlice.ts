@@ -39,6 +39,22 @@ export const fetchAllStores = createAsyncThunk('allStores/fetchAllStores', async
   }
 });
 
+export const fetchArchivedStores = createAsyncThunk('allStores/fetchArchivedStores', async (_, { rejectWithValue, dispatch }) => {
+  try {
+    dispatch(allStoresRequest());
+    const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/stores/archived`, { withCredentials: true });
+    dispatch(allStoresSuccess(data.stores));
+    return data.stores;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(allStoresFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    dispatch(allStoresFail('An error occurred'));
+    return rejectWithValue('An error occurred');
+  }
+});
+
 
 
 const allStoresSlice = createSlice({

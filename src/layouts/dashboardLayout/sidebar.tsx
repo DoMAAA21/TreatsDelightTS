@@ -14,8 +14,8 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
   const { navConfig } = useNav();
   const location = useLocation();
   const isLinkActive = (path: string) => {
-    
-    const isActiveRoute = location.pathname.startsWith(path);
+    const newPath = path.replace(/-.+$/, '');
+    const isActiveRoute = location.pathname.startsWith(newPath);
     return isActiveRoute;
   };
 
