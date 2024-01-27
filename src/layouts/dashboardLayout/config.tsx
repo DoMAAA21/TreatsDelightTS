@@ -56,6 +56,12 @@ export const useNav = () => {
         activeIcon: <MealIcon color="#fff" />
 
       },
+      {
+        title: 'Rent',
+        path: '/admin/rent-all',
+        defaultIcon: <StoreIcon color="#000" />,
+        activeIcon: <StoreIcon color="#fff" />
+      },
     ];
 
     //Role Filtering
@@ -65,7 +71,7 @@ export const useNav = () => {
     }
 
     if (user?.role === 'Admin') {
-      const filteredNav = ['Dashboard','Stores', 'Owners'];
+      const filteredNav = ['Dashboard','Stores', 'Owners','Rent','Water','Electricity'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 

@@ -8,6 +8,9 @@ interface Store {
   stall: number;
   location: string;
   active: boolean;
+  rent?: number;
+  water?: number;
+  electricity?: number;
 }
 
 

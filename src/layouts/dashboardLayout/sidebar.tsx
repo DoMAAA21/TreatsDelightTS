@@ -4,7 +4,6 @@ import Logo from '../../assets/logo.png';
 import { useNav } from './config';
 import AOS from 'aos';
 
-
 interface SidebarProps {
   isMobileMenuOpen: boolean;
   closeMobileMenu: () => void;
@@ -20,6 +19,7 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
   };
 
   useEffect(() => {
+    AOS.init();
     AOS.refresh(); 
   }, [isMobileMenuOpen]);
 
