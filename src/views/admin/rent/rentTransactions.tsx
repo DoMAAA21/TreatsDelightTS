@@ -1,13 +1,16 @@
-import { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchAllStores } from '../../../store/reducers/store/allStoressSlice';
+import { fetchAllRents } from '../../../store/reducers/rent/allRentSlice';
 import { deleteStoreReset } from '../../../store/reducers/store/storeSlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
+import RentModal from './rentModal';
 import { successMsg } from '../../../components/toast';
 import TableLoader from '../../../components/loaders/TableLoader';
 import ArrowRightIcon from '../../../assets/icons/arrowright.svg';
+
+import { colors } from '../../../components/theme';
 
 
 
@@ -16,7 +19,7 @@ interface Store {
     name: string;
     rent: number;
     actions: React.ReactNode;
-   
+
 }
 
 interface StoresData {
@@ -26,33 +29,45 @@ interface StoresData {
 
 const RentPage: FC = () => {
     const dispatch = useAppDispatch();
-    const { stores, loading } = useAppSelector((state) => state.allStores);
-    const { isDeleted } = useAppSelector((state) => state.store);
+    const { id } = useParams();
+    const { rents, loading } = useAppSelector((state) => state.allRent);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
 
     useEffect(() => {
-        dispatch(fetchAllStores());
-
-        if (isDeleted) {
-            dispatch(fetchAllStores());
-            dispatch(deleteStoreReset());
-            successMsg('Store deleted successfully');
+        if (id) {
+            dispatch(fetchAllRents(id));
         }
-    }, [dispatch, isDeleted]);
 
-   
+        // if (isDeleted && id) {
+        //     dispatch(fetchAllRents(id));
+        //     dispatch(deleteStoreReset());
+        //     successMsg('Store deleted successfully');
+        // }
+    }, [dispatch, rents]);
 
-    const renderRentStatus = (rent : number) => {
+
+
+    const renderRentStatus = (rent: number) => {
         const rentValue = rent || 0;
         const rentClass = rentValue >= 0 ? 'text-green-600' : 'text-red-600';
-      
-        return (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold ${rentClass}`}>
-            {rentValue}
-          </span>
-        );
-      };
 
-    const storesData: StoresData = {
+        return (
+            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold ${rentClass}`}>
+                {rentValue}
+            </span>
+        );
+    };
+
+    const rentsData: StoresData = {
         columns: [
             { label: 'Store ID', field: '_id' },
             { label: 'Name', field: 'name' },
@@ -60,22 +75,14 @@ const RentPage: FC = () => {
             { label: 'Actions', field: 'actions' },
 
         ],
-        rows: stores.map((store) => ({
-            _id: store._id,
-            name: store.name,
-            rent: store.rent ? renderRentStatus(store?.rent) : 'No payment yet',
-            active: store.active ? (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
-                    Yes
-                </span>
-            ) : (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-red-600 text-white">
-                    No
-                </span>
-            ),
+        rows: rents.map((rent) => ({
+            _id: rent._id,
+            name: rent.storeId,
+            rent: rent.amount ? renderRentStatus(rent?.amount) : 'No payment yet',
+
             actions: (
                 <div className="flex items-center  justify-center ml-6">
-                    <Link to={`/admin/rent/store/${store._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
+                    <Link to={`/admin/store/${rent._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
                         <img
                             src={ArrowRightIcon}
                             alt="Edit Icon"
@@ -102,7 +109,14 @@ const RentPage: FC = () => {
                 }}
             >
                 <div className="p-4">
-                    <h1 className="text-2xl font-semibold">Rents</h1>
+                    <h1 className="text-2xl font-semibold">Rent Transaction</h1>
+                </div>
+                <div>
+                    <button onClick={openModal} className={`${colors.primary} font-bold py-2 px-4 rounded-lg`}>
+                        Add +
+                    </button>
+
+
                 </div>
             </div>
 
@@ -110,8 +124,11 @@ const RentPage: FC = () => {
                 {loading ? (
                     <TableLoader />
                 ) : (
-                    <DataTable columns={storesData.columns} rows={storesData.rows} />
+                    <DataTable columns={rentsData.columns} rows={rentsData.rows} />
                 )}
+
+                <RentModal isOpen={isModalOpen} onClose={closeModal} />
+
 
             </div>
         </>
