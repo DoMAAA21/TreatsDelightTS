@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { useRoutes } from 'react-router-dom';
+import { useRoutes, Navigate } from 'react-router-dom';
 import type { RouteObject } from 'react-router';
 //Layouts
-import  DashboardLayout from './layouts/dashboardLayout';
+import DashboardLayout from './layouts/dashboardLayout';
 import DefaultLayout from './layouts/defaultLayout';
 //Views
 import DashboardPage from './views/admin/dashboard';
@@ -37,8 +37,9 @@ const AppRoutes: FC = () => {
   const routes: RouteObject[] = [
     {
       path: '/admin',
-      element: <DashboardLayout/>,
+      element: <DashboardLayout />,
       children: [
+        { path: '', element: <Navigate to="dashboard" /> },
         { path: 'dashboard', element: <DashboardPage /> },
         { path: 'owner-all', element: <UserPage /> },
         { path: 'owner-add', element: <AddOwnerPage /> },
@@ -55,22 +56,24 @@ const AppRoutes: FC = () => {
         { path: 'meal-all', element: <MealPage /> },
         { path: 'meal-add', element: <AddMealPage /> },
         { path: 'meal/:id', element: <EdiMealPage /> },
-      ] 
+      ]
     },
     {
       path: '/',
-      element: <DefaultLayout/>,
+      element: <DefaultLayout />,
       children: [
+        { path: '/', element: <Navigate to="home" /> },
+        { path: 'home', element: <HomePage /> },
         { path: 'shop', element: <ShoppingPage /> },
-        { path: 'shop/product/:id', element: <ProductDetails/> },
-        { path: 'cart', element: <CartPage/> },
-        { path: 'home', element: <HomePage/> },
-      ] 
+        { path: 'shop/product/:id', element: <ProductDetails /> },
+        { path: 'cart', element: <CartPage /> },
+
+      ]
     },
-    { path: '/login',element: <LoginPage/>},
+    { path: '/login', element: <LoginPage /> },
   ];
 
-  
+
 
   return useRoutes(routes);
 };
