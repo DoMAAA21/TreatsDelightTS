@@ -11,6 +11,7 @@ import { successMsg } from '../../../components/toast';
 import TableLoader from '../../../components/loaders/TableLoader';
 import EditIcon from '../../../assets/icons/edit.svg';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';
+import ArchiveIcon from '../../../assets/icons/archive.svg';
 
 interface Store {
     _id: number | string;
@@ -77,13 +78,13 @@ const StorePage: FC = () => {
             location: store.location,
             active: store.active ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
-                  Yes
+                    Yes
                 </span>
-              ) : (
+            ) : (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-red-600 text-white">
-                  No
+                    No
                 </span>
-              ),
+            ),
             actions: (
                 <div className="flex items-center ml-6">
                     <Link to={`/admin/store/${store._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
@@ -122,10 +123,18 @@ const StorePage: FC = () => {
                 <div className="p-4">
                     <h1 className="text-2xl font-semibold">Stores</h1>
                 </div>
-                <div className="p-4">
+                <div className="p-4 flex items-center justify-center">
+                    <Link to="/admin/store-archived">
+                        <img
+                            src={ArchiveIcon}
+                            alt="Delete Icon"
+                            className="h8 w-8 mr-4"
+                        />
+                    </Link>
                     <Link to="/admin/store-add">
                         <button className={`${colors.primary} font-bold py-2 px-4 rounded-lg`}>Add +</button>
                     </Link>
+
                 </div>
             </div>
 

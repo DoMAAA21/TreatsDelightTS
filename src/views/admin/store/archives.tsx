@@ -1,13 +1,15 @@
 import { FC, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchArchivedStores } from '../../../store/reducers/store/allStoressSlice';
-import { deleteStore, deleteStoreReset } from '../../../store/reducers/store/storeSlice';
+import { restoreStore, restoreStoreReset } from '../../../store/reducers/store/storeSlice';
 import Swal from 'sweetalert2';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import { successMsg } from '../../../components/toast';
 import TableLoader from '../../../components/loaders/TableLoader';
-import DeleteIcon from '../../../assets/icons/trashcan.svg';
+import RestoreIcon from '../../../assets/icons/restore.svg';
+import DocumentsIcons from '../../../assets/icons/documents.svg';
 
 interface Store {
     _id: number | string;
@@ -24,22 +26,22 @@ interface StoresData {
     rows: { [key: string]: string | number | React.ReactNode }[];
 }
 
-const ArchivedStorePage: FC = () => {
+const StoreArchivesPage: FC = () => {
     const dispatch = useAppDispatch();
     const { stores, loading } = useAppSelector((state) => state.allStores);
-    const { isDeleted } = useAppSelector((state) => state.store);
+    const { isRestored } = useAppSelector((state) => state.store);
 
     useEffect(() => {
         dispatch(fetchArchivedStores());
 
-        if (isDeleted) {
+        if (isRestored) {
             dispatch(fetchArchivedStores());
-            dispatch(deleteStoreReset());
-            successMsg('Store deleted successfully');
+            dispatch(restoreStoreReset());
+            successMsg('Store Restored successfully');
         }
-    }, [dispatch, isDeleted]);
+    }, [dispatch, isRestored]);
 
-    const deleteStoreHandler = (id: number | string) => {
+    const restoreStoreHandler = (id: number | string) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -47,11 +49,11 @@ const ArchivedStorePage: FC = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yes, restore it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteStore(id));
-                Swal.fire('Deleted!', 'Store has been deleted.', 'success');
+                dispatch(restoreStore(id));
+                Swal.fire('Restored!', 'Store has been restored.', 'success');
             }
         });
     };
@@ -83,10 +85,10 @@ const ArchivedStorePage: FC = () => {
               ),
             actions: (
                 <div className="flex items-center justify-center ml-6">
-                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteStoreHandler(store._id)}>
+                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => restoreStoreHandler(store._id)}>
                         <img
-                            src={DeleteIcon}
-                            alt="Delete Icon"
+                            src={RestoreIcon}
+                            alt="Restore Icon"
                             className="transition duration-300 ease-in-out transform hover:scale-110"
                         />
                     </button>
@@ -112,6 +114,17 @@ const ArchivedStorePage: FC = () => {
                 <div className="p-4">
                     <h1 className="text-2xl font-semibold">Stores Archive</h1>
                 </div>
+                <div className="p-4 flex items-center justify-center">
+                    <Link to="/admin/store-all">
+                        <img
+                            src={DocumentsIcons}
+                            alt="Delete Icon"
+                            className="h8 w-8 mr-4"
+                        />
+                    </Link>
+                    
+
+                </div>
             </div>
 
             <div className="ph-4">
@@ -126,4 +139,4 @@ const ArchivedStorePage: FC = () => {
     );
 };
 
-export default ArchivedStorePage;
+export default StoreArchivesPage;

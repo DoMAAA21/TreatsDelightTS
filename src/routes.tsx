@@ -11,7 +11,7 @@ import UserPage from './views/admin/owner';
 import AddOwnerPage from './views/admin/owner/addOwner';
 import EditOwnerPage from './views/admin/owner/editOwner';
 import StorePage from './views/admin/store';
-import ArchivedStorePage from './views/admin/store/archived';
+import StoreArchivesPage from './views/admin/store/archives';
 import AddStorePage from './views/admin/store/addStore';
 import EditStorePage from './views/admin/store/editStore';
 import EmployeePage from './views/admin/employee';
@@ -34,6 +34,7 @@ import HomePage from './views/home';
 
 
 
+
 const AppRoutes: FC = () => {
   const routes: RouteObject[] = [
     {
@@ -46,7 +47,7 @@ const AppRoutes: FC = () => {
         { path: 'owner-add', element: <AddOwnerPage /> },
         { path: 'owner/:id', element: <EditOwnerPage /> },
         { path: 'store-all', element: <StorePage /> },
-        { path: 'store-archived', element: <ArchivedStorePage /> },
+        { path: 'store-archived', element: <StoreArchivesPage /> },
         { path: 'store-add', element: <AddStorePage /> },
         { path: 'store/:id', element: <EditStorePage /> },
         { path: 'employee-all', element: <EmployeePage /> },
