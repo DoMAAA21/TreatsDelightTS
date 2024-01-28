@@ -16,7 +16,7 @@ interface Store {
     name: string;
     rent: number;
     actions: React.ReactNode;
-   
+
 }
 
 interface StoresData {
@@ -39,18 +39,18 @@ const RentPage: FC = () => {
         }
     }, [dispatch, isDeleted]);
 
-   
 
-    const renderRentStatus = (rent : number) => {
+
+    const renderRentStatus = (rent: number) => {
         const rentValue = rent || 0;
         const rentClass = rentValue >= 0 ? 'text-green-600' : 'text-red-600';
-      
+
         return (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold ${rentClass}`}>
-            {rentValue}
-          </span>
+            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold ${rentClass}`}>
+                {rentValue}
+            </span>
         );
-      };
+    };
 
     const storesData: StoresData = {
         columns: [
@@ -63,7 +63,12 @@ const RentPage: FC = () => {
         rows: stores.map((store) => ({
             _id: store._id,
             name: store.name,
-            rent: store.rent ? renderRentStatus(store?.rent) : 'No payment yet',
+            rent: store.rent ? renderRentStatus(store?.rent) :
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold text-green-600`}>
+                    0
+                </span>
+
+            ,
             active: store.active ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Yes

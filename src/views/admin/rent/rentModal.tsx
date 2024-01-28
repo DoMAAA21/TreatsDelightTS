@@ -19,6 +19,7 @@ interface FormData {
     type: string;
     storeId: number | string;
     issuedAt: Date;
+    paidAt: Date;
 
 }
 
@@ -33,21 +34,17 @@ const validationSchema = Yup.object({
 const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
-    const [show, setShow] = useState < boolean > (false);
+    const [showIssuedAt, setShowIssuedAt] = useState < boolean > (false);
+    const [showPaidAt, setShowPaidAt] = useState < boolean > (false);
     const [issuedAt, setIssuedAt] = useState(new Date());
+    const [paidAt, setPaidAt] = useState(new Date());
 
-   
-    const handleChange = (selectedDate: Date) => {
-		setIssuedAt(selectedDate)
-	}
-	const handleClose = (state: boolean) => {
-		setShow(state)
-	}
     const initialValues = {
         amount: 0,
         type: '',
         issuedAt: new Date(),
-        storeId: ''
+        storeId: '',
+        paidAt: new Date()
     }
 
     const typeOptions = [{ label: 'To pay', value: 'topay' }, { label: 'Paid', value: 'paid' }];
@@ -59,7 +56,8 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                 amount: data.amount,
                 type: data.type,
                 storeId: id,
-                issuedAt: issuedAt
+                issuedAt,
+                paidAt
              };
             dispatch(newRent(rentData))
         }
@@ -118,10 +116,17 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                         </div>
 
                                         <div className="mb-2">
-                                            <label htmlFor="date" className="block text-sm font-medium text-gray-700">
-                                              Date
+                                            <label htmlFor="issuedAt" className="block text-sm font-medium text-gray-700">
+                                              Issued At
                                             </label>
-                                            <Datepicker options={options} onChange={handleChange} show={show} setShow={handleClose} value={issuedAt} />
+                                            <Datepicker  options={options} onChange={(date)=>setIssuedAt(date)} show={showIssuedAt} setShow={(show)=> setShowIssuedAt(show)} value={issuedAt} />
+                                        </div>
+
+                                        <div className="mb-2">
+                                            <label htmlFor="paidAt" className="block text-sm font-medium text-gray-700">
+                                              Paid At
+                                            </label>
+                                            <Datepicker options={options} onChange={(date)=>setPaidAt(date)} show={showPaidAt} setShow={(show)=> setShowPaidAt(show)} value={paidAt} />
                                         </div>
                                         
                                         <div className="mb-4">

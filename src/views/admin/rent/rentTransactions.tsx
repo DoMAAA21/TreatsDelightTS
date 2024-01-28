@@ -20,6 +20,7 @@ interface Store {
     rent: number;
     issuedAt: Date;
     paidAt: Date;
+    type: string;
     actions: React.ReactNode;
 
 }
@@ -79,18 +80,27 @@ const RentPage: FC = () => {
 
     const rentsData: StoresData = {
         columns: [
-            { label: 'Store ID', field: '_id' },
-            { label: 'Name', field: 'name' },
+            { label: 'Rent ID', field: '_id' },
             { label: 'Rent', field: 'rent' },
-            { label: 'Issued', field: 'issuedAt' },
-            { label: 'paidAt', field: 'paidAt' },
+            { label: 'Issued At', field: 'issuedAt' },
+            { label: 'Paid At', field: 'paidAt' },
+            { label: 'Type', field: 'type' },
 
         ],
         rows: rents.map((rent) => ({
             _id: rent._id,
-            name: rent.storeId,
             rent: rent.amount ? renderRentStatus(rent?.amount) : 'No payment yet',
-            issuedAt: rent.issuedAt,
+            issuedAt: new Date(rent.issuedAt).toISOString().slice(0, 10),
+            paidAt: rent?.paidAt ? new Date(rent.paidAt).toISOString().slice(0, 10) : 'Not paid yet',
+            type: rent?.type==="paid" ? (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
+                    Paid
+                </span>
+            ) : (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-red-600 text-white">
+                    To Pay
+                </span>
+            ),
 
             // actions: (
             //     <div className="flex items-center  justify-center ml-6">
