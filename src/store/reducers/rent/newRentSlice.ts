@@ -3,7 +3,6 @@ import axios from 'axios';
 
 interface Rent {
     _id: number;
-    storeId: string | number;
     amount: number;
     type: string;
     note?: string;
@@ -22,12 +21,9 @@ interface NewRentResponse {
 }
 
 interface NewRentData {
-    name: string;
-    slogan: string;
-    stall: number;
-    location: string;
-    active: boolean | string;
-    logo: File | Blob | String | null;
+    amount: number;
+    type: string;
+    note?: string;
 }
 
 export const newRent = createAsyncThunk<NewRentResponse, NewRentData>('newRent/newRent', async (rentData, { rejectWithValue, dispatch }) => {
@@ -36,7 +32,7 @@ export const newRent = createAsyncThunk<NewRentResponse, NewRentData>('newRent/n
         dispatch(newRentRequest());
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/json',
             },
         };
 
@@ -92,7 +88,6 @@ const newRentSlice = createSlice({
 });
 
 export const {
-    // updateField,
     newRentRequest,
     newRentSuccess,
     newRentFail,

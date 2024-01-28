@@ -18,6 +18,7 @@ import newProductReducer from './product/newProductSlice';
 import productDetailsReducer from './product/productDetailsSlice';
 import cartReducer from './cart/cartSlice';
 import allRentReducer from './rent/allRentSlice';
+import newRentReducer from './rent/newRentSlice';
 
 
 
@@ -40,7 +41,8 @@ const rootReducer = combineReducers({
     newProduct : newProductReducer,
     productDetails : productDetailsReducer,
     cart : cartReducer,
-    allRent : allRentReducer
+    allRent : allRentReducer,
+    newRent : newRentReducer
 })
 
 export default rootReducer;

@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllRents } from '../../../store/reducers/rent/allRentSlice';
-import { deleteStoreReset } from '../../../store/reducers/store/storeSlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import RentModal from './rentModal';
@@ -11,6 +10,7 @@ import TableLoader from '../../../components/loaders/TableLoader';
 import ArrowRightIcon from '../../../assets/icons/arrowright.svg';
 
 import { colors } from '../../../components/theme';
+import { newRentReset } from '../../../store/reducers/rent/newRentSlice';
 
 
 
@@ -18,19 +18,22 @@ interface Store {
     _id: number | string;
     name: string;
     rent: number;
+    issuedAt: Date;
+    paidAt: Date;
     actions: React.ReactNode;
 
 }
 
 interface StoresData {
     columns: { label: string; field: keyof Store }[];
-    rows: { [key: string]: string | number | React.ReactNode }[];
+    rows: { [key: string]: string | number | Date | React.ReactNode }[];
 }
 
 const RentPage: FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const { rents, loading } = useAppSelector((state) => state.allRent);
+    const { success } = useAppSelector((state) => state.newRent);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
@@ -47,12 +50,19 @@ const RentPage: FC = () => {
             dispatch(fetchAllRents(id));
         }
 
+        if (success && id) {
+            dispatch(fetchAllRents(id));
+            setIsModalOpen(false);
+            successMsg('Rent transaction added');
+            dispatch(newRentReset());
+        }
+
         // if (isDeleted && id) {
         //     dispatch(fetchAllRents(id));
         //     dispatch(deleteStoreReset());
         //     successMsg('Store deleted successfully');
         // }
-    }, [dispatch, rents]);
+    }, [dispatch, success]);
 
 
 
@@ -72,25 +82,27 @@ const RentPage: FC = () => {
             { label: 'Store ID', field: '_id' },
             { label: 'Name', field: 'name' },
             { label: 'Rent', field: 'rent' },
-            { label: 'Actions', field: 'actions' },
+            { label: 'Issued', field: 'issuedAt' },
+            { label: 'paidAt', field: 'paidAt' },
 
         ],
         rows: rents.map((rent) => ({
             _id: rent._id,
             name: rent.storeId,
             rent: rent.amount ? renderRentStatus(rent?.amount) : 'No payment yet',
+            issuedAt: rent.issuedAt,
 
-            actions: (
-                <div className="flex items-center  justify-center ml-6">
-                    <Link to={`/admin/store/${rent._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
-                        <img
-                            src={ArrowRightIcon}
-                            alt="Edit Icon"
-                            className="transition duration-300 ease-in-out transform hover:scale-110"
-                        />
-                    </Link>
-                </div>
-            ),
+            // actions: (
+            //     <div className="flex items-center  justify-center ml-6">
+            //         <Link to={`/admin/store/${rent._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
+            //             <img
+            //                 src={ArrowRightIcon}
+            //                 alt="Edit Icon"
+            //                 className="transition duration-300 ease-in-out transform hover:scale-110"
+            //             />
+            //         </Link>
+            //     </div>
+            // ),
         })),
     };
 

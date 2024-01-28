@@ -8,6 +8,7 @@ interface Rent {
     type: string;
     paymentType: string;
     note?: string;
+    issuedAt: Date;
     paidAt: Date;
 }
 
