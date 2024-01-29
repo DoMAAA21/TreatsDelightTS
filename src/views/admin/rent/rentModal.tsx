@@ -24,7 +24,7 @@ interface FormData {
 }
 
 const validationSchema = Yup.object({
-    amount: Yup.number().min(1,'Minimum of 1').required('Amount is required'),
+    amount: Yup.number().min(1, 'Minimum of 1').required('Amount is required'),
     type: Yup.string().required('Transaction type is required'),
 });
 
@@ -34,8 +34,9 @@ const validationSchema = Yup.object({
 const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
-    const [showIssuedAt, setShowIssuedAt] = useState < boolean > (false);
-    const [showPaidAt, setShowPaidAt] = useState < boolean > (false);
+    const [showIssuedAt, setShowIssuedAt] = useState(false);
+    const [showPaidAt, setShowPaidAt] = useState(false);
+    const [isPaid, setIsPaid] = useState(false);
     const [issuedAt, setIssuedAt] = useState(new Date());
     const [paidAt, setPaidAt] = useState(new Date());
 
@@ -51,17 +52,17 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
 
     const onSubmit = (data: FormData) => {
 
-        if(id){
+        if (id) {
             const rentData: FormData = {
                 amount: data.amount,
                 type: data.type,
                 storeId: id,
                 issuedAt,
                 paidAt
-             };
+            };
             dispatch(newRent(rentData))
         }
-       
+
     };
 
     return (
@@ -71,10 +72,13 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                     <div className="flex items-center justify-center min-h-screen">
                         <div className="fixed inset-0 bg-black opacity-50" onClick={onClose} />
                         <div className="z-50 bg-white p-2 rounded-lg shadow-md lg:w-2/5 w-4/5">
-                            <div className="flex justify-end">
-                                <button onClick={onClose} className="text-white rounded-3xl p-1 px-3 bg-red-500 hover:bg-red-700">
-                                    X
-                                </button>
+                            <div className="flex items-center justify-between">
+                                <h2 className="text-2xl font-semibold ml-2 text-indigo-500">Add Rent</h2>
+                                <div className="flex items-center">
+                                    <button onClick={onClose} className="text-white rounded-3xl p-1 px-3 bg-red-500 hover:bg-red-700">
+                                        X
+                                    </button>
+                                </div>
                             </div>
                             <div className="p-2">
                                 <h1></h1>
@@ -106,6 +110,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                 id="type"
                                                 name="type"
                                                 className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                                                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setIsPaid(e.target.value === 'paid')}
                                             >
                                                 <option value="" label="Select a type" disabled />
                                                 {typeOptions.map((option) => (
@@ -117,18 +122,19 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
 
                                         <div className="mb-2">
                                             <label htmlFor="issuedAt" className="block text-sm font-medium text-gray-700">
-                                              Issued At
+                                                Issued At
                                             </label>
-                                            <Datepicker  options={options} onChange={(date)=>setIssuedAt(date)} show={showIssuedAt} setShow={(show)=> setShowIssuedAt(show)} value={issuedAt} />
+                                            <Datepicker options={options} onChange={(date) => setIssuedAt(date)} show={showIssuedAt} setShow={(show) => setShowIssuedAt(show)} value={issuedAt} />
                                         </div>
+                                        {isPaid && (
+                                            <div className="mb-2">
+                                                <label htmlFor="paidAt" className="block text-sm font-medium text-gray-700">
+                                                    Paid At
+                                                </label>
+                                                <Datepicker options={options} onChange={(date) => setPaidAt(date)} show={showPaidAt} setShow={(show) => setShowPaidAt(show)} value={paidAt} />
+                                            </div>
+                                        )}
 
-                                        <div className="mb-2">
-                                            <label htmlFor="paidAt" className="block text-sm font-medium text-gray-700">
-                                              Paid At
-                                            </label>
-                                            <Datepicker options={options} onChange={(date)=>setPaidAt(date)} show={showPaidAt} setShow={(show)=> setShowPaidAt(show)} value={paidAt} />
-                                        </div>
-                                        
                                         <div className="mb-4">
                                             <label htmlFor="note" className="block text-sm font-medium text-gray-700">
                                                 Note
