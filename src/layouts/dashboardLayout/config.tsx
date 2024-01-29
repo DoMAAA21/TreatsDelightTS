@@ -7,6 +7,7 @@ import ProductIcon from '../../components/icons/ProductIcon';
 import MealIcon from '../../components/icons/MealIcon';
 import EmployeeIcon from '../../components/icons/EmployeeIcon';
 import RentIcon from '../../components/icons/RentIcon';
+import WaterIcon from '../../components/icons/WaterIcon';
 
 interface NavItem {
   title: string;
@@ -62,6 +63,12 @@ export const useNav = () => {
         path: '/admin/rent-all',
         defaultIcon: <RentIcon color="#000" />,
         activeIcon: <RentIcon color="#fff" />
+      },
+      {
+        title: 'Water',
+        path: '/admin/water-all',
+        defaultIcon: <WaterIcon color="#000" />,
+        activeIcon: <WaterIcon color="#fff" />
       },
     ];
 

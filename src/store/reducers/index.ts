@@ -17,9 +17,12 @@ import productReducer from './product/productSlice';
 import newProductReducer from './product/newProductSlice';
 import productDetailsReducer from './product/productDetailsSlice';
 import cartReducer from './cart/cartSlice';
-import allRentReducer from './rent/allRentsSlice';
+import allRentsReducer from './rent/allRentsSlice';
 import newRentReducer from './rent/newRentSlice';
 import rentReducer from './rent/rentSlice';
+import allWatersReducer from './water/allWatersSlice';
+import newWaterReducer from './water/newWaterSlice';
+import waterReducer from './water/waterSlice';
 
 
 const rootReducer = combineReducers({
@@ -41,9 +44,12 @@ const rootReducer = combineReducers({
     newProduct : newProductReducer,
     productDetails : productDetailsReducer,
     cart : cartReducer,
-    allRent : allRentReducer,
+    allRent : allRentsReducer,
     newRent : newRentReducer,
-    rent : rentReducer
+    rent : rentReducer,
+    allWater : allWatersReducer,
+    newWater : newWaterReducer,
+    water : waterReducer
 })
 
 export default rootReducer;

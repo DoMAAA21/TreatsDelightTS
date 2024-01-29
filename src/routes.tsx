@@ -26,6 +26,9 @@ import EdiMealPage from './views/admin/meal/editMeal';
 import RentPage from './views/admin/rent';
 import RentTransaction from './views/admin/rent/rentTransactions';
 import RentArchivesPage from './views/admin/rent/archives';
+import WaterPage from './views/admin/water';
+import WaterTransaction from './views/admin/water/waterTransactions';
+import WaterArchivesPage from './views/admin/water/archives';
 //Client
 import ShoppingPage from './views/client/shop';
 import ProductDetails from './views/client/shop/productDetails';
@@ -65,6 +68,9 @@ const AppRoutes: FC = () => {
         { path: 'rent-all', element: <RentPage /> },
         { path: 'rent/store/:id', element: <RentTransaction /> },
         { path: 'rent/store-archived/:id', element: <RentArchivesPage /> },
+        { path: 'water-all', element: <WaterPage /> },
+        { path: 'water/store/:id', element: <WaterTransaction /> },
+        { path: 'water/store-archived/:id', element: <WaterArchivesPage /> },
       ]
     },
     {

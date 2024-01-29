@@ -25,7 +25,6 @@ interface FormData {
 
 const validationSchema = Yup.object({
     amount: Yup.number().min(1, 'Minimum of 1').required('Amount is required'),
-    type: Yup.string().required('Transaction type is required'),
 });
 
 
@@ -37,6 +36,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
     const [showIssuedAt, setShowIssuedAt] = useState(false);
     const [showPaidAt, setShowPaidAt] = useState(false);
     const [isPaid, setIsPaid] = useState(false);
+    const [type, setType] = useState("");
     const [issuedAt, setIssuedAt] = useState(new Date());
     const [paidAt, setPaidAt] = useState(new Date());
 
@@ -50,16 +50,17 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
 
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value;
+        setType(selectedValue);
         setIsPaid(selectedValue === 'paid');
     };
 
-
+   
     const onSubmit = (data: FormData) => {
 
         if (id) {
             const rentData: FormData = {
                 amount: data.amount,
-                type: data.type,
+                type,
                 storeId: id,
                 issuedAt,
                 paidAt
@@ -114,7 +115,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                 className="mt-1 p-2 w-full border border-gray-400 rounded-md"
                                                 onChange={handleTypeChange}
                                             >
-                                                <option value="" label="Select a type" disabled />
+                                                <option value="" label="Select a type"/>
                                                 <option value="topay">To pay</option>
                                                 <option value="paid">Paid</option>
                                             </select>
