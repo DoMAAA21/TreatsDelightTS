@@ -29,6 +29,9 @@ import RentArchivesPage from './views/admin/rent/archives';
 import WaterPage from './views/admin/water';
 import WaterTransaction from './views/admin/water/waterTransactions';
 import WaterArchivesPage from './views/admin/water/archives';
+import ElectricityPage from './views/admin/electricity';
+import ElectricityTransaction from './views/admin/electricity/electricityTransaction';
+import ElectricityArchivesPage from './views/admin/electricity/archives';
 //Client
 import ShoppingPage from './views/client/shop';
 import ProductDetails from './views/client/shop/productDetails';
@@ -71,6 +74,9 @@ const AppRoutes: FC = () => {
         { path: 'water-all', element: <WaterPage /> },
         { path: 'water/store/:id', element: <WaterTransaction /> },
         { path: 'water/store-archived/:id', element: <WaterArchivesPage /> },
+        { path: 'electricity-all', element: <ElectricityPage /> },
+        { path: 'electricity/store/:id', element: <ElectricityTransaction /> },
+        { path: 'electricity/store-archived/:id', element: <ElectricityArchivesPage /> },
       ]
     },
     {

@@ -8,6 +8,7 @@ import MealIcon from '../../components/icons/MealIcon';
 import EmployeeIcon from '../../components/icons/EmployeeIcon';
 import RentIcon from '../../components/icons/RentIcon';
 import WaterIcon from '../../components/icons/WaterIcon';
+import ElectricityIcon from '../../components/icons/ElectricityIcon';
 
 interface NavItem {
   title: string;
@@ -69,6 +70,12 @@ export const useNav = () => {
         path: '/admin/water-all',
         defaultIcon: <WaterIcon color="#000" />,
         activeIcon: <WaterIcon color="#fff" />
+      },
+      {
+        title: 'Electricity',
+        path: '/admin/electricity-all',
+        defaultIcon: <ElectricityIcon color="#000" />,
+        activeIcon: <ElectricityIcon color="#fff" />
       },
     ];
 

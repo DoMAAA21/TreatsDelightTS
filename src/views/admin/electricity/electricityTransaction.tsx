@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchAllWaters } from '../../../store/reducers/water/allWatersSlice';
-import { deleteWater, deleteWaterReset } from '../../../store/reducers/water/waterSlice';
+import { fetchAllElectricity } from '../../../store/reducers/electricity/allElectricitySlice';
+import { deleteElectricity, deleteElectricityReset } from '../../../store/reducers/electricity/electricitySlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
-import WaterModal from './waterModal';
+import ElectricityModal from './electricityModal';
 import { successMsg } from '../../../components/toast';
 import TableLoader from '../../../components/loaders/TableLoader';
 import { colors } from '../../../components/theme';
-import { newWaterReset } from '../../../store/reducers/water/newWaterSlice';
+import { newElectricityReset } from '../../../store/reducers/electricity/newElectricitySlice';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';
 import ArchiveIcon from '../../../assets/icons/archive.svg';
 import Swal from 'sweetalert2';
@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 interface Store {
     _id: number | string;
     name: string;
-    water: number;
+    electricity: number;
     pxc: number;
     additionals: number;
     issuedAt: Date;
@@ -32,14 +32,13 @@ interface StoresData {
     rows: { [key: string]: string | number | Date | React.ReactNode }[];
 }
 
-const WaterPage: FC = () => {
+const ElectricityPage: FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
-    const { waters, loading } = useAppSelector((state) => state.allWater);
-    const { isDeleted } = useAppSelector((state) => state.water);
-    const { success } = useAppSelector((state) => state.newWater);
+    const { electricity, loading } = useAppSelector((state) => state.allElectricity);
+    const { isDeleted } = useAppSelector((state) => state.electricity);
+    const { success } = useAppSelector((state) => state.newElectricity);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -52,26 +51,26 @@ const WaterPage: FC = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(fetchAllWaters(id));
+            dispatch(fetchAllElectricity(id));
         }
 
         if (success && id) {
-            dispatch(fetchAllWaters(id));
+            dispatch(fetchAllElectricity(id));
             setIsModalOpen(false);
-            successMsg('Water transaction added');
-            dispatch(newWaterReset());
+            successMsg('Electricity transaction added');
+            dispatch(newElectricityReset());
         }
 
         if (isDeleted && id) {
-            dispatch(fetchAllWaters(id));
-            dispatch(deleteWaterReset());
-            successMsg('Water deleted successfully');
+            dispatch(fetchAllElectricity(id));
+            dispatch(deleteElectricityReset());
+            successMsg('Electricity deleted successfully');
         }
     }, [dispatch, success, isDeleted]);
 
 
     
-    const deleteWaterHandler = (id: number | string) => {
+    const deleteElectricityHandler = (id: number | string) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -82,29 +81,29 @@ const WaterPage: FC = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteWater(id));
-                Swal.fire('Deleted!', 'Water has been deleted.', 'success');
+                dispatch(deleteElectricity(id));
+                Swal.fire('Deleted!', 'Electricity has been deleted.', 'success');
             }
         });
     };
 
 
 
-    const renderWaterStatus = (water: number) => {
-        const waterValue = water || 0;
-        const waterClass = waterValue >= 0 ? 'text-green-600' : 'text-red-600';
+    const renderElectricityStatus = (electricity: number) => {
+        const electricityValue = electricity || 0;
+        const electricityClass = electricityValue >= 0 ? 'text-green-600' : 'text-red-600';
 
         return (
-            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold ${waterClass}`}>
-                {waterValue}
+            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold ${electricityClass}`}>
+                {electricityValue}
             </span>
         );
     };
 
-    const watersData: StoresData = {
+    const electricityData: StoresData = {
         columns: [
-            { label: 'Water ID', field: '_id' },
-            { label: 'Water Total', field: 'water' },
+            { label: 'Electricity ID', field: '_id' },
+            { label: 'Electricity Total', field: 'electricity' },
             { label: 'Consumed x m³', field: 'pxc' },
             { label: 'Additionals', field: 'additionals' },
             { label: 'Issued At', field: 'issuedAt' },
@@ -113,14 +112,14 @@ const WaterPage: FC = () => {
             { label: 'Actions', field: 'actions' },
 
         ],
-        rows: waters.map((water) => ({
-            _id: water._id,
-            water: water.total ? renderWaterStatus(water?.total) : 'No payment yet',
-            pxc: `${water.consumed} x ${water.price}`,
-            additionals: water.additionals,
-            issuedAt: new Date(water.issuedAt).toISOString().slice(0, 10),
-            paidAt: water?.paidAt ? new Date(water.paidAt).toISOString().slice(0, 10) : 'Not paid yet',
-            type: water?.type==="paid" ? (
+        rows: electricity.map((electricity) => ({
+            _id: electricity._id,
+            electricity: electricity.total ? renderElectricityStatus(electricity?.total) : 'No payment yet',
+            pxc: `${electricity.consumed} x ${electricity.price}`,
+            additionals: electricity.additionals,
+            issuedAt: new Date(electricity.issuedAt).toISOString().slice(0, 10),
+            paidAt: electricity?.paidAt ? new Date(electricity.paidAt).toISOString().slice(0, 10) : 'Not paid yet',
+            type: electricity?.type==="paid" ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Paid
                 </span>
@@ -132,7 +131,7 @@ const WaterPage: FC = () => {
 
             actions: (
                 <div className="flex items-center  justify-center ml-6">
-                     <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteWaterHandler(water._id)}>
+                     <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteElectricityHandler(electricity._id)}>
                         <img
                             src={DeleteIcon}
                             alt="Delete Icon"
@@ -146,7 +145,7 @@ const WaterPage: FC = () => {
 
     return (
         <>
-            <MetaData title={'Waters'} />
+            <MetaData title={'Electricity'} />
             <div
                 style={{
                     display: 'flex',
@@ -159,10 +158,10 @@ const WaterPage: FC = () => {
                 }}
             >
                 <div className="p-4">
-                    <h1 className="text-2xl font-semibold">Water Transaction</h1>
+                    <h1 className="text-2xl font-semibold">Electricity Transaction</h1>
                 </div>
                 <div className="p-4 flex items-center justify-center">
-                <Link to={`/admin/water/store-archived/${id}`}>
+                <Link to={`/admin/electricity/store-archived/${id}`}>
                         <img
                             src={ArchiveIcon}
                             alt="Delete Icon"
@@ -181,10 +180,10 @@ const WaterPage: FC = () => {
                 {loading ? (
                     <TableLoader />
                 ) : (
-                    <DataTable columns={watersData.columns} rows={watersData.rows} />
+                    <DataTable columns={electricityData.columns} rows={electricityData.rows} />
                 )}
 
-                <WaterModal isOpen={isModalOpen} onClose={closeModal} />
+                <ElectricityModal isOpen={isModalOpen} onClose={closeModal} />
 
 
             </div>
@@ -192,4 +191,4 @@ const WaterPage: FC = () => {
     );
 };
 
-export default WaterPage;
+export default ElectricityPage;
