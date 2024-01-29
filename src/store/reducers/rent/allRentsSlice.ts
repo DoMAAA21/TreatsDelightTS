@@ -41,10 +41,11 @@ export const fetchAllRents = createAsyncThunk('allRents/fetchAllRents', async (i
     }
 });
 
-export const fetchArchivedRents = createAsyncThunk('allRents/fetchArchivedRents', async (_, { rejectWithValue, dispatch }) => {
+export const fetchArchivedRents = createAsyncThunk('allRents/fetchAllRents', async (id: string, { rejectWithValue, dispatch }) => {
     try {
         dispatch(allRentsRequest());
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/rents/archived`, { withCredentials: true });
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/rent/store/${id}/archived`, { withCredentials: true });
+        console.log(data)
         dispatch(allRentsSuccess(data.rents));
         return data.rents;
     } catch (error) {

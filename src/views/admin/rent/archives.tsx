@@ -1,17 +1,13 @@
-import { FC, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchAllRents } from '../../../store/reducers/rent/allRentsSlice';
-import { deleteRent, deleteRentReset } from '../../../store/reducers/rent/rentSlice';
+import { fetchArchivedRents } from '../../../store/reducers/rent/allRentsSlice';
+import { restoreRent, restoreRentReset } from '../../../store/reducers/rent/rentSlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
-import RentModal from './rentModal';
 import { successMsg } from '../../../components/toast';
 import TableLoader from '../../../components/loaders/TableLoader';
-import { colors } from '../../../components/theme';
-import { newRentReset } from '../../../store/reducers/rent/newRentSlice';
-import DeleteIcon from '../../../assets/icons/trashcan.svg';
-import ArchiveIcon from '../../../assets/icons/archive.svg';
+import RestoreIcon from '../../../assets/icons/restore.svg';
 import Swal from 'sweetalert2';
 
 interface Store {
@@ -30,45 +26,31 @@ interface StoresData {
     rows: { [key: string]: string | number | Date | React.ReactNode }[];
 }
 
-const RentPage: FC = () => {
+const RentArchivesPage: FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const { rents, loading } = useAppSelector((state) => state.allRent);
-    const { isDeleted } = useAppSelector((state) => state.rent);
-    const { success } = useAppSelector((state) => state.newRent);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const { isRestored } = useAppSelector((state) => state.rent);
 
 
     useEffect(() => {
         if (id) {
-            dispatch(fetchAllRents(id));
+            dispatch(fetchArchivedRents(id));
         }
 
-        if (success && id) {
-            dispatch(fetchAllRents(id));
-            setIsModalOpen(false);
-            successMsg('Rent transaction added');
-            dispatch(newRentReset());
+        if (isRestored && id) {
+
+            console.log('hatdog');
+            dispatch(fetchArchivedRents(id));
+            successMsg('Rent restored');
+            dispatch(restoreRentReset());
         }
 
-        if (isDeleted && id) {
-            dispatch(fetchAllRents(id));
-            dispatch(deleteRentReset());
-            successMsg('Rent deleted successfully');
-        }
-    }, [dispatch, success, isDeleted]);
+    }, [dispatch, isRestored]);
 
 
-    
-    const deleteRentHandler = (id: number | string) => {
+
+    const restoreRentHandler = (id: number | string) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -76,11 +58,11 @@ const RentPage: FC = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yes, restore it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteRent(id));
-                Swal.fire('Deleted!', 'Rent has been deleted.', 'success');
+                dispatch(restoreRent(id));
+                Swal.fire('Restored!', 'Rent has been restored.', 'success');
             }
         });
     };
@@ -113,7 +95,7 @@ const RentPage: FC = () => {
             rent: rent.amount ? renderRentStatus(rent?.amount) : 'No payment yet',
             issuedAt: new Date(rent.issuedAt).toISOString().slice(0, 10),
             paidAt: rent?.paidAt ? new Date(rent.paidAt).toISOString().slice(0, 10) : 'Not paid yet',
-            type: rent?.type==="paid" ? (
+            type: rent?.type === "paid" ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Paid
                 </span>
@@ -125,9 +107,9 @@ const RentPage: FC = () => {
 
             actions: (
                 <div className="flex items-center  justify-center ml-6">
-                     <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteRentHandler(rent._id)}>
+                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => restoreRentHandler(rent._id)}>
                         <img
-                            src={DeleteIcon}
+                            src={RestoreIcon}
                             alt="Delete Icon"
                             className="transition duration-300 ease-in-out transform hover:scale-110"
                         />
@@ -139,7 +121,7 @@ const RentPage: FC = () => {
 
     return (
         <>
-            <MetaData title={'Rents'} />
+            <MetaData title={'Archived Rents'} />
             <div
                 style={{
                     display: 'flex',
@@ -152,21 +134,7 @@ const RentPage: FC = () => {
                 }}
             >
                 <div className="p-4">
-                    <h1 className="text-2xl font-semibold">Rent Transaction</h1>
-                </div>
-                <div className="p-4 flex items-center justify-center">
-                <Link to={`/admin/rent/store-archived/${id}`}>
-                        <img
-                            src={ArchiveIcon}
-                            alt="Delete Icon"
-                            className="h8 w-8 mr-4"
-                        />
-                    </Link>
-                    <button onClick={openModal} className={`${colors.primary} font-bold py-2 px-4 rounded-lg`}>
-                        Add +
-                    </button>
-
-
+                    <h1 className="text-2xl font-semibold">Rent Archives</h1>
                 </div>
             </div>
 
@@ -176,13 +144,9 @@ const RentPage: FC = () => {
                 ) : (
                     <DataTable columns={rentsData.columns} rows={rentsData.rows} />
                 )}
-
-                <RentModal isOpen={isModalOpen} onClose={closeModal} />
-
-
             </div>
         </>
     );
 };
 
-export default RentPage;
+export default RentArchivesPage;

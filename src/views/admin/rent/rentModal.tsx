@@ -48,7 +48,11 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
         paidAt: new Date()
     }
 
-    const typeOptions = [{ label: 'To pay', value: 'topay' }, { label: 'Paid', value: 'paid' }];
+    const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedValue = e.target.value;
+        setIsPaid(selectedValue === 'paid');
+    };
+
 
     const onSubmit = (data: FormData) => {
 
@@ -100,24 +104,20 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                             />
                                             <ErrorMessage name="amount" component="div" className="text-red-500" />
                                         </div>
-
                                         <div className="mb-4">
                                             <label htmlFor="type" className="block text-sm font-medium text-gray-700">
                                                 Type
                                             </label>
-                                            <Field
-                                                as="select"
+                                            <select
                                                 id="type"
                                                 name="type"
                                                 className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setIsPaid(e.target.value === 'paid')}
+                                                onChange={handleTypeChange}
                                             >
                                                 <option value="" label="Select a type" disabled />
-                                                {typeOptions.map((option) => (
-                                                    <option key={option.label} value={option.value} label={option.label} />
-                                                ))}
-                                            </Field>
-                                            <ErrorMessage name="type" component="div" className="text-red-500" />
+                                                <option value="topay">To pay</option>
+                                                <option value="paid">Paid</option>
+                                            </select>
                                         </div>
 
                                         <div className="mb-2">

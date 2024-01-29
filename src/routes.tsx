@@ -25,6 +25,7 @@ import AddMealPage from './views/admin/meal/addMeal';
 import EdiMealPage from './views/admin/meal/editMeal';
 import RentPage from './views/admin/rent';
 import RentTransaction from './views/admin/rent/rentTransactions';
+import RentArchivesPage from './views/admin/rent/archives';
 //Client
 import ShoppingPage from './views/client/shop';
 import ProductDetails from './views/client/shop/productDetails';
@@ -63,6 +64,7 @@ const AppRoutes: FC = () => {
         { path: 'meal/:id', element: <EdiMealPage /> },
         { path: 'rent-all', element: <RentPage /> },
         { path: 'rent/store/:id', element: <RentTransaction /> },
+        { path: 'rent/store-archived/:id', element: <RentArchivesPage /> },
       ]
     },
     {
