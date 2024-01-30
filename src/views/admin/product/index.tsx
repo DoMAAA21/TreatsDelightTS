@@ -34,7 +34,6 @@ const ProductPage: FC = () => {
     const dispatch = useAppDispatch();
     const { products, loading } = useAppSelector((state) => state.allProducts);
     const { isDeleted } = useAppSelector((state) => state.product);
-    console.log(products)
     useEffect(() => {
         dispatch(fetchAllProducts());
        

@@ -9,6 +9,7 @@ import EmployeeIcon from '../../components/icons/EmployeeIcon';
 import RentIcon from '../../components/icons/RentIcon';
 import WaterIcon from '../../components/icons/WaterIcon';
 import ElectricityIcon from '../../components/icons/ElectricityIcon';
+import InventoryIcon from '../../components/icons/InventoryIcon';
 
 interface NavItem {
   title: string;
@@ -77,11 +78,17 @@ export const useNav = () => {
         defaultIcon: <ElectricityIcon color="#000" />,
         activeIcon: <ElectricityIcon color="#fff" />
       },
+      {
+        title: 'Inventory',
+        path: '/admin/inventory',
+        defaultIcon: <InventoryIcon color="#000" />,
+        activeIcon: <InventoryIcon color="#fff" />
+      },
     ];
 
     //Role Filtering
     if (user?.role === 'Employee') {
-      const filteredNav = ['Employees','Products','Meals'];
+      const filteredNav = ['Dashboard','Employees','Products','Meals','Inventory'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 
