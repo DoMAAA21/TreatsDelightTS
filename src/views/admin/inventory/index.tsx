@@ -55,8 +55,11 @@ const App: React.FC = () => {
             successMsg('Checkout success')
             setCart([]);
         }
-
     }
+
+    const handleRemoveFromCart = (itemId: number | string) => {
+        setCart((prevCart) => prevCart.filter((item) => item._id !== itemId));
+    };
 
     const filteredProducts = selectedCategory
         ? products.filter((product) => product.category === selectedCategory)
@@ -68,7 +71,7 @@ const App: React.FC = () => {
             <div className="flex overflow-x-hidden">
                 <CategoryList categories={categories} onSelectCategory={onSelectCategory} />
                 <ProductList products={filteredProducts} onAddToCart={handleAddToCart} />
-                <CartTable cart={cart} handleCheckout={handleCheckout} />
+                <CartTable cart={cart} handleCheckout={handleCheckout}  handleRemoveItem={handleRemoveFromCart}/>
             </div>
         </>
     );

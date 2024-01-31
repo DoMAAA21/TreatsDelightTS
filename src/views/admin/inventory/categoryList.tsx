@@ -14,8 +14,8 @@ const CategoryList: React.FC<CategoryListProps> = ({ categories, onSelectCategor
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   return (
-    <div className="w-1/6 p-4">
-      <h2 className="text-lg font-semibold mb-4">Categories</h2>
+    <div className="w-2/12 py-4 pr-2">
+      <h2 className="text-2xl font-semibold mb-4 rounded-full text-center">Categories</h2>
       <ul>
         <li
           key={'Meals'}

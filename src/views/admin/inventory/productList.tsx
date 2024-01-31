@@ -1,5 +1,4 @@
 import React from 'react';
-import ArrowRightIcon from '../../../assets/icons/arrowright.svg';
 
 interface ProductImage {
     index?: number;
@@ -29,12 +28,12 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
     };
 
     return (
-        <div className="pt-4 w-2/3">
-            <h2 className="text-xl font-semibold">Products</h2>
+        <div className="py-4 w-8/12 max-w-2xl">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Products</h2>
             <div className="flex-grow overflow-y-auto max-h-screen custom-scrollbar">
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 pb-20">
                     {products.map((product) => (
-                        <div key={product._id} className="border p-4 bg-white rounded-md h-64 w-52">
+                        <div key={product._id} className="border p-4 bg-white rounded-md cursor-pointer" onClick={() => handleAddToCart(product)}>
                             <img
                                 src={product.images[0]?.url || 'placeholder-image-url'}
                                 alt={product.name}
@@ -46,9 +45,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {
                                 <h3 className="text-md text-gray-500">
                                     {product?.category !== "Meals" ? `Stock: ${product.stock}` : 'Meal'}
                                 </h3>
-                                <button type="button" onClick={() => handleAddToCart(product)}>
-                                    <img src={ArrowRightIcon} className="h-7 w-7"/>
-                                </button>
+                                
                             </div>
 
                         </div>
