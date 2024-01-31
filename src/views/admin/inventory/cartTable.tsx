@@ -23,13 +23,14 @@ const CartTable: React.FC<CartTableProps> = ({ cart, handleCheckout, handleRemov
     const total = cart.reduce((acc, item) => acc + item.sellPrice * (item?.quantity ?? 0), 0);
 
     return (
-        <div className="w-4/12 pt-4 ml-4">
+        <div className="w-4/12 pt-4 ml-4 ">
             <div className="w-full">
                 <h2 className="text-2xl font-semibold mb-4 text-center">Cart</h2>
+                <div className="overflow-x-auto">
                 <table className="table-auto bg-white rounded-t-3xl max-w-full" style={{ width: '100%' }}>
                     <thead className="text-indigo-500 rounded-3xl">
                         <tr >
-                            <th className="px-4 py-2 bg-blue-200 rounded-tl-3xl">Product</th>
+                            <th className="px-4 py-6 bg-blue-200 rounded-tl-3xl">Product</th>
                             <th className="px-4 py-2 bg-blue-200">Qty</th>
                             <th className="px-4 py-2 bg-blue-200">Price</th>
                             <th className="px-1 py-2 bg-blue-200 rounded-tr-3xl"></th>
@@ -38,7 +39,7 @@ const CartTable: React.FC<CartTableProps> = ({ cart, handleCheckout, handleRemov
                     <tbody className="max-h-60 overflow-y-auto">
                         {cart.map((item) => (
                             <tr key={item._id}>
-                                <td className="border px-8 py-2 font-semibold">{item.name}</td>
+                                <td className="border px-4 py-2 font-semibold">{item.name}</td>
                                 <td className="border px-4 py-2">{item.quantity}</td>
                                 <td className="border px-6 py-2">₱{item.sellPrice * (item?.quantity ?? 0)}</td>
                                 <td className=" px-1 py-4 flex justify-center">
@@ -62,6 +63,7 @@ const CartTable: React.FC<CartTableProps> = ({ cart, handleCheckout, handleRemov
                         </tr>
                     </tfoot>
                 </table>
+                </div>
                 <div className="mt-4" onClick={() => handleCheckout()}>
                     <button type="button" className={`${colors.secondary} px-4 py-3 rounded-3xl w-full`}>Checkout</button>
                 </div>
