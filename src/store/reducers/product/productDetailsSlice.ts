@@ -16,6 +16,7 @@ interface ProductDetails {
         sellPrice: number;
         stock: number;
         category: string;
+        halal: boolean | string;
         active: boolean | string;
         nutrition:{
             calories: number;
@@ -42,6 +43,7 @@ const initialState: ProductDetails = {
         stock: 0,
         category: '',
         active: '',
+        halal: '',
         images: [],
         nutrition:{
             calories: 0,
@@ -119,6 +121,7 @@ const productDetailsSlice = createSlice({
                 stock: 0,
                 category: '',
                 active: '',
+                halal: '',
                 images: [],
                 nutrition:{
                     calories: 0,

@@ -119,7 +119,7 @@ export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQ
 
       const url = `${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}${searchQuery ? `&searchQuery=${searchQuery}` : ''}`;
 
-      const { data } = await axios.get(url);
+      const { data } = await axios.get(url,{ withCredentials: true });
    
       if (page === 1) {
         dispatch(allItemsSuccess(data));

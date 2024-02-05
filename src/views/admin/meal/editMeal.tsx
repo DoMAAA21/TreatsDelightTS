@@ -27,6 +27,7 @@ interface FormData {
     stock: number;
     category: string;
     active: boolean | string;
+    halal?: boolean | string;
     portion: boolean;
     calories: number;
     protein: number;
@@ -48,6 +49,7 @@ const validationSchema = Yup.object({
     stock: Yup.number().required('Stock is required').min(0, 'Minimum of 0').max(999, 'Maximum of 999').integer('Stock cannot be decimal'),
     category: Yup.string().required('Category is required'),
     active: Yup.boolean().required('Active or Not'),
+    halal: Yup.boolean().required('Halal or Not Halal'),
     calories: Yup.number().required('Calorie is required').min(0, 'Minimum of 0'),
     protein: Yup.number().required('Protein is required').min(0, 'Minimum of 0'),
     carbs: Yup.number().required('Carbs is required').min(0, 'Minimum of 0'),
@@ -75,15 +77,18 @@ const EditProductPage = () => {
 
         if (id !== undefined && product && product._id !== id) {
             dispatch(getProductDetails(id));
-
+            console.log(product);
         }
 
         if (product) {
-            const formValues: (keyof typeof product)[] = ['name', 'description', 'costPrice', 'sellPrice', 'stock', 'category', 'active'];
+            const formValues: (keyof typeof product)[] = ['name', 'description', 'costPrice', 'sellPrice', 'stock', 'category','halal', 'active',];
             formValues.forEach((property) => {
                 let value = product[property];
                 if (property === 'active') {
                     value = product?.active === true ? 'True' : 'False';
+                }
+                if (property === 'halal') {
+                    value = product?.halal === true ? 'True' : 'False';
                 }
                 formik.setFieldValue(property, value);
             });
@@ -162,6 +167,7 @@ const EditProductPage = () => {
             stock: 0,
             category: '',
             active: '',
+            halal: '',
             calories: 0,
             protein: 0,
             carbs: 0,
@@ -173,8 +179,8 @@ const EditProductPage = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log('hatodg')
             const isActive = values.active === 'True' ? true : false;
+            const isHalal = values.halal === 'True' ? true : false;
 
             const productData: FormData = {
                 name: values.name,
@@ -185,6 +191,7 @@ const EditProductPage = () => {
                 stock: 0,
                 portion: true,
                 active: isActive,
+                halal: isHalal,
                 calories: values.calories,
                 protein: values.protein,
                 carbs: values.carbs,

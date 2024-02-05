@@ -18,6 +18,7 @@ interface Product {
     sugar: number;
     sodium: number;
     active: boolean | string;
+    halal: boolean | string;
 }
 
 interface NewProductState {
@@ -40,6 +41,7 @@ interface NewProductData {
     stock?: number;
     category: string;
     active: boolean | string;
+    halal: boolean | string;
     calories: number;
     protein: number;
     carbs: number;

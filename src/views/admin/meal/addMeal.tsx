@@ -19,6 +19,7 @@ interface FormData {
     category: string;
     stock?: number;
     active: boolean | string;
+    halal: boolean | string;
     portion: boolean;
     calories: number;    
     protein: number;
@@ -38,6 +39,7 @@ const validationSchema = Yup.object({
     costPrice: Yup.number().required('Cost price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
     sellPrice: Yup.number().required('Sell price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
     active: Yup.boolean().required('Active or Not'),
+    halal: Yup.boolean().required('Halal or Not Halal'),
     calories: Yup.number().required('Calorie is required').min(0, 'Minimum of 0'),
     protein: Yup.number().required('Protein is required').min(0, 'Minimum of 0'),
     carbs: Yup.number().required('Carbs is required').min(0, 'Minimum of 0'),
@@ -68,6 +70,7 @@ const AddMealPage = () => {
             portion: false,
             stock: 0,
             active: '',
+            halal: '',
             calories: 0,
             protein: 0,
             carbs: 0,
@@ -80,6 +83,7 @@ const AddMealPage = () => {
         validationSchema: validationSchema,
         onSubmit: (values) => {
             const isActive = values.active === 'True' ? true : false;
+            const isHalal = values.halal === 'True' ? true : false;
 
             const formData: FormData = {
                 name: values.name,
@@ -90,6 +94,7 @@ const AddMealPage = () => {
                 stock: 0,
                 portion: true,
                 active: isActive,
+                halal: isHalal,
                 calories: values.calories,
                 protein: values.protein,
                 carbs: values.carbs,
