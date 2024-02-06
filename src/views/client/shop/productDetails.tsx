@@ -7,6 +7,8 @@ import { colors } from '../../../components/theme';
 import { addItemToCart } from '../../../store/reducers/cart/cartSlice';
 import ProductDetailsLoader from '../../../components/loaders/ProductDetailsLoader';
 import { errorMsg, successMsg } from '../../../components/toast';
+import Swal from 'sweetalert2';
+
 
 interface ProductImage {
   index?: number;
@@ -28,7 +30,7 @@ const ProductDetails = () => {
         setImages(product.images);
         setFetchLoading(false)
       });
-      console.log(cartItems)
+    console.log(cartItems)
   }, [id, fetchLoading]);
 
   const settings = {
@@ -41,14 +43,31 @@ const ProductDetails = () => {
   }
 
   const handleAddToCart = () => {
-    if(!id){
+    if (!id) {
       errorMsg('Product not available');
     }
-    if(id){
-      dispatch(addItemToCart({ id: id, quantity })).then(() => {
-        successMsg('Added to Cart')
-      });
-      console.log(cartItems)
+    if (id) {
+      if (product?.nutrition?.cholesterol >= 50) {
+        Swal.fire({
+          title: 'High Cholesterol Content',
+          text: 'This product has high cholesterol content. Do you still want to add it to your cart?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, add to cart',
+          cancelButtonText: 'No, cancel',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(addItemToCart({ id: id, quantity })).then(() => {
+              successMsg('Added to Cart')
+            });
+
+          }
+        });
+      } else {
+        dispatch(addItemToCart({ id: id, quantity })).then(() => {
+          successMsg('Added to Cart')
+        });
+      }
     }
   };
 
