@@ -10,6 +10,7 @@ interface NutritionFacts {
   fiber: number;
   sugar: number;
   sodium: number;
+  cholesterol: number;
 }
 
 interface UseNutritionFactsProps {
@@ -56,7 +57,7 @@ const useFetchNutritionFacts = ({ formik }: UseNutritionFactsProps, item : strin
             { role: 'system', content: 'You are a helpful assistant. Please provide only raw data dont provide measurements like kcal, grams etc' },
             {
               role: 'user',
-              content: `Can u give me the nutritional facts (calories, protein, carbs, fat, fiber, sugar, sodium) of ${item} per ${measurement} without the title, only (calories, protein, carbs, fat, fiber, sugar, sodium) in JSON Format with NO EXTRA INSTRUCTION/MESSAGE also don't provide measurements only raw data, if u cant find return message "error"`,
+              content: `Can u give me the nutritional facts (calories, protein, carbs, fat, fiber, sugar, sodium, cholesterol) of ${item} per ${measurement} without the title, only (calories, protein, carbs, fat, fiber, sugar, sodium, cholesterol) in JSON Format with NO EXTRA INSTRUCTION/MESSAGE also don't provide measurements only raw data, if u cant find return message "error"`,
             },
           ],
         },
@@ -79,9 +80,10 @@ const useFetchNutritionFacts = ({ formik }: UseNutritionFactsProps, item : strin
           'fat' in parsedNutrition &&
           'fiber' in parsedNutrition &&
           'sugar' in parsedNutrition &&
-          'sodium' in parsedNutrition
+          'sodium' in parsedNutrition &&
+          'cholesterol' in parsedNutrition
         ) {
-          const nutritionKeys: (keyof NutritionFacts)[] = ['calories', 'protein', 'carbs', 'fat', 'fiber', 'sugar', 'sodium'];
+          const nutritionKeys: (keyof NutritionFacts)[] = ['calories', 'protein', 'carbs', 'fat', 'fiber', 'sugar', 'sodium','cholesterol'];
             nutritionKeys.forEach((key: keyof NutritionFacts) => {
               formik.setFieldValue(key, parseFloat(String(parsedNutrition[key as keyof typeof parsedNutrition])));
             });

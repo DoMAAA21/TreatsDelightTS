@@ -17,8 +17,9 @@ interface Product {
     fiber: number;
     sugar: number;
     sodium: number;
+    cholesterol: number;
     active: boolean | string;
-    halal: boolean | string;
+    halal?: boolean | string;
 }
 
 interface NewProductState {
@@ -41,7 +42,7 @@ interface NewProductData {
     stock?: number;
     category: string;
     active: boolean | string;
-    halal: boolean | string;
+    halal?: boolean | string;
     calories: number;
     protein: number;
     carbs: number;
@@ -49,6 +50,7 @@ interface NewProductData {
     fiber: number;
     sugar: number;
     sodium: number;
+    cholesterol: number;
     firstImage: File | String | null; //first image is mandatory
     secondImage?: File | String | null;  //remaining are not
     thirdImage?: File | String | null;

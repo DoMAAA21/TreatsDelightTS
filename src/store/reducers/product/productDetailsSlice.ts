@@ -26,6 +26,7 @@ interface ProductDetails {
             fiber: number;
             sugar: number;
             sodium: number;
+            cholesterol: number;
         }
         images: ProductImage[] ;
 
@@ -52,7 +53,8 @@ const initialState: ProductDetails = {
             fat: 0,
             fiber: 0,
             sugar: 0,
-            sodium: 0
+            sodium: 0,
+            cholesterol: 0
         }
     },
     loading: false,
@@ -130,7 +132,8 @@ const productDetailsSlice = createSlice({
                     fat: 0,
                     fiber: 0,
                     sugar: 0,
-                    sodium: 0
+                    sodium: 0,
+                    cholesterol: 0,
                 }
             };
         },

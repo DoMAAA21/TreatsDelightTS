@@ -32,6 +32,7 @@ interface ProductData {
     fiber: number;
     sugar: number;
     sodium: number;
+    cholesterol: number;
     avatar?: File | Blob | string | null;
 }
 

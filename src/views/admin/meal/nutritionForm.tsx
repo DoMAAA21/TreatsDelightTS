@@ -16,6 +16,7 @@ interface UseNutritionFactsProps {
             fiber: number;
             sugar: number;
             sodium: number;
+            cholesterol: number;
         };
         touched: {
             calories?: boolean;
@@ -25,6 +26,7 @@ interface UseNutritionFactsProps {
             fiber?: boolean;
             sugar?: boolean;
             sodium?: boolean;
+            cholesterol?: boolean;
         };
         errors: {
             calories?: string;
@@ -34,6 +36,7 @@ interface UseNutritionFactsProps {
             fiber?: string;
             sugar?: string;
             sodium?: string;
+            cholesterol?: string;
         };
         setFieldValue: (field: string, value: any) => void;
         handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -63,7 +66,7 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
         <>
             <div className="flex items-center mb-2">
                 <div className="flex-1 border-t"></div>
-                <p className="font-semibold">Nutrition</p>
+                <p className="font-semibold">Nutrition <span className="text-md text-gray-6000">(per 100g)</span></p>
                 <div className="flex-1 border-t"></div>
             </div>
             <button type="button" onClick={fetchNutritionFacts} className={`mt-2 mb-2 ${colors.info} py-2 px-4 rounded-lg w-full flex items-center justify-center`}>
@@ -216,6 +219,25 @@ const NutritionForm = ({ formik }: UseNutritionFactsProps) => {
                     />
                     {formik.touched.sodium && formik.errors.sodium ? (
                         <div className="text-red-500">{formik.errors.sodium}</div>
+                    ) : null}
+                </div>
+
+
+                <div className="flex-1">
+                    <label htmlFor="cholesterol" className="block text-sm font-medium text-gray-700">
+                    Cholesterol <span className="text-xs text-gray-500">(mg)</span>
+                    </label>
+                    <input
+                        type="number"
+                        id="cholesterol"
+                        name="cholesterol"
+                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.cholesterol}
+                    />
+                    {formik.touched.cholesterol && formik.errors.cholesterol ? (
+                        <div className="text-red-500">{formik.errors.cholesterol}</div>
                     ) : null}
                 </div>
             </div>

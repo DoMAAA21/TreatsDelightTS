@@ -27,6 +27,7 @@ interface FormData {
     fiber: number;
     sugar: number;
     sodium: number;
+    cholesterol: number;
     firstImage: File | String | null;
     secondImage?: File | String | null;
     thirdImage?: File | String | null;
@@ -47,6 +48,7 @@ const validationSchema = Yup.object({
     fiber: Yup.number().required('Fiber is required').min(0, 'Minimum of 0'),
     sugar: Yup.number().required('Sugar is required').min(0, 'Minimum of 0'),
     sodium: Yup.number().required('Sodium is required').min(0, 'Minimum of 0'),
+    cholesterol: Yup.number().required('Cholesterol is required').min(0, 'Minimum of 0'),
 });
 
 const AddProductPage = () => {
@@ -78,6 +80,7 @@ const AddProductPage = () => {
             fiber: 0,
             sugar: 0,
             sodium: 0,
+            cholesterol: 0,
             firstImage: '',
         },
         validationSchema: validationSchema,
@@ -100,6 +103,7 @@ const AddProductPage = () => {
                 fiber: values.fiber,
                 sugar: values.sugar,
                 sodium: values.sodium,
+                cholesterol: values.cholesterol,
                 firstImage: firstImage,
                 secondImage: secondImage ? secondImage : null,
                 thirdImage: thirdImage ? thirdImage : null,
