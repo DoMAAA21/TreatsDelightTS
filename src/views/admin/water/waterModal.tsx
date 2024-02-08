@@ -26,7 +26,7 @@ interface FormData {
 }
 
 const validationSchema = Yup.object({
-    additionals: Yup.number().min(1, 'Minimum of 1').required('Amount is required'),
+    additionals: Yup.number().required('Amount is required'),
     consumed: Yup.number().min(1, 'Minimum of 1').required('Consumed is required'),
     price: Yup.number().min(0, 'Minimum of 0').required('Price is required'),
 });
@@ -150,7 +150,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
 
                                             <div className="mb-4">
                                                 <label htmlFor="additionals" className="block text-sm font-medium text-gray-700">
-                                                    Additionals
+                                                    Additionals/ Deductions 
                                                 </label>
                                                 <Field
                                                     type="number"
