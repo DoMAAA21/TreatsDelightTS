@@ -27,6 +27,7 @@ interface AllProductsState {
   hasMore: boolean;
   currentPage: number;
   totalPages: number;
+  searchQuery: string; 
   selectedCategory: string; 
   lastSelectedCategory: string; 
 
@@ -40,6 +41,7 @@ const initialState: AllProductsState = {
   hasMore: true,
   currentPage: 1,
   totalPages: 1,
+  searchQuery: '',
   selectedCategory: '',
   lastSelectedCategory: '',
 }
@@ -188,6 +190,9 @@ const allProductsSlice = createSlice({
     setHasMore: (state, action) => {
       state.hasMore = action.payload;
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload;
     },
@@ -217,6 +222,7 @@ export const {
   clearErrors,
   setHasMore,
   setCurrentPage,
+  setSearchQuery,
   setSelectedCategory,
   setLastSelectedCategory,
   concatItems,

@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import useDebounce from '../../../hooks/useDebounce';
-import { fetchAllItems, setSelectedCategory, setLastSelectedCategory } from '../../../store/reducers/product/allProductsSlice';
+import { fetchAllItems, setSelectedCategory, setLastSelectedCategory, setSearchQuery } from '../../../store/reducers/product/allProductsSlice';
 import ProductList from './productList';
 import ProductLoader from '../../../components/loaders/ProductLoader';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -25,8 +25,7 @@ const categories: Category[] = [
 
 const ShoppingPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { items, loading, hasMore, currentPage, selectedCategory, lastSelectedCategory  } = useAppSelector(state => state.allProducts);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const { items, loading, hasMore, currentPage, selectedCategory, lastSelectedCategory, searchQuery  } = useAppSelector(state => state.allProducts);
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const debouncedSearchQueryRef = useRef<string>(debouncedSearchQuery);
 
@@ -71,7 +70,7 @@ const ShoppingPage: React.FC = () => {
             type="text"
             placeholder="Search"
             value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+            onChange={e => dispatch(setSearchQuery(e.target.value))}
             className="my-4 p-3 border border-gray-300 rounded-3xl w-full sm:w-auto"
           />
           <div className="my-4 flex flex-wrap gap-2">
