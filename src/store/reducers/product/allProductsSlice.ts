@@ -28,6 +28,8 @@ interface AllProductsState {
   currentPage: number;
   totalPages: number;
   selectedCategory: string; 
+  lastSelectedCategory: string; 
+
 }
 
 const initialState: AllProductsState = {
@@ -39,6 +41,7 @@ const initialState: AllProductsState = {
   currentPage: 1,
   totalPages: 1,
   selectedCategory: '',
+  lastSelectedCategory: '',
 }
 
 export const fetchAllProducts = createAsyncThunk<Product[], void, { state: RootState }>(
@@ -188,6 +191,9 @@ const allProductsSlice = createSlice({
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload;
     },
+    setLastSelectedCategory: (state, action) => {
+      state.lastSelectedCategory = action.payload;
+    },
     concatItems: (state, action) => {
       state.items = state.items.concat(action.payload.products);
       state.hasMore = action.payload.hasMore;
@@ -212,6 +218,7 @@ export const {
   setHasMore,
   setCurrentPage,
   setSelectedCategory,
+  setLastSelectedCategory,
   concatItems,
   clearItems
 } = allProductsSlice.actions;

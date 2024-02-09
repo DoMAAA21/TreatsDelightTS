@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import useDebounce from '../../../hooks/useDebounce';
-import { fetchAllItems, setSelectedCategory } from '../../../store/reducers/product/allProductsSlice';
+import { fetchAllItems, setSelectedCategory, setLastSelectedCategory } from '../../../store/reducers/product/allProductsSlice';
 import ProductList from './productList';
 import ProductLoader from '../../../components/loaders/ProductLoader';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -25,25 +25,31 @@ const categories: Category[] = [
 
 const ShoppingPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { items, loading, hasMore, currentPage, selectedCategory  } = useAppSelector(state => state.allProducts);
+  const { items, loading, hasMore, currentPage, selectedCategory, lastSelectedCategory  } = useAppSelector(state => state.allProducts);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const debouncedSearchQueryRef = useRef<string>(debouncedSearchQuery);
 
-  useEffect(() => {
-    if (items.length === 0 || selectedCategory !== '') {
-      // Fetch items only when items are empty or category changes
+
+  // Only dispatch the fetch action if items are empty or selectedCategory has changed
+  useEffect(() => { 
+    if (items.length === 0 || selectedCategory !== lastSelectedCategory) {
       dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory }));
+      dispatch(setLastSelectedCategory(selectedCategory));
     }
-  }, [dispatch, selectedCategory, debouncedSearchQuery]);
+  }, [dispatch, selectedCategory, debouncedSearchQuery, items, lastSelectedCategory]);
 
   useEffect(() => {
     if (debouncedSearchQueryRef.current !== '' && debouncedSearchQuery.trim() === '') {
       dispatch(fetchAllItems({ page: 1, searchQuery: '', category: selectedCategory }));
+
+      console.log('test1')
     }
-    if (debouncedSearchQuery) {
+    if (debouncedSearchQuery  ) {
       dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory }));
+      console.log('test2')
     }
+
     debouncedSearchQueryRef.current = debouncedSearchQuery;
   }, [debouncedSearchQuery, selectedCategory]);
 
@@ -54,9 +60,9 @@ const ShoppingPage: React.FC = () => {
     }
   };
 
+  // Reset items when category changes
   const handleCategoryChange = (categoryValue: string) => {
     dispatch(setSelectedCategory(categoryValue));
-    // Reset items when category changes
   };
 
   return (
