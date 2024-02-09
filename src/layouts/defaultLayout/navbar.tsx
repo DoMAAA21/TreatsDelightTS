@@ -5,7 +5,7 @@ import { useNav } from './config';
 import Logo from '../../assets/logo.png';
 import { successMsg } from '../../components/toast';
 import { logout } from '../../store/reducers/auth/authenticationSlice';
-
+import Cart from '../../assets/icons/cart.svg';
 
 const Navbar: React.FC = () => {
   const { navConfig } = useNav();
@@ -14,10 +14,11 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const { cartItems } = useAppSelector((state) => state.cart);
   const [isOptionsOpen, setOptionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const closeMenu = () =>{
+  const closeMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   }
   const toggleDropdown = () => {
@@ -93,6 +94,12 @@ const Navbar: React.FC = () => {
               <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
             </a>
             <div className="flex items-center lg:order-2">
+              <Link to="/cart" className="relative">
+                <img src={Cart} className="w-8 h-8" alt="Cart Icon" />
+                {cartItems.length > 0 && (
+                  <span className="absolute bottom-4 left-4 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{cartItems.length}</span>
+                )}
+              </Link>
               <button
                 onClick={toggleMobileMenu}
                 type="button"
@@ -126,6 +133,8 @@ const Navbar: React.FC = () => {
                   ></path>
                 </svg>
               </button>
+
+
             </div>
             <div
               className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
@@ -148,9 +157,12 @@ const Navbar: React.FC = () => {
                 ))}
               </ul>
 
+
             </div>
 
           </div>
+
+
           <div className="absolute hidden lg:flex right-3 top-2 h-16  items-center z-10" ref={dropdownRef}>
             <div className="relative">
               <button
@@ -174,6 +186,7 @@ const Navbar: React.FC = () => {
               )}
             </div>
           </div>
+
         </nav>
 
       </header>
@@ -195,7 +208,7 @@ const Navbar: React.FC = () => {
                     to={item.path}
                     className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-violet-700' : 'text-gray-700'}
                       } hover:text-violet-700`}
-                      onClick={closeMenu}
+                    onClick={closeMenu}
                   >
                     {item.title}
                   </Link>
