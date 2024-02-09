@@ -42,12 +42,9 @@ const ShoppingPage: React.FC = () => {
   useEffect(() => {
     if (debouncedSearchQueryRef.current !== '' && debouncedSearchQuery.trim() === '') {
       dispatch(fetchAllItems({ page: 1, searchQuery: '', category: selectedCategory }));
-
-      console.log('test1')
     }
     if (debouncedSearchQuery  ) {
       dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory }));
-      console.log('test2')
     }
 
     debouncedSearchQueryRef.current = debouncedSearchQuery;
