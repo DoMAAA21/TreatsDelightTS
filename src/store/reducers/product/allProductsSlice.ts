@@ -24,9 +24,10 @@ interface AllProductsState {
   items: Product[];
   loading: boolean;
   error: string | null;
-  hasMore: boolean; 
-  currentPage: number; 
+  hasMore: boolean;
+  currentPage: number;
   totalPages: number;
+  selectedCategory: string; 
 }
 
 const initialState: AllProductsState = {
@@ -37,6 +38,7 @@ const initialState: AllProductsState = {
   hasMore: true,
   currentPage: 1,
   totalPages: 1,
+  selectedCategory: '',
 }
 
 export const fetchAllProducts = createAsyncThunk<Product[], void, { state: RootState }>(
@@ -110,17 +112,22 @@ export const fetchAllStoreItems = createAsyncThunk<Product[], void, { state: Roo
   }
 );
 
-
-export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string }, { state: RootState }>(
+export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string; category?: string; }, { state: RootState }>(
   'allItems/fetchAllItems',
-  async ({ page, searchQuery }, { rejectWithValue, dispatch }) => {
+  async ({ page, searchQuery, category }, { rejectWithValue, dispatch }) => {
     try {
       dispatch(allItemsRequest());
 
-      const url = `${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}${searchQuery ? `&searchQuery=${searchQuery}` : ''}`;
+      let url = `${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}`;
+      if (searchQuery) {
+        url += `&searchQuery=${searchQuery}`;
+      }
+      if (category) {
+        url += `&category=${category}`; // Append category filter to URL
+      }
 
-      const { data } = await axios.get(url,{ withCredentials: true });
-   
+      const { data } = await axios.get(url, { withCredentials: true });
+
       if (page === 1) {
         dispatch(allItemsSuccess(data));
       } else {
@@ -178,6 +185,9 @@ const allProductsSlice = createSlice({
     setHasMore: (state, action) => {
       state.hasMore = action.payload;
     },
+    setSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload;
+    },
     concatItems: (state, action) => {
       state.items = state.items.concat(action.payload.products);
       state.hasMore = action.payload.hasMore;
@@ -201,6 +211,7 @@ export const {
   clearErrors,
   setHasMore,
   setCurrentPage,
+  setSelectedCategory,
   concatItems,
   clearItems
 } = allProductsSlice.actions;
