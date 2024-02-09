@@ -37,18 +37,18 @@ const ShoppingPage: React.FC = () => {
       dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory }));
       dispatch(setLastSelectedCategory(selectedCategory));
     }
-  }, [dispatch, selectedCategory, debouncedSearchQuery, items, lastSelectedCategory]);
+  }, [selectedCategory, lastSelectedCategory]);
 
   useEffect(() => {
     if (debouncedSearchQueryRef.current !== '' && debouncedSearchQuery.trim() === '') {
       dispatch(fetchAllItems({ page: 1, searchQuery: '', category: selectedCategory }));
     }
-    if (debouncedSearchQuery  ) {
+    if (debouncedSearchQuery) {
       dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory }));
     }
 
     debouncedSearchQueryRef.current = debouncedSearchQuery;
-  }, [debouncedSearchQuery, selectedCategory]);
+  }, [debouncedSearchQuery]);
 
   const fetchMoreItems = () => {
     if (hasMore) {
@@ -69,10 +69,10 @@ const ShoppingPage: React.FC = () => {
         <div className="mx-4 flex flex-wrap items-center justify-between">
           <input
             type="text"
-            placeholder="Search items..."
+            placeholder="Search"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="my-4 p-3 border border-gray-300 rounded-md w-full sm:w-auto"
+            className="my-4 p-3 border border-gray-300 rounded-3xl w-full sm:w-auto"
           />
           <div className="my-4 flex flex-wrap gap-2">
             {categories.map(category => (
