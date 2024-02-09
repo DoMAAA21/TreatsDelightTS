@@ -14,7 +14,8 @@ interface ProductCardProps {
   costPrice?: number;
   sellPrice: number;
   stock: number;
-  store: {
+  store?: {
+    storeId: string;
     name: string;
   }
   category?: string;

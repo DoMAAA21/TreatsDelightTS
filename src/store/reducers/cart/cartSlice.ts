@@ -3,7 +3,7 @@ import { RootState } from '../../../store/index';
 import axios from 'axios';
 
 interface CartItem {
-  id: string;
+  _id: string;
   name: string;
   price: number;
   image: string;
@@ -11,6 +11,7 @@ interface CartItem {
   storeName: string;
   quantity: number;
 }
+
 
 interface Order {
   orderItems: CartItem[];
@@ -23,7 +24,17 @@ interface Order {
 
 interface CartState {
   cartItems: CartItem[];
-  receipt: CartItem[];
+  receipt: {
+    _id?: string;
+    paidAt?: Date;
+    orderItems: CartItem[];
+    totalPrice: number;
+    user: {
+      id?: string;
+      name?: string;
+    }
+  }
+
   success: boolean;
   loading: boolean;
 }
@@ -40,7 +51,14 @@ const initialCartItems = persistedCartItems ? JSON.parse(persistedCartItems) : [
 
 const initialState: CartState = {
   cartItems: initialCartItems,
-  receipt: [],
+  receipt: {
+    orderItems: [],
+    totalPrice: 0,
+    user: {
+      id: undefined,
+      name: undefined,
+    },
+  },
   success: false,
   loading: false,
 };
@@ -51,7 +69,7 @@ export const addItemToCart = createAsyncThunk(
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`);
       const cartItem: CartItem = {
-        id: data.product._id,
+        _id: data.product._id,
         name: data.product.name,
         price: data.product.sellPrice,
         image: data.product.images[0].url,
@@ -73,7 +91,7 @@ export const addItemToCart = createAsyncThunk(
 
 
 export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartPayload, { state: RootState }>('cart/checkoutCart',
-  async ({cartItems,totalPrice}, { dispatch, getState }) => {
+  async ({ cartItems, totalPrice }, { dispatch, getState }) => {
     try {
       dispatch(checkoutRequest());
 
@@ -115,15 +133,15 @@ const cartSlice = createSlice({
       localStorage.removeItem('cartItems');
     },
     removeItemFromCart: (state, action: PayloadAction<string>) => {
-      state.cartItems = state.cartItems.filter((i) => i.id !== action.payload);
+      state.cartItems = state.cartItems.filter((i) => i._id !== action.payload);
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
     },
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const item = action.payload;
-      const isItemExist = state.cartItems.find((i) => i.id === item.id);
+      const isItemExist = state.cartItems.find((i) => i._id === item._id);
 
       if (isItemExist) {
-        state.cartItems = state.cartItems.map((i) => (i.id === isItemExist.id ? { ...i, quantity: i.quantity + item.quantity } : i));
+        state.cartItems = state.cartItems.map((i) => (i._id === isItemExist._id ? { ...i, quantity: i.quantity + item.quantity } : i));
       } else {
         state.cartItems = [...state.cartItems, item];
       }
@@ -132,7 +150,7 @@ const cartSlice = createSlice({
     increaseItemQuantity: (state, action: PayloadAction<string>) => {
       const id = action.payload;
       state.cartItems = state.cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        item._id === id ? { ...item, quantity: item.quantity + 1 } : item
       );
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
@@ -140,7 +158,7 @@ const cartSlice = createSlice({
       const id = action.payload;
       state.cartItems = state.cartItems
         .map((item) =>
-          item.id === id ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
+          item._id === id ? { ...item, quantity: Math.max(item.quantity - 1, 0) } : item
         )
         .filter((item) => item.quantity > 0);
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));

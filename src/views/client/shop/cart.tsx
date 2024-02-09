@@ -4,7 +4,7 @@ import { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart, checkou
 import { colors } from "../../../components/theme";
 import EmptyCart from "../../../assets/svg/emptycart.svg";
 import MetaData from "../../../components/MetaData";
-import { topErrorMsg } from "../../../components/toast";
+import { successMsg, topErrorMsg } from "../../../components/toast";
 
 const CartPage = () => {
     const dispatch = useAppDispatch();
@@ -13,6 +13,8 @@ const CartPage = () => {
     const { cartItems } = useAppSelector(state => state.cart)
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2);
+
+    
 
     const incrementQty = (id: string) => {
         dispatch(increaseItemQuantity(id));
@@ -33,8 +35,8 @@ const CartPage = () => {
             cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
         );
         await dispatch(checkoutCart({ cartItems, totalPrice })).then(() => {
-            // navigate('receipt');
-            console.log('hatdog')
+            navigate('/receipt');
+            successMsg('Checkout Success')
         })
 
     };
@@ -65,15 +67,15 @@ const CartPage = () => {
                                     </div>
 
                                     {cartItems.map((item) => (
-                                        <div key={item.id} className="flex p-6 mb-2 border border-gray-200 shadow-md rounded">
+                                        <div key={item._id} className="flex p-6 mb-2 border border-gray-200 shadow-md rounded">
                                             <div className="flex flex-col w-4/5">
                                                 <span className="text-red-800 text-lg font-semibold mb-2">{item.name}</span>
                                                 <span className="text-gray-500 text-sm">{item.name}</span>
                                             </div>
                                             <div className="flex items-center w-2/6">
-                                                <button className="p-3 py-1 bg-red-500 text-white rounded-3xl" onClick={() => decrementQty(item.id)}>-</button>
+                                                <button className="p-3 py-1 bg-red-500 text-white rounded-3xl" onClick={() => decrementQty(item._id)}>-</button>
                                                 <span className="w-10 text-center">{item.quantity}</span>
-                                                <button className="p-3 py-1 bg-blue-500 text-white rounded-3xl" onClick={() => incrementQty(item.id)}>+</button>
+                                                <button className="p-3 py-1 bg-blue-500 text-white rounded-3xl" onClick={() => incrementQty(item._id)}>+</button>
                                             </div>
                                             <div className="flex items-center w-2/12">
                                                 <span className="font-bold text-2xl">*</span>
@@ -83,7 +85,7 @@ const CartPage = () => {
                                             </div>
 
                                             <div className="flex items-center">
-                                                <button className="p-2 py-1 bg-red-500 text-white rounded" onClick={() => removeItem(item.id)}>_</button>
+                                                <button className="p-2 py-1 bg-red-500 text-white rounded" onClick={() => removeItem(item._id)}>_</button>
                                             </div>
                                         </div>
                                     ))}
