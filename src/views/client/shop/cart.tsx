@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart, checkoutCart } from "../../../store/reducers/cart/cartSlice";
+import { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart, checkoutCart, clearQrCode } from "../../../store/reducers/cart/cartSlice";
 import { colors } from "../../../components/theme";
 import EmptyCart from "../../../assets/svg/emptycart.svg";
 import MetaData from "../../../components/MetaData";
@@ -10,11 +10,13 @@ const CartPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const { cartItems } = useAppSelector(state => state.cart)
+    const { cartItems } = useAppSelector(state => state.cart);
+    const { isAuthenticated } = useAppSelector(state => state.auth)
+
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2);
 
-    
+
 
     const incrementQty = (id: string) => {
         dispatch(increaseItemQuantity(id));
@@ -26,7 +28,9 @@ const CartPage = () => {
         dispatch(removeItemFromCart(id))
     }
 
-    const checkouHandler = async () => {
+    const checkoutHandler = async () => {
+        dispatch(clearQrCode());
+        const isReserve = false;
         if (cartItems.length === 0) {
             topErrorMsg('Empty Cart')
             return;
@@ -34,7 +38,25 @@ const CartPage = () => {
         const totalPrice: number = parseFloat(
             cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
         );
-        await dispatch(checkoutCart({ cartItems, totalPrice })).then(() => {
+        await dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
+            navigate('/receipt');
+            successMsg('Checkout Success')
+        })
+
+    };
+
+    const reserveHandler = async () => {
+        dispatch(clearQrCode());
+        const isReserve = true;
+        if (cartItems.length === 0) {
+            topErrorMsg('Empty Cart')
+            return;
+        }
+        const totalPrice: number = parseFloat(
+            cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
+        );
+
+        await dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
             navigate('/receipt');
             successMsg('Checkout Success')
         })
@@ -102,7 +124,13 @@ const CartPage = () => {
                                 <span className="text-xl font-semibold">Total</span>
                                 <span className="float-right text-lg">₱{totalPrice}</span>
                             </div>
-                            <button onClick={checkouHandler} className={`${colors.secondary} px-4 py-2  w-full rounded-xl text-lg`}>
+                            {isAuthenticated ? (
+                                <button onClick={reserveHandler} className={`${colors.primary} px-4 py-2  w-full rounded-xl text-lg mb-4`}>
+                                    Reserve
+                                </button>
+                            ) : null}
+
+                            <button onClick={checkoutHandler} className={`${colors.secondary} px-4 py-2  w-full rounded-xl text-lg`}>
                                 Checkout
                             </button>
                         </div>

@@ -20,6 +20,7 @@ interface Order {
     id?: string;
     name?: string;
   }
+  isReserve: boolean;
 }
 
 interface CartState {
@@ -34,7 +35,7 @@ interface CartState {
       name?: string;
     }
   }
-
+  qrCode?: string | null;
   success: boolean;
   loading: boolean;
 }
@@ -43,6 +44,7 @@ interface CartState {
 interface CheckoutCartPayload {
   cartItems: CartItem[];
   totalPrice: number;
+  isReserve: boolean;
 }
 
 
@@ -59,6 +61,7 @@ const initialState: CartState = {
       name: undefined,
     },
   },
+  qrCode: '',
   success: false,
   loading: false,
 };
@@ -91,7 +94,7 @@ export const addItemToCart = createAsyncThunk(
 
 
 export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartPayload, { state: RootState }>('cart/checkoutCart',
-  async ({ cartItems, totalPrice }, { dispatch, getState }) => {
+  async ({ cartItems, totalPrice, isReserve }, { dispatch, getState }) => {
     try {
       dispatch(checkoutRequest());
 
@@ -106,12 +109,14 @@ export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartP
           name: userName
         },
         totalPrice: totalPrice,
+        isReserve
       };
 
       const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/order/new`, order);
 
       dispatch(showReceipt(data.order));
       dispatch(checkoutSuccess(data.success));
+      dispatch(setQrCode(data.qrCodeURL));
       dispatch(clearCart());
 
       return data;
@@ -166,17 +171,23 @@ const cartSlice = createSlice({
     checkoutRequest: (state) => {
       state.loading = true;
     },
-    checkoutSuccess: (state, action: PayloadAction<boolean>) => {
+    checkoutSuccess: (state, action) => {
       state.success = action.payload;
       state.loading = false;
     },
-    showReceipt: (state, action: PayloadAction<any>) => {
+    setQrCode: (state, action) => {
+      state.qrCode = action.payload;
+    },
+    clearQrCode: (state) => {
+      state.qrCode = null;
+    },
+    showReceipt: (state, action) => {
       state.receipt = action.payload;
     },
   },
 });
 
 export const { clearCart, removeItemFromCart, addToCart, increaseItemQuantity, decreaseItemQuantity,
-  checkoutRequest, checkoutSuccess, showReceipt } = cartSlice.actions;
+  checkoutRequest, checkoutSuccess, showReceipt, setQrCode, clearQrCode } = cartSlice.actions;
 
 export default cartSlice.reducer;
