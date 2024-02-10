@@ -39,7 +39,7 @@ const Receipt: React.FC = () => {
 
     useEffect(()=>{
         return()=>{
-            
+
         }
     },[])
 
@@ -93,16 +93,15 @@ const Receipt: React.FC = () => {
                         <span className="font-semibold">Total:</span>
                         <span className="font-semibold">₱{receipt?.totalPrice.toFixed(2)}</span>
                     </div>
-
+                    {qrCode && 
+                    <div className="flex justify-center items-center">                   
+                        <QRCode value={qrCode} className="bg-white shadow-md p-4 rounded-lg"  height={400}/>
+                    </div>
+                }
 
 
                 </div>
-                {qrCode ? (
-                    <div className="ml-20  mt-20 justify-center">
-                        <h2 className="text-center text-lg font-bold">The store will scan this</h2>                   
-                        <QRCode value={qrCode} className="bg-white shadow-md p-4 rounded-lg"  height={400}/>
-                    </div>
-                ) : null}
+                
             </div>
         </div>
     );
