@@ -6,7 +6,7 @@ import DashboardLayout from './layouts/dashboardLayout';
 import DefaultLayout from './layouts/defaultLayout';
 //Views
 import DashboardPage from './views/admin/dashboard';
-import LoginPage from './views/auth/login';
+
 import UserPage from './views/admin/owner';
 import AddOwnerPage from './views/admin/owner/addOwner';
 import EditOwnerPage from './views/admin/owner/editOwner';
@@ -34,6 +34,8 @@ import ElectricityTransaction from './views/admin/electricity/electricityTransac
 import ElectricityArchivesPage from './views/admin/electricity/archives';
 import InventoryPage from './views/admin/inventory';
 //Client
+import LoginPage from './views/auth/login';
+import RegisterPage from './views/auth/register';
 import ShoppingPage from './views/client/shop';
 import ProductDetails from './views/client/shop/productDetails';
 import CartPage from './views/client/shop/cart';
@@ -96,6 +98,7 @@ const AppRoutes: FC = () => {
       ]
     },
     { path: '/login', element: <LoginPage /> },
+    { path: '/register', element: <RegisterPage /> },
   ];
 
 

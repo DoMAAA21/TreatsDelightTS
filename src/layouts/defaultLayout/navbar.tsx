@@ -88,13 +88,13 @@ const Navbar: React.FC = () => {
     <>
       <header>
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2 border">
-          <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+          <div className="flex flex-wrap justify-between items-center  max-w-screen-xl">
             <a href="#" className="flex items-center">
               <img src={Logo} className="h-20 sm:h-16" alt="Logo" />
               <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
             </a>
             <div className="flex items-center lg:order-2">
-              <Link to="/cart" className="relative">
+              <Link to="/cart" className="absolute right-20">
                 <img src={Cart} className="w-8 h-8" alt="Cart Icon" />
                 {cartItems.length > 0 && (
                   <span className="absolute bottom-4 left-4 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{cartItems.length}</span>
@@ -161,6 +161,7 @@ const Navbar: React.FC = () => {
             </div>
 
           </div>
+
 
 
           <div className="absolute hidden lg:flex right-3 top-2 h-16  items-center z-10" ref={dropdownRef}>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import LoginForm from './loginForm';
 import Logo from '../../../assets/logo.png'
 import BreakFastLogo from '../../../assets/svg/breakfast.svg';
@@ -59,6 +60,7 @@ const LoginPage = () => {
                 </div>
                 <LoginForm />
               </div>
+              <p className="text-gray-600 text-sm mt-4">Don't have an account?<Link to="/register" className="text-blue-500">Register</Link></p>
             </div>
           </div>
 
