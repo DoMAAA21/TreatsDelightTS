@@ -14,6 +14,7 @@ interface FormData {
     email: string;
     password: string;
     religion: string;
+    course: string;
     role: string;
 }
 
@@ -46,6 +47,7 @@ const RegisterForm = () => {
         email: '',
         password: '',
         religion: '',
+        course: '',
         role: 'Customer'
     };
 
@@ -57,6 +59,7 @@ const RegisterForm = () => {
             email: data.email,
             password: data.password,
             religion: data.religion,
+            course: data.course,
             role: 'Customer',
         };
 
