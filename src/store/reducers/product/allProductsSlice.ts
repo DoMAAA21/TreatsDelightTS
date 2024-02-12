@@ -29,7 +29,9 @@ interface AllProductsState {
   totalPages: number;
   searchQuery: string; 
   selectedCategory: string; 
-  lastSelectedCategory: string; 
+  lastSelectedCategory: string;
+  selectedStore: string; 
+  lastSelectedStore: string; 
 
 }
 
@@ -44,6 +46,8 @@ const initialState: AllProductsState = {
   searchQuery: '',
   selectedCategory: '',
   lastSelectedCategory: '',
+  selectedStore: '',
+  lastSelectedStore: '',
 }
 
 export const fetchAllProducts = createAsyncThunk<Product[], void, { state: RootState }>(
@@ -117,18 +121,21 @@ export const fetchAllStoreItems = createAsyncThunk<Product[], void, { state: Roo
   }
 );
 
-export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string; category?: string; }, { state: RootState }>(
+export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string; category?: string; store?: string; }, { state: RootState }>(
   'allItems/fetchAllItems',
-  async ({ page, searchQuery, category }, { rejectWithValue, dispatch }) => {
+  async ({ page, searchQuery, category, store }, { rejectWithValue, dispatch }) => {
     try {
       dispatch(allItemsRequest());
-
+     
       let url = `${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}`;
       if (searchQuery) {
         url += `&searchQuery=${searchQuery}`;
       }
       if (category) {
-        url += `&category=${category}`; // Append category filter to URL
+        url += `&category=${category}`; 
+      }
+      if (store) {
+        url += `&store=${store}`; 
       }
 
       const { data } = await axios.get(url, { withCredentials: true });
@@ -199,6 +206,12 @@ const allProductsSlice = createSlice({
     setLastSelectedCategory: (state, action) => {
       state.lastSelectedCategory = action.payload;
     },
+    setSelectedStore: (state, action) => {
+      state.selectedStore = action.payload;
+    },
+    setLastSelectedStore: (state, action) => {
+      state.lastSelectedStore = action.payload;
+    },
     concatItems: (state, action) => {
       state.items = state.items.concat(action.payload.products);
       state.hasMore = action.payload.hasMore;
@@ -225,6 +238,8 @@ export const {
   setSearchQuery,
   setSelectedCategory,
   setLastSelectedCategory,
+  setSelectedStore,
+  setLastSelectedStore,
   concatItems,
   clearItems
 } = allProductsSlice.actions;

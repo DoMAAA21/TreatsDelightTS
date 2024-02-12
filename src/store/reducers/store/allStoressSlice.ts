@@ -26,10 +26,29 @@ const initialState: AllStoresState = {
   error: null,
 };
 
+//admin control stores
 export const fetchAllStores = createAsyncThunk('allStores/fetchAllStores', async (_, { rejectWithValue, dispatch }) => {
   try {
     dispatch(allStoresRequest());
     const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/stores`, { withCredentials: true });
+    dispatch(allStoresSuccess(data.stores));
+    return data.stores;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(allStoresFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    dispatch(allStoresFail('An error occurred'));
+    return rejectWithValue('An error occurred');
+  }
+});
+
+
+//for shop filtering and others
+export const fetchStores = createAsyncThunk('allStores/fetchAllStores', async (_, { rejectWithValue, dispatch }) => {
+  try {
+    dispatch(allStoresRequest());
+    const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/stores`, { withCredentials: true });
     dispatch(allStoresSuccess(data.stores));
     return data.stores;
   } catch (error) {

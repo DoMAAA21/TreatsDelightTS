@@ -1,11 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import useDebounce from '../../../hooks/useDebounce';
-import { fetchAllItems, setSelectedCategory, setLastSelectedCategory, setSearchQuery } from '../../../store/reducers/product/allProductsSlice';
 import ProductList from './productList';
 import ProductLoader from '../../../components/loaders/ProductLoader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MetaData from '../../../components/MetaData';
+import { fetchAllItems, setSelectedCategory, setLastSelectedCategory, setSearchQuery, setSelectedStore, setLastSelectedStore } from '../../../store/reducers/product/allProductsSlice';
+import { fetchStores } from '../../../store/reducers/store/allStoressSlice';
+import ChevronDown from '../../../assets/icons/chevrondown.svg';
+
 
 interface Category {
   label: string;
@@ -25,25 +28,37 @@ const categories: Category[] = [
 
 const ShoppingPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { items, loading, hasMore, currentPage, selectedCategory, lastSelectedCategory, searchQuery  } = useAppSelector(state => state.allProducts);
+  const { items, loading, hasMore, currentPage, searchQuery, selectedCategory, lastSelectedCategory, selectedStore, lastSelectedStore } = useAppSelector(state => state.allProducts);
+  const { stores } = useAppSelector(state => state.allStores);
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const debouncedSearchQueryRef = useRef<string>(debouncedSearchQuery);
 
 
-  // Only dispatch the fetch action if items are empty or selectedCategory has changed
-  useEffect(() => { 
+  useEffect(() => {
+    dispatch(fetchStores());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (items.length === 0 || selectedCategory !== lastSelectedCategory) {
-      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory }));
+      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory, store: selectedStore }));
       dispatch(setLastSelectedCategory(selectedCategory));
     }
   }, [selectedCategory, lastSelectedCategory]);
 
+
+  useEffect(() => {
+    if (items.length === 0 || selectedStore !== lastSelectedStore) {
+      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory, store: selectedStore }));
+      dispatch(setLastSelectedStore(selectedStore));
+    }
+  }, [selectedStore, lastSelectedStore]);
+
   useEffect(() => {
     if (debouncedSearchQueryRef.current !== '' && debouncedSearchQuery.trim() === '') {
-      dispatch(fetchAllItems({ page: 1, searchQuery: '', category: selectedCategory }));
+      dispatch(fetchAllItems({ page: 1, searchQuery: '', category: selectedCategory, store: selectedStore }));
     }
     if (debouncedSearchQuery) {
-      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory }));
+      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory, store: selectedStore }));
     }
 
     debouncedSearchQueryRef.current = debouncedSearchQuery;
@@ -56,9 +71,12 @@ const ShoppingPage: React.FC = () => {
     }
   };
 
-  // Reset items when category changes
   const handleCategoryChange = (categoryValue: string) => {
     dispatch(setSelectedCategory(categoryValue));
+  };
+
+  const handleStoreChange = (storeValue: string) => {
+    dispatch(setSelectedStore(storeValue));
   };
 
   return (
@@ -73,6 +91,23 @@ const ShoppingPage: React.FC = () => {
             onChange={e => dispatch(setSearchQuery(e.target.value))}
             className="my-4 p-3 border border-gray-300 rounded-3xl w-full sm:w-auto"
           />
+          <div className="my-4 relative border-2 border-black rounded-md bg-indigo-200 w-96">
+            <select
+              className="appearance-none border-none bg-transparent py-2 px-4 pr-8 rounded-md focus:outline-none w-full"
+              value={lastSelectedStore}
+              onChange={e => handleStoreChange(e.target.value)}
+            >
+              <option value="">All Stores</option>
+              {stores.map(store => (
+                <option key={store._id} value={store.name}>{store.name}</option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+              <img className="h-4 w-4" src={ChevronDown} alt="chevron-down" />
+            </div>
+          </div>
+
+
           <div className="my-4 flex flex-wrap gap-2">
             {categories.map(category => (
               <button
@@ -84,6 +119,7 @@ const ShoppingPage: React.FC = () => {
               </button>
             ))}
           </div>
+
         </div>
 
         {loading && !items.length ? (
