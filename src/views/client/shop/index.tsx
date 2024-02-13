@@ -91,7 +91,7 @@ const ShoppingPage: React.FC = () => {
             onChange={e => dispatch(setSearchQuery(e.target.value))}
             className="my-4 p-3 border border-gray-300 rounded-3xl w-full sm:w-auto"
           />
-          <div className="my-4 relative border-2 border-black rounded-md bg-indigo-200 w-96">
+          <div className="my-4 relative border border-gray-300 rounded-md bg-indigo-100 w-96">
             <select
               className="appearance-none border-none bg-transparent py-2 px-4 pr-8 rounded-md focus:outline-none w-full"
               value={lastSelectedStore}
