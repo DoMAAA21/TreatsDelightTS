@@ -1,18 +1,19 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
+
 const DefaultLayout = () => {
 
 
     return (
-        <>
-            <div className="w-full">
-                {/* <Navbar /> */}
+        <div className="max-w-full">
+        
+            <div  className="w-full top-0 z-50 sticky">
+                <Navbar />
             </div>
-            {/* <div className="p-4 w-full h-full">
-               
-            </div> */}
-            <Outlet />
-        </>
+            <div className="w-full h-full">
+                <Outlet />
+            </div>
+        </div>
 
     );
 };

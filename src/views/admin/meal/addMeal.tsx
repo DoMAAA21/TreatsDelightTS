@@ -19,6 +19,7 @@ interface FormData {
     category: string;
     stock?: number;
     active: boolean | string;
+    halal: boolean | string;
     portion: boolean;
     calories: number;    
     protein: number;
@@ -27,6 +28,7 @@ interface FormData {
     fiber: number;
     sugar: number;
     sodium: number;
+    cholesterol: number;
     firstImage: File | String | null;
     secondImage?: File | String | null;
     thirdImage?: File | String | null;
@@ -38,6 +40,7 @@ const validationSchema = Yup.object({
     costPrice: Yup.number().required('Cost price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
     sellPrice: Yup.number().required('Sell price is required').min(1, 'Minimum of 1').max(999, 'Maximum of 999'),
     active: Yup.boolean().required('Active or Not'),
+    halal: Yup.boolean().required('Halal or Not Halal'),
     calories: Yup.number().required('Calorie is required').min(0, 'Minimum of 0'),
     protein: Yup.number().required('Protein is required').min(0, 'Minimum of 0'),
     carbs: Yup.number().required('Carbs is required').min(0, 'Minimum of 0'),
@@ -45,6 +48,7 @@ const validationSchema = Yup.object({
     fiber: Yup.number().required('Fiber is required').min(0, 'Minimum of 0'),
     sugar: Yup.number().required('Sugar is required').min(0, 'Minimum of 0'),
     sodium: Yup.number().required('Sodium is required').min(0, 'Minimum of 0'),
+    cholesterol: Yup.number().required('Cholesterol is required').min(0, 'Minimum of 0'),
 });
 
 const AddMealPage = () => {
@@ -68,6 +72,7 @@ const AddMealPage = () => {
             portion: false,
             stock: 0,
             active: '',
+            halal: '',
             calories: 0,
             protein: 0,
             carbs: 0,
@@ -75,11 +80,13 @@ const AddMealPage = () => {
             fiber: 0,
             sugar: 0,
             sodium: 0,
+            cholesterol: 0,
             firstImage: '',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
             const isActive = values.active === 'True' ? true : false;
+            const isHalal = values.halal === 'True' ? true : false;
 
             const formData: FormData = {
                 name: values.name,
@@ -90,6 +97,7 @@ const AddMealPage = () => {
                 stock: 0,
                 portion: true,
                 active: isActive,
+                halal: isHalal,
                 calories: values.calories,
                 protein: values.protein,
                 carbs: values.carbs,
@@ -97,6 +105,7 @@ const AddMealPage = () => {
                 fiber: values.fiber,
                 sugar: values.sugar,
                 sodium: values.sodium,
+                cholesterol: values.cholesterol,
                 firstImage: firstImage,
                 secondImage: secondImage ? secondImage : null,
                 thirdImage: thirdImage ? thirdImage : null,

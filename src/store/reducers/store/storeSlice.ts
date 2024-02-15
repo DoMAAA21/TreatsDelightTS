@@ -5,6 +5,7 @@ interface StoreState {
     loading: boolean;
     isUpdated: boolean;
     isDeleted: boolean;
+    isRestored: boolean;
     error: string | null;
 }
 
@@ -12,6 +13,7 @@ const initialState: StoreState = {
     loading: false,
     isUpdated: false,
     isDeleted: false,
+    isRestored: false,
     error: null,
 };
 
@@ -31,6 +33,21 @@ export const deleteStore = createAsyncThunk('store/deleteStore', async (id: stri
     try {
         const { data } = await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/store/${id}`, { withCredentials: true });
         dispatch(deleteStoreSuccess(data.success))
+        return data.success;
+
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw error.response?.data?.message || 'An error occured';
+        }
+        throw 'An error occured';
+    }
+}
+);
+
+export const restoreStore = createAsyncThunk('store/restoreStore', async (id: string | number, { dispatch }) => {
+    try {
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/store/restore/${id}`, { withCredentials: true });
+        dispatch(restoreStoreSuccess(data.success))
         return data.success;
 
     } catch (error) {
@@ -93,6 +110,13 @@ const storeSlice = createSlice({
         deleteStoreReset: (state) => {
             state.isDeleted = false;
         },
+        restoreStoreSuccess: (state, action) => {
+            state.loading = false;
+            state.isRestored = action.payload;
+        },
+        restoreStoreReset: (state) => {
+            state.isRestored = false;
+        },
         updateStoreFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
@@ -110,6 +134,8 @@ export const {
     updateStoreReset,
     deleteStoreReset,
     updateStoreFail,
+    restoreStoreSuccess,
+    restoreStoreReset,
     clearErrors,
 } = storeSlice.actions;
 

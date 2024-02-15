@@ -16,6 +16,7 @@ interface ProductDetails {
         sellPrice: number;
         stock: number;
         category: string;
+        halal: boolean | string;
         active: boolean | string;
         nutrition:{
             calories: number;
@@ -25,6 +26,7 @@ interface ProductDetails {
             fiber: number;
             sugar: number;
             sodium: number;
+            cholesterol: number;
         }
         images: ProductImage[] ;
 
@@ -42,6 +44,7 @@ const initialState: ProductDetails = {
         stock: 0,
         category: '',
         active: '',
+        halal: '',
         images: [],
         nutrition:{
             calories: 0,
@@ -50,7 +53,8 @@ const initialState: ProductDetails = {
             fat: 0,
             fiber: 0,
             sugar: 0,
-            sodium: 0
+            sodium: 0,
+            cholesterol: 0
         }
     },
     loading: false,
@@ -119,6 +123,7 @@ const productDetailsSlice = createSlice({
                 stock: 0,
                 category: '',
                 active: '',
+                halal: '',
                 images: [],
                 nutrition:{
                     calories: 0,
@@ -127,7 +132,8 @@ const productDetailsSlice = createSlice({
                     fat: 0,
                     fiber: 0,
                     sugar: 0,
-                    sodium: 0
+                    sodium: 0,
+                    cholesterol: 0,
                 }
             };
         },

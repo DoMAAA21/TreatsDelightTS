@@ -24,9 +24,15 @@ interface AllProductsState {
   items: Product[];
   loading: boolean;
   error: string | null;
-  hasMore: boolean; 
-  currentPage: number; 
+  hasMore: boolean;
+  currentPage: number;
   totalPages: number;
+  searchQuery: string; 
+  selectedCategory: string; 
+  lastSelectedCategory: string;
+  selectedStore: string; 
+  lastSelectedStore: string; 
+
 }
 
 const initialState: AllProductsState = {
@@ -37,6 +43,11 @@ const initialState: AllProductsState = {
   hasMore: true,
   currentPage: 1,
   totalPages: 1,
+  searchQuery: '',
+  selectedCategory: '',
+  lastSelectedCategory: '',
+  selectedStore: '',
+  lastSelectedStore: '',
 }
 
 export const fetchAllProducts = createAsyncThunk<Product[], void, { state: RootState }>(
@@ -86,17 +97,49 @@ export const fetchAllMeals = createAsyncThunk<Product[], void, { state: RootStat
   }
 );
 
+export const fetchAllStoreItems = createAsyncThunk<Product[], void, { state: RootState }>(
+  'allProducts/fetchAllStoreItems',
+  async (_, { rejectWithValue, dispatch, getState }) => {
+    try {
+      dispatch(allProductsRequest());
+      const authState = getState().auth;
+      const storeId = authState.user?.store?.storeId;
+      if (!storeId) {
+        return dispatch(allProductsFail('Store not found'));
+      }
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/store/${storeId}/all-store-items`, { withCredentials: true });
+      dispatch(allProductsSuccess(data.products));
+      return data.products;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(allProductsFail(error.response?.data?.message || 'An error occurred'));
+        return rejectWithValue(error.response?.data?.message || 'An error occurred');
+      }
+      dispatch(allProductsFail('An error occurred'));
+      return rejectWithValue('An error occurred');
+    }
+  }
+);
 
-export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string }, { state: RootState }>(
+export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string; category?: string; store?: string; }, { state: RootState }>(
   'allItems/fetchAllItems',
-  async ({ page, searchQuery }, { rejectWithValue, dispatch }) => {
+  async ({ page, searchQuery, category, store }, { rejectWithValue, dispatch }) => {
     try {
       dispatch(allItemsRequest());
+     
+      let url = `${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}`;
+      if (searchQuery) {
+        url += `&searchQuery=${searchQuery}`;
+      }
+      if (category) {
+        url += `&category=${category}`; 
+      }
+      if (store) {
+        url += `&store=${store}`; 
+      }
 
-      const url = `${import.meta.env.VITE_BASE_URL}/api/v1/allItemsWeb?page=${page}${searchQuery ? `&searchQuery=${searchQuery}` : ''}`;
+      const { data } = await axios.get(url, { withCredentials: true });
 
-      const { data } = await axios.get(url);
-   
       if (page === 1) {
         dispatch(allItemsSuccess(data));
       } else {
@@ -116,6 +159,8 @@ export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQ
     }
   }
 );
+
+
 
 const allProductsSlice = createSlice({
   name: 'allProducts',
@@ -152,6 +197,21 @@ const allProductsSlice = createSlice({
     setHasMore: (state, action) => {
       state.hasMore = action.payload;
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
+    setSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload;
+    },
+    setLastSelectedCategory: (state, action) => {
+      state.lastSelectedCategory = action.payload;
+    },
+    setSelectedStore: (state, action) => {
+      state.selectedStore = action.payload;
+    },
+    setLastSelectedStore: (state, action) => {
+      state.lastSelectedStore = action.payload;
+    },
     concatItems: (state, action) => {
       state.items = state.items.concat(action.payload.products);
       state.hasMore = action.payload.hasMore;
@@ -175,6 +235,11 @@ export const {
   clearErrors,
   setHasMore,
   setCurrentPage,
+  setSearchQuery,
+  setSelectedCategory,
+  setLastSelectedCategory,
+  setSelectedStore,
+  setLastSelectedStore,
   concatItems,
   clearItems
 } = allProductsSlice.actions;

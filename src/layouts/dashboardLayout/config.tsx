@@ -6,6 +6,10 @@ import OwnerIcon from '../../components/icons/OwnerIcon';
 import ProductIcon from '../../components/icons/ProductIcon';
 import MealIcon from '../../components/icons/MealIcon';
 import EmployeeIcon from '../../components/icons/EmployeeIcon';
+import RentIcon from '../../components/icons/RentIcon';
+import WaterIcon from '../../components/icons/WaterIcon';
+import ElectricityIcon from '../../components/icons/ElectricityIcon';
+import InventoryIcon from '../../components/icons/InventoryIcon';
 
 interface NavItem {
   title: string;
@@ -56,16 +60,40 @@ export const useNav = () => {
         activeIcon: <MealIcon color="#fff" />
 
       },
+      {
+        title: 'Rent',
+        path: '/admin/rent-all',
+        defaultIcon: <RentIcon color="#000" />,
+        activeIcon: <RentIcon color="#fff" />
+      },
+      {
+        title: 'Water',
+        path: '/admin/water-all',
+        defaultIcon: <WaterIcon color="#000" />,
+        activeIcon: <WaterIcon color="#fff" />
+      },
+      {
+        title: 'Electricity',
+        path: '/admin/electricity-all',
+        defaultIcon: <ElectricityIcon color="#000" />,
+        activeIcon: <ElectricityIcon color="#fff" />
+      },
+      {
+        title: 'Inventory',
+        path: '/admin/inventory',
+        defaultIcon: <InventoryIcon color="#000" />,
+        activeIcon: <InventoryIcon color="#fff" />
+      },
     ];
 
     //Role Filtering
     if (user?.role === 'Employee') {
-      const filteredNav = ['Employees','Products','Meals'];
+      const filteredNav = ['Dashboard','Employees','Products','Meals','Inventory'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 
     if (user?.role === 'Admin') {
-      const filteredNav = ['Dashboard','Stores', 'Owners'];
+      const filteredNav = ['Dashboard','Stores', 'Owners','Rent','Water','Electricity'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 

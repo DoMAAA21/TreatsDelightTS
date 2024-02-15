@@ -11,10 +11,19 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { isAuthenticated, error, loading } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, error, loading, user } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/");
+    if (isAuthenticated) {
+      if (user?.role === "Admin") {
+        return navigate("/admin/dashboard");
+      } else if (user?.role === "Employee" || user?.role === "Owner") {
+        return navigate("/admin");
+      }
+
+      navigate("/");
+    }
+
     if (error) {
       topErrorMsg(error);
       dispatch(clearErrors());

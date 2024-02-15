@@ -5,7 +5,7 @@ type Column = {
   label: string;
 };
 
-type DataRow = Record<string, string | number | React.ReactNode>; //If You want to submit this as a package;) haha  change this to any to avoid conflicts
+type DataRow = any; //If You want to submit this as a package;) haha  change this to any to avoid conflicts
 
 type DataTableProps = {
   columns: Column[];

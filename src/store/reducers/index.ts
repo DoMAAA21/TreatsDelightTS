@@ -17,7 +17,15 @@ import productReducer from './product/productSlice';
 import newProductReducer from './product/newProductSlice';
 import productDetailsReducer from './product/productDetailsSlice';
 import cartReducer from './cart/cartSlice';
-
+import allRentsReducer from './rent/allRentsSlice';
+import newRentReducer from './rent/newRentSlice';
+import rentReducer from './rent/rentSlice';
+import allWatersReducer from './water/allWatersSlice';
+import newWaterReducer from './water/newWaterSlice';
+import waterReducer from './water/waterSlice';
+import allElectricityReducer from './electricity/allElectricitySlice';
+import newElectricityReducer from './electricity/newElectricitySlice';
+import electricityReducer from './electricity/electricitySlice';
 
 
 const rootReducer = combineReducers({
@@ -38,7 +46,16 @@ const rootReducer = combineReducers({
     product : productReducer,
     newProduct : newProductReducer,
     productDetails : productDetailsReducer,
-    cart : cartReducer
+    cart : cartReducer,
+    allRent : allRentsReducer,
+    newRent : newRentReducer,
+    rent : rentReducer,
+    allWater : allWatersReducer,
+    newWater : newWaterReducer,
+    water : waterReducer,
+    allElectricity : allElectricityReducer,
+    newElectricity : newElectricityReducer,
+    electricity : electricityReducer
 })
 
 export default rootReducer;

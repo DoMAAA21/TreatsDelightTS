@@ -7,6 +7,7 @@ interface UseMealFormProps {
             costPrice: number;
             sellPrice: number;
             active: string;
+            halal: string;
         };
         touched: {
             name?: boolean;
@@ -15,6 +16,7 @@ interface UseMealFormProps {
             sellPrice?: boolean;
             stock?: boolean;
             active?: boolean;
+            halal?: boolean;
         };
         errors: {
             name?: string;
@@ -22,6 +24,7 @@ interface UseMealFormProps {
             costPrice?: string;
             sellPrice?: string;
             active?: string;
+            halal?: string;
         };
         setFieldValue: (field: string, value: any) => void;
         handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -106,27 +109,50 @@ const MealForm = ({ formik }: UseMealFormProps) => {
 
             </div>
 
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
+                <div className="flex-1">
+                    <label htmlFor="active" className="block text-sm font-medium text-gray-700">
+                        Active
+                    </label>
+                    <select
+                        id="active"
+                        name="active"
+                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.active}
+                    >
+                        <option value="" label="Select active status" />
+                        <option value="True" label="Active" />
+                        <option value="False" label="Not active" />
+                    </select>
+                    {formik.touched.active && formik.errors.active ? (
+                        <div className="text-red-500">{formik.errors.active}</div>
+                    ) : null}
+                </div>
 
-            <div className="mb-4">
-                <label htmlFor="active" className="block text-sm font-medium text-gray-700">
-                    Active
-                </label>
-                <select
-                    id="active"
-                    name="active"
-                    className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.active}
-                >
-                    <option value="" label="Select active status" />
-                    <option value="True" label="Active" />
-                    <option value="False" label="Not active" />
-                </select>
-                {formik.touched.active && formik.errors.active ? (
-                    <div className="text-red-500">{formik.errors.active}</div>
-                ) : null}
+                <div className="flex-1">
+                    <label htmlFor="halal" className="block text-sm font-medium text-gray-700">
+                        Halal
+                    </label>
+                    <select
+                        id="halal"
+                        name="halal"
+                        className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.halal}
+                    >
+                        <option value="" label="Select" />
+                        <option value="True" label="Halal" />
+                        <option value="False" label="Not Halal" />
+                    </select>
+                    {formik.touched.halal && formik.errors.halal ? (
+                        <div className="text-red-500">{formik.errors.halal}</div>
+                    ) : null}
+                </div>
             </div>
+
 
         </>
     )

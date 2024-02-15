@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
-import AOS from 'aos';
 
 
 const DashboardLayout = () => {
@@ -17,7 +16,6 @@ const DashboardLayout = () => {
   };
 
   useEffect(() => {
-    AOS.init();
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setMobileMenuOpen(false);

@@ -4,7 +4,6 @@ import Logo from '../../assets/logo.png';
 import { useNav } from './config';
 import AOS from 'aos';
 
-
 interface SidebarProps {
   isMobileMenuOpen: boolean;
   closeMobileMenu: () => void;
@@ -14,12 +13,13 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
   const { navConfig } = useNav();
   const location = useLocation();
   const isLinkActive = (path: string) => {
-    
-    const isActiveRoute = location.pathname.startsWith(path);
+    const newPath = path.replace(/-.+$/, '');
+    const isActiveRoute = location.pathname.startsWith(newPath);
     return isActiveRoute;
   };
 
   useEffect(() => {
+    AOS.init();
     AOS.refresh(); 
   }, [isMobileMenuOpen]);
 

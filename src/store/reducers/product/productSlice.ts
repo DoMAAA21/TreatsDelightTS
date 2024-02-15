@@ -24,6 +24,7 @@ interface ProductData {
     stock: number;
     category: string;
     active: boolean | string;
+    halal?: boolean | string;
     calories: number;
     protein: number;
     carbs: number;
@@ -31,6 +32,7 @@ interface ProductData {
     fiber: number;
     sugar: number;
     sodium: number;
+    cholesterol: number;
     avatar?: File | Blob | string | null;
 }
 

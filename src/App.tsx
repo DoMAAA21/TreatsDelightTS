@@ -8,10 +8,11 @@ import ScrollToTop from './helpers/scrollToTop';
 import 'aos/dist/aos.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import AOS from 'aos';
 
-
-
+AOS.init();
 function App() {
+ 
   return (
     <>
       <Provider store={store}>
