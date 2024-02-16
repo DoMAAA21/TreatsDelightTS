@@ -20,12 +20,14 @@ const RegisterPage = () => {
 
                     </div>
                     <div className="lg:w-1/2 xl:w-5/12 p-2 sm:p-12">
-                        <div className="flex items-center ml-14 lg:ml-24">
-                            <img src={Logo} className="w-16" />
-                            <div className="flex flex-col">
-                                <h1 className="text-2xl xl:text-3xl font-extrabold">Register</h1>
-                            </div>
-                        </div>
+                    <div>
+              <img src={Logo} className="w-20 mx-auto lg:w-20" />
+            </div>
+            <div className="mt-4 flex flex-col items-center">
+              <h1 className="text-xl xl:text-3xl font-extrabold">
+                Register
+              </h1>
+              </div>
                         <div className="mt-2 flex flex-col items-center">
 
                             <div className="w-full flex-1 mt-2">
@@ -54,9 +56,9 @@ const RegisterPage = () => {
                                     </button>
                                 </div>
 
-                                <div className="text-center items-center">
+                                <div className="my-2 border-b text-center">
                                     <div
-                                        className="leading-none  inline-block text-sm text-gray-600 tracking-wide font-medium bg-white ">
+                                    className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
                                         Or
                                     </div>
                                 </div>

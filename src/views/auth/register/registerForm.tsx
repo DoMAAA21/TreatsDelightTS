@@ -68,7 +68,7 @@ const RegisterForm = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-xs">
+        <div className="mx-auto max-w-xs pt-4">
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
