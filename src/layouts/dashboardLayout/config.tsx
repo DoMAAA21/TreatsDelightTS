@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import DashboardIcon from '../../components/icons/DashboardIcon';
+import AnalyticsIcon from '../../components/icons/AnalyticsIcon';
 import StoreIcon from '../../components/icons/StoreIcon';
 import OwnerIcon from '../../components/icons/OwnerIcon';
 import ProductIcon from '../../components/icons/ProductIcon';
@@ -28,6 +29,12 @@ export const useNav = () => {
         path: '/admin/dashboard',
         defaultIcon: <DashboardIcon color="#000" />,
         activeIcon: <DashboardIcon color="#fff" />
+      },
+      {
+        title: 'Analytics',
+        path: '/admin/analytics',
+        defaultIcon: <AnalyticsIcon color="#000" />,
+        activeIcon: <AnalyticsIcon color="#fff" />
       },
       {
         title: 'Stores',
@@ -88,12 +95,12 @@ export const useNav = () => {
 
     //Role Filtering
     if (user?.role === 'Employee') {
-      const filteredNav = ['Dashboard','Products','Meals','Inventory'];
+      const filteredNav = ['Dashboard','Analytics','Products','Meals','Inventory'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
     
     if (user?.role === 'Owner') {
-      const filteredNav = ['Dashboard','Employees','Products','Meals','Inventory'];
+      const filteredNav = ['Dashboard','Analytics','Employees','Products','Meals','Inventory'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 

@@ -23,11 +23,6 @@ const ChartCard = () => {
         <VictoryBar data={data} x="quarter" y="earnings" />
       </VictoryChart> */}
       <VictoryPie
-        // data={[
-        //   { x: "Cats", y: 35 },
-        //   { x: "Dogs", y: 40 },
-        //   { x: "Birds", y: 55 }
-        // ]}
         data={data}
         x="quarter" y="earnings"
         colorScale={["#bfe0e2", "#5faab1", "#356169", "#d9aeff", "#9825f8" ]}
