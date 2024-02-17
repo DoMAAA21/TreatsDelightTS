@@ -3,14 +3,28 @@ import FallSvg from '../../../assets/svg/fall.svg';
 
 interface CardProps {
   name: string;
+  role: string;
 }
 
-const Card: React.FC<CardProps> = ({ name }) => {
+
+
+const Card: React.FC<CardProps> = ({ name, role }) => {
+  const currentDate = new Date();
+  const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+  const formattedDate = currentDate.toLocaleDateString(undefined, options);
+  
   return (
     <div className="relative w-100 h-40 shadow-md rounded-xl bg-gray-700">
-      <div className="p-5 text-lg text-white">
-        Hello {name}!  
+      <div className="px-5 pt-5 text-lg text-white">
+        Howdy! {name}
       </div>
+      <div className="px-5 mt-1 text-md text-white">
+        {role} 
+      </div>
+      <div className="px-5 mt-4 text-md text-white">
+        {formattedDate} 
+      </div>
+
 
       <img
         className="absolute top-[-25%] right-0 lg:w-80 lg:h-full w-40 h-40" 
