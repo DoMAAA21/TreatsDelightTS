@@ -53,7 +53,7 @@ const UserPage: FC = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteUser(id));
-                Swal.fire('Deleted!', 'User has been deleted.', 'success');
+                Swal.fire('Deleted!', 'Owner has been deleted.', 'success');
             }
         });
     };
