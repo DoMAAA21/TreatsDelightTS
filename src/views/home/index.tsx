@@ -20,8 +20,8 @@ const HomePage = () => {
                     className="relative bg-cover bg-center h-screen flex flex-col lg:flex-row items-center homepage-container"
                     style={{ backgroundImage: `url(https://cdn.animaapp.com/projects/6543a2d33a69872920c03d1c/releases/65abbd4440ec8d74c3e49952/img/copy-of-invitation-for-seminar--1.png)` }}
                 >
-                    <div className="container lg:pl-16 px-4">
-                        <div className="lg:flex items-center">
+                    <div className="container lg:pl-20 px-4">
+                        <div className="lg:flex items-center mt-[-50px]">
                             {/* Logo for mobile */}
 
                             <div className="flex-shrink-0 lg:hidden sm:h-80 sm:w-80 mt-20 mb-12 flex items-center" data-aos="fade-left" data-aos-delay={300}>
@@ -32,11 +32,11 @@ const HomePage = () => {
                                 />
                             </div>
 
-                            <div className="text-white mr-8 " data-aos="fade-right" data-aos-delay={500}>
+                            <div className="text-white mr-10 " data-aos="fade-right" data-aos-delay={500}>
                                 <h1 className="text-6xl font-bold lg:text-9xl mb-4">Treats Delight</h1>
                                 <p className="text-2xl lg:text-2xl">A Digital Transformation of TUP-T Canteen</p>
 
-                                <div className="flex mt-6" data-aos="fade-up" data-aos-delay={500}>
+                                <div className="flex mt-6" >
                                     <button className="bg-green-700 hover:bg-green-900 text-white font-bold  py-4 px-8  lg:px-12 mr-4 rounded-3xl">
                                         Shop Now
                                     </button>

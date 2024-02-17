@@ -87,8 +87,8 @@ const Navbar: React.FC = () => {
   return (
     <>
       <header>
-        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2 border">
-          <div className="flex flex-wrap justify-between items-center  max-w-screen-xl">
+        <nav className="bg-[#306844] border-gray-200 px-4 lg:px-6 py-2 border">
+          <div className="flex flex-wrap items-center  max-w-screen-xl">
             <a href="#" className="flex items-center">
               <img src={Logo} className="h-20 sm:h-16" alt="Logo" />
               <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
@@ -140,26 +140,20 @@ const Navbar: React.FC = () => {
               className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
               id="mobile-menu-2"
             >
-              <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-2 lg:mt-0">
-
-
+              <ul className="pl-10 flex flex-col mt-4 font-medium lg:flex-row lg:space-x-2 lg:mt-0">
                 {navConfig.map((item) => (
                   <li key={item.title}>
                     <Link
                       to={item.path}
-                      className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-violet-700' : 'text-gray-700'}
-                      } hover:text-violet-700`}
+                      className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-[#FFDC95]' : 'text-white'}
+                      } hover:text-[#FFDC95]`}
                     >
                       {item.title}
                     </Link>
                   </li>
-
                 ))}
               </ul>
-
-
             </div>
-
           </div>
 
 

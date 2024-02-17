@@ -53,7 +53,7 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
           </li>
           {navConfig.map((item) => (
             <Link key={item.title} to={item.path} onClick={closeMobileMenu} className={`block hover:bg-[#306844] p-2 mb-1 rounded text-gray-600 hover:text-white ${isLinkActive(item.path) ? 'bg-[#306844] text-white' : ''}`}>
-              <li className={`flex items-center py-2 px-4 ${isLinkActive(item.path) ? 'font-bold text-white' : ''}`}>
+              <li className={`flex items-center py-2 px-4 ${isLinkActive(item.path) ? 'font-semibold text-white' : ''}`}>
                 {isLinkActive(item.path) ? item.activeIcon : item.defaultIcon}
                 <span className="ml-3">{item.title}</span>
               </li>
