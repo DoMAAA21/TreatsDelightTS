@@ -1,4 +1,12 @@
 const WaterIcon: React.FC<{ color: string }> = ({ color }) => (
-    <svg viewBox="0 0 24 24" height="30px" width="30px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Environment / Water_Drop"> <path id="Vector" d="M16.0001 13.3848C16.0001 14.6088 15.526 15.7828 14.6821 16.6483C14.203 17.1397 13.6269 17.5091 13 17.7364M19 13.6923C19 7.11538 12 2 12 2C12 2 5 7.11538 5 13.6923C5 15.6304 5.7375 17.4893 7.05025 18.8598C8.36301 20.2302 10.1436 20.9994 12.0001 20.9994C13.8566 20.9994 15.637 20.2298 16.9497 18.8594C18.2625 17.4889 19 15.6304 19 13.6923Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g> </g></svg>
+    <svg fill={color} width="30px" height="30px" viewBox="-1.82 0 15.99 15.99" xmlns="http://www.w3.org/2000/svg" stroke={color} strokeWidth="0.20787">
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+        <g id="SVGRepo_iconCarrier"> 
+        <g id="Layer_2" data-name="Layer 2"> 
+        <g id="Layer_1-2" data-name="Layer 1"> 
+        <path d="M11.08,6.06,6.58.19a.52.52,0,0,0-.8,0L1.28,6.06a6.18,6.18,0,1,0,10.44,6.49A6.13,6.13,0,0,0,11.08,6.06Zm-.26,6A5.07,5.07,0,0,1,6.18,15,5.08,5.08,0,0,1,1.54,12.1a5.08,5.08,0,0,1,.53-5.43L6.18,1.31l4.11,5.36A5.08,5.08,0,0,1,10.82,12.1ZM10.18,10a4,4,0,0,1-4,4,.5.5,0,0,1,0-1,3,3,0,0,0,3-3,.5.5,0,0,1,1,0Z"></path> 
+        </g> </g> </g>
+    </svg>
 )
 export default WaterIcon
