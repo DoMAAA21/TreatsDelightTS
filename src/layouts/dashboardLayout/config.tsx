@@ -88,6 +88,11 @@ export const useNav = () => {
 
     //Role Filtering
     if (user?.role === 'Employee') {
+      const filteredNav = ['Dashboard','Products','Meals','Inventory'];
+      return defaultConfig.filter((item) => filteredNav.includes(item.title));
+    }
+    
+    if (user?.role === 'Owner') {
       const filteredNav = ['Dashboard','Employees','Products','Meals','Inventory'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
