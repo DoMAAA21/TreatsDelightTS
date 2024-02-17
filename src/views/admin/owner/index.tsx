@@ -35,8 +35,6 @@ const UserPage: FC = () => {
     const { users, loading } = useAppSelector((state) => state.allUsers);
     const { isDeleted } = useAppSelector((state) => state.user);
 
-    console.log(users);
-
     useEffect(() => {
         dispatch(fetchAllOwners());
 
