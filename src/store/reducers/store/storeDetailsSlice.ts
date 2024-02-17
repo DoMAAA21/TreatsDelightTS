@@ -3,7 +3,7 @@ import axios from 'axios';
 
 interface StoreDetails {
     store: {
-        _id? : string | number;
+        _id?: string | number;
         name: string;
         slogan: string;
         stall: number;
@@ -12,6 +12,9 @@ interface StoreDetails {
         logo?: {
             url?: string;
         };
+        rent: number;
+        electricity: number;
+        water: number;
     };
     loading: boolean;
     error: string | null;
@@ -24,13 +27,17 @@ const initialState: StoreDetails = {
         stall: 0,
         location: '',
         active: false,
+        rent: 0,
+        electricity: 0,
+        water: 0,
 
     },
+
     loading: false,
     error: null,
 };
 
-export const getStoreDetails = createAsyncThunk('storeDetails/getStoreDetails', async (id: string | undefined, { dispatch, rejectWithValue }) => {
+export const getStoreDetails = createAsyncThunk('storeDetails/getStoreDetails', async (id: string | number |undefined, { dispatch, rejectWithValue }) => {
     try {
         dispatch(storeDetailsRequest());
 
@@ -73,6 +80,9 @@ const storeDetailsSlice = createSlice({
                 stall: 0,
                 location: '',
                 active: false,
+                rent: 0,
+                electricity: 0,
+                water: 0,
             };
         },
     },
