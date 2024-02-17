@@ -14,6 +14,10 @@ interface UserDetails {
         avatar?: {
             url?: string;
         };
+        store?: {
+            storeId: string;
+            name: string;
+        }
     };
     loading: boolean;
     error: string | null;

@@ -2,13 +2,25 @@ import React from 'react'
 import FallSvg from '../../../assets/svg/fall.svg';
 
 interface CardProps {
-  name: string;
+  user:{
+    _id: string;
+  email: string;
+  avatar: {
+    url: string;
+  }
+  fname: string;
+  lname: string;
   role: string;
+  store?: {
+    storeId?: string | number;
+    name?: string
+  }
+  }
 }
 
 
 
-const Card: React.FC<CardProps> = ({ name, role }) => {
+const Card: React.FC<CardProps> = ({ user }) => {
   const currentDate = new Date();
   const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
   const formattedDate = currentDate.toLocaleDateString(undefined, options);
@@ -16,10 +28,10 @@ const Card: React.FC<CardProps> = ({ name, role }) => {
   return (
     <div className="relative w-100 h-40 shadow-md rounded-xl bg-gray-700">
       <div className="px-5 pt-5 text-lg text-white">
-        Howdy! {name}
+        Howdy! {user.fname} {user.lname}
       </div>
       <div className="px-5 mt-1 text-md text-white">
-        {role} 
+        {user.role} {user.role.toLowerCase() === "owner" && `- ${user?.store?.name}`}
       </div>
       <div className="px-5 mt-4 text-md text-white">
         {formattedDate} 

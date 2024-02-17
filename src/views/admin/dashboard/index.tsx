@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppSelector } from '../../../hooks';
 import MetaData from '../../../components/MetaData';
 import WelcomeCard from './welcomeCard';
 import WidgetNav from './widgetNav';
@@ -22,7 +21,7 @@ const DashboardPage = () => {
             <div className="lg:pt-8 pt-4 pb-3 lg:px-4"
                 data-aos="fade-down"
                 data-aos-delay={100}>
-                <WelcomeCard name={`${user?.fname} ${user?.lname}`} role={`${user?.role}`} />
+                <WelcomeCard user= {user} />
             </div>
             {user && user?.role.toLowerCase() === "admin" && (
                 <div className="flex flex-col lg:flex-row lg:px-4 ">
