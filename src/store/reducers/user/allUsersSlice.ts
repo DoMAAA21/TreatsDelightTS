@@ -9,6 +9,10 @@ interface User {
   course: string;
   religion: string;
   role: string;
+  store?: {
+    storeId: string | number;
+    name: string;
+  }
 
 }
 

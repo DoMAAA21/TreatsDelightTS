@@ -18,6 +18,10 @@ interface User {
     email: string;
     religion: string;
     role: string;
+    store: {
+        storeId: string;
+        name: string;
+    }
     actions: React.ReactNode;
 }
 
@@ -30,6 +34,8 @@ const UserPage: FC = () => {
     const dispatch = useAppDispatch();
     const { users, loading } = useAppSelector((state) => state.allUsers);
     const { isDeleted } = useAppSelector((state) => state.user);
+
+    console.log(users);
 
     useEffect(() => {
         dispatch(fetchAllOwners());
@@ -64,6 +70,7 @@ const UserPage: FC = () => {
             { label: 'Full Name', field: 'fullName' },
             { label: 'Email', field: 'email' },
             { label: 'Religion', field: 'religion' },
+            { label: 'Store', field: 'store' },
             { label: 'Role', field: 'role' },
             { label: 'Actions', field: 'actions' },
         ],
@@ -72,6 +79,7 @@ const UserPage: FC = () => {
             fullName: `${user.fname} ${user.lname}`,
             email: user.email,
             religion: user.religion,
+            store: user?.store?.name,
             role: user.role,
             actions: (
                 <div className="flex items-center ml-6">

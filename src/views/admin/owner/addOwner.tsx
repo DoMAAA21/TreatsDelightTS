@@ -18,6 +18,8 @@ interface FormData {
   password: string;
   religion: string;
   avatar: File | string | null;
+  storeId: string;
+  storeName: string;
   role: string;
 }
 
@@ -27,6 +29,7 @@ const validationSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Email is required'),
   password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
   religion: Yup.string().required('Religion is required'),
+  storeId: Yup.string().required('Store is required'),
 });
 
 
@@ -44,6 +47,8 @@ const AddOwnerPage = () => {
     password: '',
     religion: '',
     avatar: '',
+    storeId: '',
+    storeName: '',
     role: 'Owner'
   };
 
@@ -62,6 +67,8 @@ const AddOwnerPage = () => {
   }, [dispatch, error, success, navigate]);
 
   const onSubmit = (data: FormData) => {
+
+    const [storeId, storeName] = data.storeId.split('-');
     const userData: FormData = {
       fname: data.fname,
       lname: data.lname,
@@ -69,6 +76,8 @@ const AddOwnerPage = () => {
       password: data.password,
       religion: data.religion,
       role: 'Owner',
+      storeId: storeId,
+      storeName: storeName,
       avatar: compressedImage,
     };
 
