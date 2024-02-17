@@ -26,6 +26,7 @@ import waterReducer from './water/waterSlice';
 import allElectricityReducer from './electricity/allElectricitySlice';
 import newElectricityReducer from './electricity/newElectricitySlice';
 import electricityReducer from './electricity/electricitySlice';
+import electricityBillsPerMonthReducer from './chart/electricBillsPerMonthSlice';
 
 
 const rootReducer = combineReducers({
@@ -55,7 +56,8 @@ const rootReducer = combineReducers({
     water : waterReducer,
     allElectricity : allElectricityReducer,
     newElectricity : newElectricityReducer,
-    electricity : electricityReducer
+    electricity : electricityReducer,
+    electricityBill : electricityBillsPerMonthReducer
 })
 
 export default rootReducer;

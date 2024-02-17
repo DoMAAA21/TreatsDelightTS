@@ -1,4 +1,4 @@
-import { VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryPie } from 'victory';
+import { VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryPie, VictoryLabel } from 'victory';
 
 const ChartCard = () => {
   const data = [
@@ -24,6 +24,7 @@ const ChartCard = () => {
       </VictoryChart> */}
       <VictoryPie
         data={data}
+        
         x="quarter" y="earnings"
         colorScale={["#bfe0e2", "#5faab1", "#356169", "#d9aeff", "#9825f8" ]}
 
