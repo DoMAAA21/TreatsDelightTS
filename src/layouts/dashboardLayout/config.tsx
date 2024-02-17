@@ -30,17 +30,17 @@ export const useNav = () => {
         activeIcon: <DashboardIcon color="#fff" />
       },
       {
-        title: 'Owners',
-        path: '/admin/owner-all',
-        defaultIcon: <OwnerIcon color="#000" />,
-        activeIcon: <OwnerIcon color="#fff" />
-      },
-      {
         title: 'Stores',
         path: '/admin/store-all',
         defaultIcon: <StoreIcon color="#000" />,
         activeIcon: <StoreIcon color="#fff" />
       },
+      {
+        title: 'Owners',
+        path: '/admin/owner-all',
+        defaultIcon: <OwnerIcon color="#000" />,
+        activeIcon: <OwnerIcon color="#fff" />
+      },   
       {
         title: 'Employees',
         path: '/admin/employee-all',
