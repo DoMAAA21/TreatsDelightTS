@@ -25,14 +25,6 @@ const DashboardPage = () => {
             </div>
             {user && user?.role.toLowerCase() === "admin" && (
                 <div className="flex flex-col lg:flex-row lg:px-4 ">
-
-                    <div className="w-full lg:w-2/6 mb-4 lg:mb-0 order-first lg:order-last"
-                        data-aos="fade-left"
-                        data-aos-delay={100}
-                    >
-                        <ChartCard />
-                    </div>
-
                     <div className="w-full lg:w-4/6 mb-4 lg:mb-0 lg:mr-4 "
                         data-aos="fade-right"
                         data-aos-delay={100}
