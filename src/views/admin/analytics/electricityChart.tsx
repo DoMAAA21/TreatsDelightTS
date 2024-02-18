@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchElectricityBillsPerMonth } from '../../../store/reducers/chart/electricBillsPerMonthSlice';
-import { LineChart, Line, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,  } from 'recharts'; // Import ResponsiveContainer from Recharts
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,  } from 'recharts'; // Import ResponsiveContainer from Recharts
 
 interface Bill {
     month: number;
