@@ -20,7 +20,7 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
 
   useEffect(() => {
     AOS.init();
-    AOS.refresh(); 
+    AOS.refresh();
   }, [isMobileMenuOpen]);
 
   return (
@@ -38,10 +38,10 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
       >
         <ul className="flex flex-col font-medium p-2 w-full">
           <li className='mb-8 flex'>
-            <a href="#" className="flex items-center">
-              <img src={Logo} className="h-16 sm:h-16 ml-5" alt="Logo" />
+              <Link to="/home" className="flex items-center">
+                <img src={Logo} className="h-16 sm:h-16 ml-5" alt="Logo" />
+              </Link>
               <span className="self-center text-xl font-semibold whitespace-nowrap text-gray-800 font-title">Treats Delight</span>
-            </a>
             <button className="text-gray-600 mr-4 ml-auto lg:hidden" onClick={closeMobileMenu}>
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path>

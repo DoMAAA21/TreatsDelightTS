@@ -89,10 +89,12 @@ const Navbar: React.FC = () => {
       <header>
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2 border">
           <div className="flex flex-wrap justify-between items-center  max-w-screen-xl">
-            <a href="#" className="flex items-center">
+
+            <Link to="/home" className="flex items-center">
               <img src={Logo} className="h-20 sm:h-16" alt="Logo" />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
-            </a>
+            </Link>
+            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
+
             <div className="flex items-center lg:order-2">
               <Link to="/cart" className="absolute right-20">
                 <img src={Cart} className="w-8 h-8" alt="Cart Icon" />
