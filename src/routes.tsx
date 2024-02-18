@@ -32,6 +32,7 @@ import WaterArchivesPage from './views/admin/water/archives';
 import ElectricityPage from './views/admin/electricity';
 import ElectricityTransaction from './views/admin/electricity/electricityTransaction';
 import ElectricityArchivesPage from './views/admin/electricity/archives';
+import MaintenancePage from './views/admin/maintenance';
 import InventoryPage from './views/admin/inventory';
 import AnalyticsPage from './views/admin/analytics';
 //Client
@@ -82,6 +83,7 @@ const AppRoutes: FC = () => {
         { path: 'electricity-all', element: <ElectricityPage /> },
         { path: 'electricity/store/:id', element: <ElectricityTransaction /> },
         { path: 'electricity/store-archived/:id', element: <ElectricityArchivesPage /> },
+        { path: 'maintenance-all', element: <MaintenancePage /> },
         { path: 'inventory', element: <InventoryPage /> },
         { path: 'analytics', element: <AnalyticsPage /> },
       ]

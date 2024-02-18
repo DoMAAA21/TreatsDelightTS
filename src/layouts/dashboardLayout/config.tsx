@@ -10,6 +10,7 @@ import EmployeeIcon from '../../components/icons/EmployeeIcon';
 import RentIcon from '../../components/icons/RentIcon';
 import WaterIcon from '../../components/icons/WaterIcon';
 import ElectricityIcon from '../../components/icons/ElectricityIcon';
+import MaintenanceIcon from '../../components/icons/MaintenanceIcon';
 import InventoryIcon from '../../components/icons/InventoryIcon';
 
 interface NavItem {
@@ -86,6 +87,12 @@ export const useNav = () => {
         activeIcon: <ElectricityIcon color="#fff" />
       },
       {
+        title: 'Maintenance',
+        path: '/admin/maintenance-all',
+        defaultIcon: <MaintenanceIcon color="#000" />,
+        activeIcon: <MaintenanceIcon color="#fff" />
+      },
+      {
         title: 'Inventory',
         path: '/admin/inventory',
         defaultIcon: <InventoryIcon color="#000" />,
@@ -105,7 +112,7 @@ export const useNav = () => {
     }
 
     if (user?.role === 'Admin') {
-      const filteredNav = ['Dashboard','Stores', 'Owners','Rent','Water','Electricity'];
+      const filteredNav = ['Dashboard','Stores', 'Owners','Rent','Water','Electricity','Maintenance'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 

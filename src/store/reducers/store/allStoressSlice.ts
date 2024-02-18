@@ -11,6 +11,7 @@ interface Store {
   rent?: number;
   water?: number;
   electricity?: number;
+  maintenance?: number;
 }
 
 
