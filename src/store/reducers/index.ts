@@ -26,6 +26,9 @@ import waterReducer from './water/waterSlice';
 import allElectricityReducer from './electricity/allElectricitySlice';
 import newElectricityReducer from './electricity/newElectricitySlice';
 import electricityReducer from './electricity/electricitySlice';
+import allMaintenanceReducer from './maintenance/allMaintenanceSlice';
+import newMaintenanceReducer from './maintenance/newMaintenanceSlice';
+import maintenanceReducer from './maintenance/maintenanceSlice';
 import electricityBillsPerMonthReducer from './chart/electricBillsPerMonthSlice';
 import waterBillsPerMonthReducer from './chart/waterBillsPerMonthSlice';
 import rentBillsPerMonthReducer from './chart/rentBillsPerMonthSlice';
@@ -63,7 +66,10 @@ const rootReducer = combineReducers({
     electricityBill : electricityBillsPerMonthReducer,
     waterBill : waterBillsPerMonthReducer,
     rentBill : rentBillsPerMonthReducer,
-    productsSold : productsSoldReducer
+    productsSold : productsSoldReducer,
+    allMaintenance : allMaintenanceReducer,
+    newMaintenance : newMaintenanceReducer,
+    maintenance : maintenanceReducer,
 })
 
 export default rootReducer;

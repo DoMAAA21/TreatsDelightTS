@@ -94,7 +94,7 @@ const MaintenancePage: FC = () => {
 
     return (
         <>
-            <MetaData title={'Maintenances'} />
+            <MetaData title={'Maintenance'} />
             <div
                 style={{
                     display: 'flex',
@@ -107,7 +107,7 @@ const MaintenancePage: FC = () => {
                 }}
             >
                 <div className="p-4">
-                    <h1 className="text-2xl font-semibold">Maintenances</h1>
+                    <h1 className="text-2xl font-semibold ">Maintenance</h1>
                 </div>
             </div>
 
