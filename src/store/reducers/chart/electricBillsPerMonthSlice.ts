@@ -3,25 +3,25 @@ import axios from 'axios';
 import { RootState } from '../../index';
 
 const initialState = {
-    billsPerMonth: [],
+    electricBillsPerMonth: [],
     loading: false,
     error: null,
 };
 
-export const fetchBillsPerMonth = createAsyncThunk<void, void, { state: RootState }>('billsPerMonth/fetchAllElectricity',async (_, { rejectWithValue, dispatch, getState }) => {
+export const fetchElectricityBillsPerMonth = createAsyncThunk<void, void, { state: RootState }>('billsPerMonth/fetchAllElectricity',async (_, { rejectWithValue, dispatch, getState }) => {
       try {
-        dispatch(billsPerMonthRequest()); 
+        dispatch(elecBillsPerMonthRequest()); 
         const authState = getState().auth;
         const storeId = authState.user?.store?.storeId;
         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/electricity-bill-per-month`, { withCredentials: true });
-        dispatch(billsPerMonthSuccess(data));
+        dispatch(elecBillsPerMonthSuccess(data));
         return;
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          dispatch(billsPerMonthFail(error.response?.data?.message || 'An error occurred'));
+          dispatch(elecBillsPerMonthFail(error.response?.data?.message || 'An error occurred'));
           return rejectWithValue(error.response?.data?.message || 'An error occurred');
         }
-        dispatch(billsPerMonthFail('An error occurred'));
+        dispatch(elecBillsPerMonthFail('An error occurred'));
         return rejectWithValue('An error occurred');
       }
     }
@@ -31,18 +31,18 @@ export const fetchBillsPerMonth = createAsyncThunk<void, void, { state: RootStat
 
 
 
-const billsPerMonthSlice = createSlice({
-    name: 'billsPerMonth',
+const electricBillsPerMonth = createSlice({
+    name: 'electricBillsPerMonth',
     initialState,
     reducers: {
-        billsPerMonthRequest: (state) => {
+        elecBillsPerMonthRequest: (state) => {
             state.loading = true;
         },
-        billsPerMonthSuccess: (state, action) => {
+        elecBillsPerMonthSuccess: (state, action) => {
             state.loading = false;
-            state.billsPerMonth = action.payload;
+            state.electricBillsPerMonth = action.payload;
         },
-        billsPerMonthFail: (state, action) => {
+        elecBillsPerMonthFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         },
@@ -53,10 +53,10 @@ const billsPerMonthSlice = createSlice({
 });
 
 export const {
-    billsPerMonthRequest,
-    billsPerMonthSuccess,
-    billsPerMonthFail,
+  elecBillsPerMonthRequest,
+    elecBillsPerMonthSuccess,
+    elecBillsPerMonthFail,
     clearErrors,
-} = billsPerMonthSlice.actions;
+} = electricBillsPerMonth.actions;
 
-export default billsPerMonthSlice.reducer;
+export default electricBillsPerMonth.reducer;

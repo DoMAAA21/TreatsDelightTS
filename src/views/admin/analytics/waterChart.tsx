@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchElectricityBillsPerMonth } from '../../../store/reducers/chart/electricBillsPerMonthSlice';
-import { LineChart, Line, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,  } from 'recharts'; // Import ResponsiveContainer from Recharts
+import { fetchWaterBillsPerMonth } from '../../../store/reducers/chart/waterBillsPerMonthSlice';
+import { LineChart,  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'; // Import ResponsiveContainer from Recharts
 
 interface Bill {
     month: number;
@@ -21,22 +21,22 @@ function getMonthName(monthNumber: number) {
     }
 }
 
-const ElectricityChart = () => {
+const WaterChart = () => {
     const dispatch = useAppDispatch();
-    const { electricBillsPerMonth } = useAppSelector(state => state.electricityBill);
+    const { waterBillsPerMonth } = useAppSelector(state => state.waterBill);
 
     useEffect(() => {
-        dispatch(fetchElectricityBillsPerMonth());
+        dispatch(fetchWaterBillsPerMonth());
     }, [dispatch]);
 
-    const chartData: { month: string; totalBill: number }[] = electricBillsPerMonth.map((bill: Bill) => ({
+    const chartData: { month: string; totalBill: number }[] = waterBillsPerMonth.map((bill: Bill) => ({
         month: getMonthName(bill.month),
         totalBill: bill.totalBill
     }));
 
     return (
         <div className="w-full">
-            <h2 className="text-center text-2xl font-semibold mb-8">Electricity Bills per Month</h2>
+            <h2 className="text-center text-2xl font-semibold mb-8">Water Bills per Month</h2>
             <ResponsiveContainer width="100%" aspect={3/2}>
                 <LineChart
                     data={chartData}
@@ -55,14 +55,14 @@ const ElectricityChart = () => {
                     />
                     <Legend
                         payload={[
-                            { value: 'Electricity Bill', type: 'circle', color: '#d1bf00' }
+                            { value: 'Water Bill', type: 'circle', color: '#62b5ce' }
                         ]}
                     />
-                    <Line dataKey="totalBill" stroke="#d1bf00" type="monotone"activeDot={{ r: 8 }} />
+                    <Line dataKey="totalBill" stroke="#62b5ce" type="monotone"activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
         </div>
     )
 }
 
-export default ElectricityChart;
+export default WaterChart;
