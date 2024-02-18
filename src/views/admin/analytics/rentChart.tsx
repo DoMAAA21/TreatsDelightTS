@@ -38,7 +38,7 @@ const RentChart = () => {
 
     return (
         <div className="w-full">
-            <h2 className="text-center text-2xl font-semibold mb-8">Rent Bills per Month</h2>
+            <h2 className="text-center text-lg font-semibold mb-8">Rent Bills per Month</h2>
             <ResponsiveContainer width="100%" aspect={3/2}>
                 <LineChart
                     data={chartData}
