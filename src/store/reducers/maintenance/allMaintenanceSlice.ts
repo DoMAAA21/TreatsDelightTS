@@ -7,6 +7,7 @@ interface Maintenance {
     amount: number;
     type: string;
     paymentType: string;
+    cateredBy: string;
     note?: string;
     issuedAt: Date;
     paidAt: Date;
