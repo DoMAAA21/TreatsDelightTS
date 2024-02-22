@@ -87,8 +87,8 @@ const Navbar: React.FC = () => {
   return (
     <>
       <header>
-        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2 border">
-          <div className="flex flex-wrap justify-between items-center  max-w-screen-xl">
+        <nav className="bg-[#306844] border-gray-200 px-4 lg:px-6 py-2 border">
+          <div className="flex flex-wrap items-center  max-w-screen-xl">
 
             <Link to="/home" className="flex items-center">
               <img src={Logo} className="h-20 sm:h-16" alt="Logo" />
@@ -139,7 +139,7 @@ const Navbar: React.FC = () => {
 
             </div>
             <div
-              className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
+              className="hidden items-center w-full lg:flex lg:w-auto lg:order-1"
               id="mobile-menu-2"
             >
               <ul className="pl-10 flex flex-col mt-4 font-medium lg:flex-row lg:space-x-2 lg:mt-0">
