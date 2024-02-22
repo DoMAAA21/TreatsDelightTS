@@ -1,38 +1,47 @@
-import { VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryPie } from 'victory';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { fetchProductsSold } from '../../../store/reducers/chart/productsSoldSlice';
 
+
+const colorList = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#e13d3d', '#ffd06d'];
 const ChartCard = () => {
-  const data = [
-    { quarter: 1, earnings: 13000 },
-    { quarter: 2, earnings: 16500 },
-    { quarter: 3, earnings: 14250 },
-    { quarter: 4, earnings: 19000 }
-  ];
+  const dispatch = useAppDispatch();
+  const { productsSold } = useAppSelector(state => state.productsSold);
+
+  useEffect(() => {
+    dispatch(fetchProductsSold());
+
+  }, [dispatch])
+
+  const modifiedData: { name: string; value: number }[] = productsSold.map((entry: { label: string; value: number }) => ({
+    name: entry.label,
+    value: entry.value
+  }));
+
 
   return (
-    <div className="bg-white shadow-md rounded-md h-96 p-4">
-      <h2>Projected Sales</h2>
-      {/* <VictoryChart domainPadding={20} theme={VictoryTheme.material}>
-        <VictoryAxis
-          tickValues={[1, 2, 3, 4]}
-          tickFormat={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
-        />
-        <VictoryAxis
-          dependentAxis
-          tickFormat={(x) => (`$${x / 1000}k`)}
-        />
-        <VictoryBar data={data} x="quarter" y="earnings" />
-      </VictoryChart> */}
-      <VictoryPie
-        // data={[
-        //   { x: "Cats", y: 35 },
-        //   { x: "Dogs", y: 40 },
-        //   { x: "Birds", y: 55 }
-        // ]}
-        data={data}
-        x="quarter" y="earnings"
-        colorScale={["#bfe0e2", "#5faab1", "#356169", "#d9aeff", "#9825f8" ]}
-
-      />
+    <div className="bg-white shadow-md rounded-md h-96 p-4 pb-8">
+      <h2 className="text-center text-lg font-semibold">Top Products</h2>
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart width={400} height={400}>
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={modifiedData}
+            cx="50%"
+            cy="50%"
+            outerRadius={120}
+            fill="#8884d8"
+          >
+            {modifiedData.map((entry, index) => (
+              <Cell key={`cell-${index}-${entry}`} fill={colorList[index % colorList.length]} />
+            ))}
+          </Pie>
+          <Legend />
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   )
 }

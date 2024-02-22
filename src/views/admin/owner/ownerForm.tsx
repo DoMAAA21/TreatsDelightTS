@@ -1,7 +1,17 @@
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { Field, ErrorMessage } from 'formik';
 import { religions } from '../../../components/inputs';
+import { fetchAllStores } from '../../../store/reducers/store/allStoressSlice';
 
 const OwnerForm = () => {
+    const dispatch = useAppDispatch();
+    const { stores } = useAppSelector(state => state.allStores);
+
+    useEffect(() => {
+        dispatch(fetchAllStores());
+    }, [dispatch]);
+
     return (
         <>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center w- mb-4">
@@ -48,6 +58,24 @@ const OwnerForm = () => {
                     ))}
                 </Field>
                 <ErrorMessage name="religion" component="div" className="text-red-500" />
+            </div>
+
+            <div className="mb-4">
+                <label htmlFor="storeId" className="block text-sm font-medium text-gray-700">
+                    Store
+                </label>
+                <Field
+                    as="select"
+                    id="store"
+                    name="storeId"
+                    className="mt-1 p-2 w-full border border-gray-400 rounded-md"
+                >
+                    <option value="" disabled>Select store</option>
+                    {stores.map(store => (
+                        <option key={store._id} value={`${store._id}-${store.name}`}>{store.name}</option>
+                    ))}
+                </Field>
+                <ErrorMessage name="storeId" component="div" className="text-red-500" />
             </div>
 
 

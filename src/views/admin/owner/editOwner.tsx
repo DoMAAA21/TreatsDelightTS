@@ -24,6 +24,8 @@ interface UserFormData {
     password: string;
     religion: string;
     avatar: File | Blob | string | null;
+    storeId: string;
+    storeName?: string;
     role: string;
 }
 
@@ -85,10 +87,13 @@ const EditOwnerPage = () => {
         role: user?.role || '',
         course: user?.course || '',
         religion: user?.religion || '',
+        storeId: user?.store ? `${user.store.storeId}-${user.store.name}` : '' || '',
         avatar: '',
     };
 
     const onSubmit = (data: UserFormData) => {
+
+        const [storeId, storeName] = data.storeId.split('-');
         const userData: UserFormData = {
             fname: data.fname,
             lname: data.lname,
@@ -96,6 +101,8 @@ const EditOwnerPage = () => {
             password: data.password,
             religion: data.religion,
             role: 'Owner',
+            storeId: storeId,
+            storeName: storeName,
             avatar: compressedImage,
         };
         if (id) {

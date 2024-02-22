@@ -1,7 +1,7 @@
 const EmployeeIcon: React.FC<{ color: string }> = ({ color }) => (
-    <svg fill={color} width="30px" height="30px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" stroke={color} stroke-width="0.5399999999999999">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+    <svg fill={color} width="30px" height="30px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" stroke={color} strokeWidth="0.5399999999999999">
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
         <g id="SVGRepo_iconCarrier"> <title>employee_line</title> 
         <g id="b1a346b4-a871-40fe-88af-10f4227eef9a" data-name="Layer 3"> 
         <path d="M16.43,16.69a7,7,0,1,1,7-7A7,7,0,0,1,16.43,16.69Zm0-11.92a5,5,0,1,0,5,5A5,5,0,0,0,16.43,4.77Z"></path> 

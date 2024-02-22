@@ -18,6 +18,10 @@ interface User {
     email: string;
     religion: string;
     role: string;
+    store: {
+        storeId: string;
+        name: string;
+    }
     actions: React.ReactNode;
 }
 
@@ -53,7 +57,7 @@ const UserPage: FC = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteUser(id));
-                Swal.fire('Deleted!', 'User has been deleted.', 'success');
+                Swal.fire('Deleted!', 'Owner has been deleted.', 'success');
             }
         });
     };
@@ -64,6 +68,7 @@ const UserPage: FC = () => {
             { label: 'Full Name', field: 'fullName' },
             { label: 'Email', field: 'email' },
             { label: 'Religion', field: 'religion' },
+            { label: 'Store', field: 'store' },
             { label: 'Role', field: 'role' },
             { label: 'Actions', field: 'actions' },
         ],
@@ -72,6 +77,7 @@ const UserPage: FC = () => {
             fullName: `${user.fname} ${user.lname}`,
             email: user.email,
             religion: user.religion,
+            store: user?.store?.name,
             role: user.role,
             actions: (
                 <div className="flex items-center ml-6">

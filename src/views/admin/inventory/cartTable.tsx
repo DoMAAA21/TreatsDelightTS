@@ -27,13 +27,13 @@ const CartTable: React.FC<CartTableProps> = ({ cart, handleCheckout, handleRemov
             <div className="w-full">
                 <h2 className="text-2xl font-semibold mb-4 text-center">Cart</h2>
                 <div className="overflow-x-auto">
-                <table className="table-auto bg-white rounded-t-3xl max-w-full" style={{ width: '100%' }}>
-                    <thead className="text-indigo-500 rounded-3xl">
+                <table className="table-auto bg-white rounded-md max-w-full" style={{ width: '100%' }}>
+                    <thead className="text-indigo-500 rounded-md">
                         <tr >
-                            <th className="px-4 py-6 bg-blue-200 rounded-tl-3xl">Product</th>
+                            <th className="px-4 py-6 bg-blue-200 rounded-tl-md">Product</th>
                             <th className="px-4 py-2 bg-blue-200">Qty</th>
                             <th className="px-4 py-2 bg-blue-200">Price</th>
-                            <th className="px-1 py-2 bg-blue-200 rounded-tr-3xl"></th>
+                            <th className="px-1 py-2 bg-blue-200 rounded-tr-md"></th>
                         </tr>
                     </thead>
                     <tbody className="max-h-60 overflow-y-auto">

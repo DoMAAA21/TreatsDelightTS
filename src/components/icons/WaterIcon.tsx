@@ -1,7 +1,7 @@
 const WaterIcon: React.FC<{ color: string }> = ({ color }) => (
-    <svg fill={color} width="30px" height="30px" viewBox="-1.82 0 15.99 15.99" xmlns="http://www.w3.org/2000/svg" stroke={color} stroke-width="0.20787">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+    <svg fill={color} width="30px" height="30px" viewBox="-1.82 0 15.99 15.99" xmlns="http://www.w3.org/2000/svg" stroke={color} strokeWidth="0.20787">
+        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
         <g id="SVGRepo_iconCarrier"> 
         <g id="Layer_2" data-name="Layer 2"> 
         <g id="Layer_1-2" data-name="Layer 1"> 
