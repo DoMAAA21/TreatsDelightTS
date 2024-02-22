@@ -67,7 +67,7 @@ const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
             type="text"
             placeholder="Search..."
             onChange={handleSearchChange}
-            className="w-48 p-2 border border-gray-300 rounded-md"
+            className="w-84 p-2 border border-gray-300 rounded-md "
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

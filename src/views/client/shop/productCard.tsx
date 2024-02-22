@@ -80,7 +80,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ _id, name, sellPrice, images,
 
     <div className="flex space-x-4 mt-4">
       <button
-        className={`${colors.primary} font-bold py-2 px-4 w-full rounded-full`}
+        className={`bg-[#2C4836] hover:bg-[#AFA54A] text-white font-bold py-2 px-4 w-full rounded-full`}
         onClick={() => navigate(`/shop/product/${_id}`)}
       >
         View Details

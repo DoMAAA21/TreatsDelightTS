@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import RegisterForm from './registerForm';
 import Logo from '../../../assets/logo.png'
-import Event from '../../../assets/svg/event.svg';
+import Register from '../../../assets/svg/register.svg';
 import MetaData from '../../../components/MetaData';
 
 
@@ -15,7 +15,7 @@ const RegisterPage = () => {
                         <div
                             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat flex items-center"
                         >
-                            <img src={Event} alt="Register Background" />
+                            <img src={Register} alt="Register Background by StorySet" />
                         </div>
 
                     </div>

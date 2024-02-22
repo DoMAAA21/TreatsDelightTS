@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from './productCard';
-import QuestionSVG from '../../../assets/svg/question.svg';
+import NothingSVG from '../../../assets/svg/nothing.svg';
 
 interface ProductImage {
     index?: number;
@@ -28,7 +28,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
         <div>
             {products.length === 0 ? (
                <div className="flex flex-col items-center h-screen p-10">
-               <img src={QuestionSVG} className="w-2/4 h-2/4" alt="Product Not Found Img" />
+               <img src={NothingSVG} className="w-2/4 h-2/4" alt="Product Not Found Img by StorySet" />
                <h2 className="mt-4 font-semibold text-2xl text-center ">No results found.</h2>
            </div>
            

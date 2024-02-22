@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import LoginForm from './loginForm';
 import Logo from '../../../assets/logo.png'
-import BreakFastLogo from '../../../assets/svg/breakfast.svg';
+import LoginSVG from '../../../assets/svg/login.svg';
 import MetaData from '../../../components/MetaData';
 
 const LoginPage = () => {
@@ -14,7 +14,7 @@ const LoginPage = () => {
             <div
               className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat flex items-center"
             >
-              <img src={BreakFastLogo} alt="Login Background" />
+              <img src={LoginSVG} alt="Login Background by Storyset" />
             </div>
 
           </div>
