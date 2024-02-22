@@ -8,7 +8,7 @@ import MetaData from '../../../components/MetaData';
 import { fetchAllItems, setSelectedCategory, setLastSelectedCategory, setSearchQuery, setSelectedStore, setLastSelectedStore } from '../../../store/reducers/product/allProductsSlice';
 import { fetchStores } from '../../../store/reducers/store/allStoressSlice';
 import ChevronDown from '../../../assets/icons/chevrondown.svg';
-
+import Search from '../../../assets/icons/search.svg';
 
 interface Category {
   label: string;
@@ -84,13 +84,20 @@ const ShoppingPage: React.FC = () => {
       <MetaData title={'Shop'} />
       <div className="container mx-auto p-4">
         <div className="mx-4 flex flex-wrap items-center justify-between">
+        <div className="relative">
           <input
-            type="text"
-            placeholder="Search"
-            value={searchQuery}
-            onChange={e => dispatch(setSearchQuery(e.target.value))}
-            className="my-4 p-3 border border-gray-300 rounded-3xl w-full sm:w-auto"
+          type="text"
+          placeholder="Search"
+          value={searchQuery}
+          onChange={e => dispatch(setSearchQuery(e.target.value))}
+          className="my-4 p-3 border border-gray-400 rounded-3xl w-full lg:w-96 pr-12"
           />
+          <img
+          src={Search}
+          className="absolute top-1/2 -translate-y-1/2 right-3 w-8 h-8" 
+          alt="Search Icon"
+          />
+          </div>
           <div className="my-4 relative border border-gray-300 rounded-md bg-indigo-100 w-96">
             <select
               className="appearance-none border-none bg-transparent py-2 px-4 pr-8 rounded-md focus:outline-none w-full"
@@ -106,20 +113,19 @@ const ShoppingPage: React.FC = () => {
               <img className="h-4 w-4" src={ChevronDown} alt="chevron-down" />
             </div>
           </div>
-
-
-          <div className="my-4 flex flex-wrap gap-2">
-            {categories.map(category => (
+          <div className="w-full flex justify-center">
+            <div className="my-4 flex flex-wrap gap-2 content-center">
+              {categories.map((category) => (
               <button
-                key={category.value}
-                onClick={() => handleCategoryChange(category.value)}
-                className={`px-4 py-2 rounded-md border font-semibold border-gray-300 ${selectedCategory === category.value ? 'bg-black text-white' : 'bg-yellow-400'}`}
+              key={category.value} onClick={() => handleCategoryChange(category.value)}
+              className={`px-4 py-2 rounded-md border font-semibold border-gray-300 
+              ${ selectedCategory === category.value ? 'bg-green-800 text-white' : 'bg-yellow-400'}`}
               >
                 {category.label}
               </button>
             ))}
+            </div>
           </div>
-
         </div>
 
         {loading && !items.length ? (
