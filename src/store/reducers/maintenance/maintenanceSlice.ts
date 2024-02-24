@@ -37,9 +37,8 @@ export const deleteMaintenance = createAsyncThunk('maintenance/deleteMaintenance
 
 export const restoreMaintenance = createAsyncThunk('maintenance/remaintenanceMaintenance', async (id: string | number, { dispatch }) => {
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/maintenance/restore/${id}`, { withCredentials: true });
+        const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/maintenance/restore`, { id }, { withCredentials: true });
         dispatch(restoreMaintenanceSuccess(data.success))
-        console.log(data.success)
         return data.success;
 
     } catch (error) {

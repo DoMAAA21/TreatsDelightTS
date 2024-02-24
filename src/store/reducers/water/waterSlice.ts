@@ -35,9 +35,9 @@ export const deleteWater = createAsyncThunk('water/deleteWater', async (id: stri
 }
 );
 
-export const restoreWater = createAsyncThunk('water/rewaterWater', async (id: string | number, { dispatch }) => {
+export const restoreWater = createAsyncThunk('water/restoreWater', async (id: string | number, { dispatch }) => {
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/restore/${id}`, { withCredentials: true });
+        const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/restore/`, { id }, { withCredentials: true });
         dispatch(restoreWaterSuccess(data.success))
         console.log(data.success)
         return data.success;
@@ -50,8 +50,6 @@ export const restoreWater = createAsyncThunk('water/rewaterWater', async (id: st
     }
 }
 );
-
-
 
 
 const waterSlice = createSlice({
