@@ -36,7 +36,6 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
         data-aos={isMobileMenuOpen ? 'fade-right' : ''}
         data-aos-delay={isMobileMenuOpen ? 0 : 300} // Add delay when closing
       >
-        {/* <div className="overflow-y-auto max-h-[calc(100vh-4rem)]"> */}
         <ul className="flex flex-col font-medium p-2 w-full">
           <li className='mb-8 flex'>
               <Link to="/home" className="flex items-center">
@@ -61,7 +60,6 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
             </Link>
           ))}
         </ul>
-        {/* </div> */}
       </div>
     </>
   );
