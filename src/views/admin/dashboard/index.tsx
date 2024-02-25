@@ -43,8 +43,7 @@ const DashboardPage = () => {
                             data-aos-delay={100}
                         >
                             <div>
-                                <SalesWidget />
-
+                               <SalesWidget  />
                             </div>
                             <div className="mt-6">
                                 <ExpensesWidget />

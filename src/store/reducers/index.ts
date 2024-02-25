@@ -34,6 +34,7 @@ import waterBillsPerMonthReducer from './analytic/waterBillsPerMonthSlice';
 import rentBillsPerMonthReducer from './analytic/rentBillsPerMonthSlice';
 import productsSoldReducer from './analytic/productsSoldSlice';
 import topStoresReducer from './analytic/topStoresSlice';
+import salesReducer from './analytic/salesSlice';
 
 
 const rootReducer = combineReducers({
@@ -71,7 +72,8 @@ const rootReducer = combineReducers({
     allMaintenance : allMaintenanceReducer,
     newMaintenance : newMaintenanceReducer,
     maintenance : maintenanceReducer,
-    topStores : topStoresReducer
+    topStores : topStoresReducer,
+    sales : salesReducer,
 })
 
 export default rootReducer;

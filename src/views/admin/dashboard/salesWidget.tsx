@@ -1,25 +1,24 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getStoreDetails } from '../../../store/reducers/store/storeDetailsSlice';
-import RentIcon from '../../../assets/svg/rentSign.svg';
-import PlugIcon from '../../../assets/svg/plug.svg';
+import { fetchSalesThisMonth, fetchSalesToday } from '../../../store/reducers/analytic/salesSlice';
+import PesoIcon from '../../../assets/svg/peso.svg';
+import MoneyIcon from '../../../assets/svg/money.svg';
+
 
 
 const SalesWidget = () => {
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state.auth);
-    const { store } = useAppSelector((state) => state.storeDetails);
+    const { salesThisMonth, salesToday } = useAppSelector((state) => state.sales);
+
 
     useEffect(() => {
-        if (user?.store?.storeId) {
-            dispatch(getStoreDetails(user.store.storeId));
-        }
+        dispatch(fetchSalesThisMonth());
+        dispatch(fetchSalesToday());
     }, [dispatch]);
 
     const expenses = [
-        { title: 'Rent', qty: store?.rent, icon: RentIcon },
-        { title: 'Electricity', qty: store?.electricity, icon: PlugIcon, },
-        // { title: 'Electricity', qty: store?.electricity, icon: PlugIcon, },
+        { title: 'Sales This Month', qty: salesThisMonth, icon: PesoIcon },
+        { title: 'Sales Today', qty: salesToday, icon: MoneyIcon, },
     ];
 
     return (
@@ -29,14 +28,15 @@ const SalesWidget = () => {
                     key={index}
                     className="bg-white lg:p-18 md:p-16 p-4 rounded-md shadow-md cursor-pointer hover:bg-gray-300 flex"
                 >
-                    <div className="bg-indigo-400 p-4 w-20 h-20 rounded-full mr-4 flex-shrink-0 transition-transform hover:scale-110">
-                        <img className="w-12 h-12 pb-2" src={exp.icon} alt="widget logo" />
+                    <div className="bg-indigo-400 p-4 w-24 h-24 rounded-full mr-4 flex-shrink-0 transition-transform hover:scale-110">
+                        <img className="w-16 h-16 pb-2" src={exp.icon} alt="widget logo" />
                     </div>
 
                     <div className="flex flex-col items-center">
                         <h2 className="text-lg font-semibold">
-                            <span className="text-lg font-bold mb-2" style={{ color: (exp.qty || 0) < 0 ? 'red' : 'green' }}>
-                                {((exp.qty || 0) < 0 ? `-₱${Math.abs(exp.qty || 0)}` : `₱${exp.qty || 0}`)} </span>
+                            <span className="text-3xl font-bold mb-2" style={{ color: (+exp.qty || 0) < 0 ? 'red' : 'green' }}>
+                                {((+exp.qty || 0) < 0 ? `-₱${Math.abs(+exp.qty || 0)}` : `₱${+exp.qty || 0}`)}
+                            </span>
                             <p> {exp.title}</p>
                         </h2>
                     </div>
