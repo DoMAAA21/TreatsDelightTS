@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchElectricityBillsPerMonth } from '../../../store/reducers/analytics/electricBillsPerMonthSlice';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts'; 
+import { fetchRentBillsPerMonth } from '../../../store/reducers/analytic/rentBillsPerMonthSlice';
+import { LineChart,  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'; // Import ResponsiveContainer from Recharts
 
 interface Bill {
     month: number;
@@ -21,22 +21,24 @@ function getMonthName(monthNumber: number) {
     }
 }
 
-const ElectricityChart = () => {
+const RentChart = () => {
     const dispatch = useAppDispatch();
-    const { electricBillsPerMonth } = useAppSelector(state => state.electricityBill);
+    const { rentBillsPerMonth } = useAppSelector(state => state.rentBill);
+
+    console.log(rentBillsPerMonth)
 
     useEffect(() => {
-        dispatch(fetchElectricityBillsPerMonth());
+        dispatch(fetchRentBillsPerMonth());
     }, [dispatch]);
 
-    const chartData: { month: string; totalBill: number }[] = electricBillsPerMonth.map((bill: Bill) => ({
+    const chartData: { month: string; totalBill: number }[] = rentBillsPerMonth.map((bill: Bill) => ({
         month: getMonthName(bill.month),
         totalBill: bill.totalBill
     }));
 
     return (
         <div className="w-full">
-            <h2 className="text-center text-lg font-semibold mb-8">Electricity Bills per Month</h2>
+            <h2 className="text-center text-lg font-semibold mb-8">Rent Bills per Month</h2>
             <ResponsiveContainer width="100%" aspect={2/1}>
                 <LineChart
                     data={chartData}
@@ -55,14 +57,14 @@ const ElectricityChart = () => {
                     />
                     <Legend
                         payload={[
-                            { value: 'Electricity Bill', type: 'circle', color: '#d1bf00' }
+                            { value: 'Rent Bill', type: 'circle', color: '#d03232' }
                         ]}
                     />
-                    <Line dataKey="totalBill" stroke="#d1bf00" type="monotone"activeDot={{ r: 8 }} />
+                    <Line dataKey="totalBill" stroke="#d03232" type="monotone"activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
         </div>
     )
 }
 
-export default ElectricityChart;
+export default RentChart;

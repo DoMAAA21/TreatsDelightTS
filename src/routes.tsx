@@ -36,7 +36,7 @@ import MaintenancePage from './views/admin/maintenance';
 import MaintenanceTransaction from './views/admin/maintenance/maintenanceTransactions';
 import MaintenanceArchivesPage from './views/admin/maintenance/archives';
 import InventoryPage from './views/admin/inventory';
-import AnalyticsPage from './views/admin/analytics';
+import AnalyticsPage from './views/admin/analytic';
 //Client
 import LoginPage from './views/auth/login';
 import RegisterPage from './views/auth/register';
