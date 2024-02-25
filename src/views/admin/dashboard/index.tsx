@@ -4,7 +4,7 @@ import WelcomeCard from './welcomeCard';
 import WidgetNav from './widgetNav';
 import ChartCard from './chartCard';
 import ExpensesWidget from './expensesWidget';
-
+import SalesWidget from './salesWidget';
 
 
 
@@ -37,12 +37,23 @@ const DashboardPage = () => {
                 )}
 
                 {user && (user?.role.toLowerCase() === "owner" || user?.role.toLocaleLowerCase() === "employee") && (
-                    <div className="w-full lg:w-4/6 mb-4 lg:mb-0 lg:mr-4 "
-                        data-aos="fade-right"
-                        data-aos-delay={100}
-                    >
-                        <ExpensesWidget />
-                    </div>
+                    <>
+                        <div className="w-full lg:w-4/6 mb-4 lg:mb-0 lg:mr-4 "
+                            data-aos="fade-right"
+                            data-aos-delay={100}
+                        >
+                            <div>
+                                <SalesWidget />
+
+                            </div>
+                            <div className="mt-6">
+                                <ExpensesWidget />
+                            </div>
+
+                        </div>
+
+                    </>
+
                 )}
             </div>
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchRentBillsPerMonth } from '../../../store/reducers/chart/rentBillsPerMonthSlice';
+import { fetchRentBillsPerMonth } from '../../../store/reducers/analytics/rentBillsPerMonthSlice';
 import { LineChart,  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'; // Import ResponsiveContainer from Recharts
 
 interface Bill {

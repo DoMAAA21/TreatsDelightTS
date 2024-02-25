@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchElectricityBillsPerMonth } from '../../../store/reducers/chart/electricBillsPerMonthSlice';
+import { fetchElectricityBillsPerMonth } from '../../../store/reducers/analytics/electricBillsPerMonthSlice';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts'; 
 
 interface Bill {

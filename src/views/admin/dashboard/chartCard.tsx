@@ -2,8 +2,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer, Cell, BarChart, Bar, Rectangle, XAxis } from 'recharts';
-import { fetchProductsSold } from '../../../store/reducers/chart/productsSoldSlice';
-import { fetchTopStores } from '../../../store/reducers/chart/topStoresSlice';
+import { fetchProductsSold } from '../../../store/reducers/analytics/productsSoldSlice';
+import { fetchTopStores } from '../../../store/reducers/analytics/topStoresSlice';
 
 interface ChartCardProps {
   role: string;

@@ -29,11 +29,11 @@ import electricityReducer from './electricity/electricitySlice';
 import allMaintenanceReducer from './maintenance/allMaintenanceSlice';
 import newMaintenanceReducer from './maintenance/newMaintenanceSlice';
 import maintenanceReducer from './maintenance/maintenanceSlice';
-import electricityBillsPerMonthReducer from './chart/electricBillsPerMonthSlice';
-import waterBillsPerMonthReducer from './chart/waterBillsPerMonthSlice';
-import rentBillsPerMonthReducer from './chart/rentBillsPerMonthSlice';
-import productsSoldReducer from './chart/productsSoldSlice';
-import topStoresReducer from './chart/topStoresSlice';
+import electricityBillsPerMonthReducer from './analytics/electricBillsPerMonthSlice';
+import waterBillsPerMonthReducer from './analytics/waterBillsPerMonthSlice';
+import rentBillsPerMonthReducer from './analytics/rentBillsPerMonthSlice';
+import productsSoldReducer from './analytics/productsSoldSlice';
+import topStoresReducer from './analytics/topStoresSlice';
 
 
 const rootReducer = combineReducers({
