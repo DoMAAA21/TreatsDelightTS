@@ -61,6 +61,7 @@ const Navbar: React.FC = () => {
     };
   }, [setOptionsOpen]);
 
+  const allowedOnAdminRoles = ["admin", "owner", "employee" ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -181,9 +182,14 @@ const Navbar: React.FC = () => {
                     <li className="mb-2">
                       <a className="hover:text-indigo-500 cursor-pointer">Profile</a>
                     </li>
-                    <li className="mb-2">
-                      <a className="hover:text-indigo-500 cursor-pointer" onClick={()=>{navigate('/admin')}} >Dashboard</a>
-                    </li>
+                    {user && allowedOnAdminRoles.includes(user.role.toLowerCase())
+                      &&
+                      (
+                        <li className="mb-2">
+                          <a className="hover:text-indigo-500 cursor-pointer" onClick={() => { navigate('/admin') }} >Dashboard</a>
+                        </li>
+                      )}
+
                     <li>
                       <a className="hover:text-indigo-500 cursor-pointer" onClick={logoutHandler}>Logout</a>
                     </li>
