@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
     };
   }, [setOptionsOpen]);
 
-  const allowedOnAdminRoles = ["admin", "owner", "employee" ];
+  const allowedOnAdminRoles = ["admin", "owner", "employee"];
 
   useEffect(() => {
     const handleResize = () => {
