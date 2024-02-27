@@ -8,7 +8,7 @@ import MetaData from '../../../components/MetaData';
 import { fetchAllItems, setSelectedCategory, setLastSelectedCategory, setSearchQuery, setSelectedStore, setLastSelectedStore } from '../../../store/reducers/product/allProductsSlice';
 import { fetchStores } from '../../../store/reducers/store/allStoressSlice';
 import ChevronDown from '../../../assets/icons/chevrondown.svg';
-import Search from '../../../assets/svg/search.svg';
+import Search from '../../../assets/icons/search.svg';
 
 interface Category {
   label: string;
@@ -90,11 +90,11 @@ const ShoppingPage: React.FC = () => {
           placeholder="Search"
           value={searchQuery}
           onChange={e => dispatch(setSearchQuery(e.target.value))}
-          className="my-4 p-3 border border-gray-400 rounded-3xl w-full lg:w-96 pr-12" // Added padding right to make space for the icon
+          className="my-4 p-3 border border-gray-400 rounded-3xl w-full lg:w-96 pr-12"
           />
           <img
           src={Search}
-          className="absolute top-1/2 -translate-y-1/2 right-3 w-8 h-8" // Positioned icon in the middle of the input height and on the right side of the input
+          className="absolute top-1/2 -translate-y-1/2 right-3 w-8 h-8" 
           alt="Search Icon"
           />
           </div>
@@ -118,7 +118,7 @@ const ShoppingPage: React.FC = () => {
               {categories.map((category) => (
               <button
               key={category.value} onClick={() => handleCategoryChange(category.value)}
-              className={`px-4 py-2 rounded-md border font-semibold border-gray-300 hover:bg-yellow-300
+              className={`px-4 py-2 rounded-md border font-semibold border-gray-300 
               ${ selectedCategory === category.value ? 'bg-green-800 text-white' : 'bg-yellow-400'}`}
               >
                 {category.label}

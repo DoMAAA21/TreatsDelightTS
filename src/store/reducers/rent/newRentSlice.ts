@@ -28,7 +28,6 @@ interface NewRentData {
 
 export const newRent = createAsyncThunk<NewRentResponse, NewRentData>('newRent/newRent', async (rentData, { rejectWithValue, dispatch }) => {
     try {
-
         dispatch(newRentRequest());
         const config = {
             headers: {

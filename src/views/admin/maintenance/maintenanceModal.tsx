@@ -8,8 +8,6 @@ import { colors } from '../../../components/theme';
 import Datepicker from "tailwind-datepicker-react"
 import { options } from '../../../components/DatePickerOptions';
 
-
-
 interface TransactionModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -27,8 +25,6 @@ interface FormData {
 const validationSchema = Yup.object({
     amount: Yup.number().min(1, 'Minimum of 1').required('Amount is required'),
 });
-
-
 
 
 const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) => {
@@ -56,10 +52,8 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
         setType(selectedValue);
         setIsPaid(selectedValue === 'paid');
     };
-
-   
+ 
     const onSubmit = (data: FormData) => {
-
         if (id && cateredBy && type) {
             const maintenanceData: FormData = {
                 amount: data.amount,
@@ -71,7 +65,6 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
             };
             dispatch(newMaintenance(maintenanceData))
         }
-
     };
 
     return (

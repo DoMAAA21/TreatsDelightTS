@@ -37,9 +37,8 @@ export const deleteElectricity = createAsyncThunk('electricity/deleteElectricity
 
 export const restoreElectricity = createAsyncThunk('electricity/reelectricityElectricity', async (id: string | number, { dispatch }) => {
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/electricity/restore/${id}`, { withCredentials: true });
+        const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/electricity/restore`, { id }, { withCredentials: true });
         dispatch(restoreElectricitySuccess(data.success))
-        console.log(data.success)
         return data.success;
 
     } catch (error) {

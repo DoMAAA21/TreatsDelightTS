@@ -37,7 +37,7 @@ export const deleteRent = createAsyncThunk('rent/deleteRent', async (id: string 
 
 export const restoreRent = createAsyncThunk('rent/rerentRent', async (id: string | number, { dispatch }) => {
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/rent/restore/${id}`, { withCredentials: true });
+        const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/rent/restore`, { id }, { withCredentials: true });
         dispatch(restoreRentSuccess(data.success))
         console.log(data.success)
         return data.success;

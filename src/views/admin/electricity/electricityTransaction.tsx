@@ -104,7 +104,7 @@ const ElectricityPage: FC = () => {
         columns: [
             { label: 'Electricity ID', field: '_id' },
             { label: 'Electricity Total', field: 'electricity' },
-            { label: 'Consumed x m³', field: 'pxc' },
+            { label: 'Consumed x watts', field: 'pxc' },
             { label: 'Additionals', field: 'additionals' },
             { label: 'Issued At', field: 'issuedAt' },
             { label: 'Paid At', field: 'paidAt' },

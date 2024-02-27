@@ -32,7 +32,7 @@ const Sidebar: FC<SidebarProps> = ({ isMobileMenuOpen, closeMobileMenu }) => {
         ></div>
       )}
       <div
-        className={`lg:flex fixed bg-white h-full top-0 left-0 z-50 border-r border-gray-200 ${isMobileMenuOpen ? 'block w-80' : 'hidden w-64'}`}
+        className={`lg:flex fixed bg-white h-full top-0 left-0 z-50 border-r border-gray-200  overflow-y-auto max-h-[calc(100vh)] ${isMobileMenuOpen ? 'block w-80' : 'hidden w-64'}`}
         data-aos={isMobileMenuOpen ? 'fade-right' : ''}
         data-aos-delay={isMobileMenuOpen ? 0 : 300} // Add delay when closing
       >

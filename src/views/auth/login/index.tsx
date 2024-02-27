@@ -8,7 +8,7 @@ const LoginPage = () => {
   return (
     <>
       <MetaData title={'Login'} />
-      <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+      <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center max-h-screen">
         <div className="max-w-screen-xl sm:m-2  bg-white shadow sm:rounded-lg flex justify-center  rounded-lg">
           <div className="flex-1 bg-indigo-100 text-center hidden lg:flex rounded-tl-lg rounded-bl-lg">
             <div
