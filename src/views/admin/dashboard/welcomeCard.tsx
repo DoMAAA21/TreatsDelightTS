@@ -20,8 +20,6 @@ interface CardProps {
   user: User | null;
 }
 
-
-
 const Card: React.FC<CardProps> = ({ user }) => {
   const currentDate = new Date();
   const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };

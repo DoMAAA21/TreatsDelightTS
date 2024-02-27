@@ -6,7 +6,6 @@ import DashboardLayout from './layouts/dashboardLayout';
 import DefaultLayout from './layouts/defaultLayout';
 //Views
 import DashboardPage from './views/admin/dashboard';
-
 import UserPage from './views/admin/owner';
 import AddOwnerPage from './views/admin/owner/addOwner';
 import EditOwnerPage from './views/admin/owner/editOwner';
@@ -37,6 +36,7 @@ import MaintenanceTransaction from './views/admin/maintenance/maintenanceTransac
 import MaintenanceArchivesPage from './views/admin/maintenance/archives';
 import InventoryPage from './views/admin/inventory';
 import AnalyticsPage from './views/admin/analytics';
+import ProfilePage from './views/admin/employee/profile';
 //Client
 import LoginPage from './views/auth/login';
 import RegisterPage from './views/auth/register';
@@ -90,6 +90,7 @@ const AppRoutes: FC = () => {
         { path: 'maintenance/store-archived/:id', element: <MaintenanceArchivesPage /> },
         { path: 'inventory', element: <InventoryPage /> },
         { path: 'analytics', element: <AnalyticsPage /> },
+        { path: 'profile', element: <ProfilePage/> }
       ]
     },
     {

@@ -173,7 +173,9 @@ const Navbar: React.FC = () => {
                 <div className="absolute top-full w-32 right-0 bg-white border border-gray-200 rounded-lg shadow-lg">
                   <ul className="py-2 text-center">
                     <li className="mb-2">
-                      <a className="hover:text-indigo-500 cursor-pointer">Profile</a>
+                    <Link to="/admin/profile" className="hover:text-indigo-500 cursor-pointer">
+                      Profile
+                    </Link>
                     </li>
                     <li>
                       <a className="hover:text-indigo-500 cursor-pointer" onClick={logoutHandler}>Logout</a>
