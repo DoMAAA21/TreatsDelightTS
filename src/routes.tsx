@@ -37,6 +37,7 @@ import MaintenanceTransaction from './views/admin/maintenance/maintenanceTransac
 import MaintenanceArchivesPage from './views/admin/maintenance/archives';
 import InventoryPage from './views/admin/inventory';
 import AnalyticsPage from './views/admin/analytic';
+import PermitPage from './views/admin/permit';
 //Client
 import LoginPage from './views/auth/login';
 import RegisterPage from './views/auth/register';
@@ -90,6 +91,7 @@ const AppRoutes: FC = () => {
         { path: 'maintenance/store-archived/:id', element: <MaintenanceArchivesPage /> },
         { path: 'inventory', element: <InventoryPage /> },
         { path: 'analytics', element: <AnalyticsPage /> },
+        { path: 'permits', element: <PermitPage /> },
       ]
     },
     {

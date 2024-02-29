@@ -12,6 +12,10 @@ interface Store {
   water?: number;
   electricity?: number;
   maintenance?: number;
+  permit?:{
+    startedAt?: Date,
+    expiration?: Date,
+  }
 }
 
 

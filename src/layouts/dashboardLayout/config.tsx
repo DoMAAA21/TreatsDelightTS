@@ -93,11 +93,18 @@ export const useNav = () => {
         activeIcon: <MaintenanceIcon color="#fff" />
       },
       {
+        title: 'Permits',
+        path: '/admin/permits',
+        defaultIcon: <InventoryIcon color="#000" />,
+        activeIcon: <InventoryIcon color="#fff" />
+      },
+      {
         title: 'Inventory',
         path: '/admin/inventory',
         defaultIcon: <InventoryIcon color="#000" />,
         activeIcon: <InventoryIcon color="#fff" />
       },
+
     ];
 
     //Role Filtering
@@ -112,7 +119,7 @@ export const useNav = () => {
     }
 
     if (user?.role === 'Admin') {
-      const filteredNav = ['Dashboard','Stores', 'Owners','Rent','Water','Electricity','Maintenance'];
+      const filteredNav = ['Dashboard','Stores', 'Owners','Rent','Water','Electricity','Maintenance','Permits'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 

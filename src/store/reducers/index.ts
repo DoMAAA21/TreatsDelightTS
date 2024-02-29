@@ -35,7 +35,8 @@ import rentBillsPerMonthReducer from './analytic/rentBillsPerMonthSlice';
 import productsSoldReducer from './analytic/productsSoldSlice';
 import topStoresReducer from './analytic/topStoresSlice';
 import salesReducer from './analytic/salesSlice';
-
+import permitReducer from './permit/permitSlice';
+import permitSlice from './permit/permitSlice';
 
 const rootReducer = combineReducers({
     auth : authenticationReducer,
@@ -74,6 +75,7 @@ const rootReducer = combineReducers({
     maintenance : maintenanceReducer,
     topStores : topStoresReducer,
     sales : salesReducer,
+    permit : permitSlice
 })
 
 export default rootReducer;
