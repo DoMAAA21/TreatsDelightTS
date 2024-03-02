@@ -5,30 +5,30 @@ import ProductList from './productList';
 import ProductLoader from '../../../components/loaders/ProductLoader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MetaData from '../../../components/MetaData';
-import { fetchAllItems, setSelectedCategory, setLastSelectedCategory, setSearchQuery, setSelectedStore, setLastSelectedStore } from '../../../store/reducers/product/allProductsSlice';
+import { fetchAllItems, setSearchQuery, setSelectedStore, setLastSelectedStore } from '../../../store/reducers/product/allProductsSlice';
 import { fetchStores } from '../../../store/reducers/store/allStoressSlice';
 import ChevronDown from '../../../assets/icons/chevrondown.svg';
 import Search from '../../../assets/icons/search.svg';
 
-interface Category {
-  label: string;
-  value: string;
-}
+// interface Category {
+//   label: string;
+//   value: string;
+// }
 
-const categories: Category[] = [
-  { label: 'All', value: '' },
-  { label: 'Meals', value: 'Meals' },
-  { label: 'Snacks', value: 'snacks' },
-  { label: 'Beverages', value: 'beverages' },
-  { label: 'Desserts', value: 'desserts' },
-  { label: 'Sandwiches and Wraps', value: 'sandwichesandwraps' },
-  { label: 'Breads', value: 'breads' },
-  { label: 'Others', value: 'Others' },
-];
+// const categories: Category[] = [
+//   { label: 'All', value: '' },
+//   { label: 'Meals', value: 'Meals' },
+//   { label: 'Snacks', value: 'snacks' },
+//   { label: 'Beverages', value: 'beverages' },
+//   { label: 'Desserts', value: 'desserts' },
+//   { label: 'Sandwiches and Wraps', value: 'sandwichesandwraps' },
+//   { label: 'Breads', value: 'breads' },
+//   { label: 'Others', value: 'Others' },
+// ];
 
 const ShoppingPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { items, loading, hasMore, currentPage, searchQuery, selectedCategory, lastSelectedCategory, selectedStore, lastSelectedStore } = useAppSelector(state => state.allProducts);
+  const { items, loading, hasMore, currentPage, searchQuery, selectedStore, lastSelectedStore } = useAppSelector(state => state.allProducts);
   const { stores } = useAppSelector(state => state.allStores);
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const debouncedSearchQueryRef = useRef<string>(debouncedSearchQuery);
@@ -38,27 +38,27 @@ const ShoppingPage: React.FC = () => {
     dispatch(fetchStores());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (items.length === 0 || selectedCategory !== lastSelectedCategory) {
-      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory, store: selectedStore }));
-      dispatch(setLastSelectedCategory(selectedCategory));
-    }
-  }, [selectedCategory, lastSelectedCategory]);
+  // useEffect(() => {
+  //   if (items.length === 0 || selectedCategory !== lastSelectedCategory) {
+  //     dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory, store: selectedStore }));
+  //     dispatch(setLastSelectedCategory(selectedCategory));
+  //   }
+  // }, [selectedCategory, lastSelectedCategory]);
 
 
   useEffect(() => {
     if (items.length === 0 || selectedStore !== lastSelectedStore) {
-      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory, store: selectedStore }));
+      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, store: selectedStore }));
       dispatch(setLastSelectedStore(selectedStore));
     }
   }, [selectedStore, lastSelectedStore]);
 
   useEffect(() => {
     if (debouncedSearchQueryRef.current !== '' && debouncedSearchQuery.trim() === '') {
-      dispatch(fetchAllItems({ page: 1, searchQuery: '', category: selectedCategory, store: selectedStore }));
+      dispatch(fetchAllItems({ page: 1, searchQuery: '', store: selectedStore }));
     }
     if (debouncedSearchQuery) {
-      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, category: selectedCategory, store: selectedStore }));
+      dispatch(fetchAllItems({ page: 1, searchQuery: debouncedSearchQuery, store: selectedStore }));
     }
 
     debouncedSearchQueryRef.current = debouncedSearchQuery;
@@ -67,13 +67,13 @@ const ShoppingPage: React.FC = () => {
   const fetchMoreItems = () => {
     if (hasMore) {
       console.log('Fetching more items. Current page:', currentPage + 1);
-      dispatch(fetchAllItems({ page: currentPage + 1, category: selectedCategory }));
+      dispatch(fetchAllItems({ page: currentPage + 1}));
     }
   };
 
-  const handleCategoryChange = (categoryValue: string) => {
-    dispatch(setSelectedCategory(categoryValue));
-  };
+  // const handleCategoryChange = (categoryValue: string) => {
+  //   dispatch(setSelectedCategory(categoryValue));
+  // };
 
   const handleStoreChange = (storeValue: string) => {
     dispatch(setSelectedStore(storeValue));

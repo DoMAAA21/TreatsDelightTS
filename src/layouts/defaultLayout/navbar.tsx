@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useNav } from './config';
-import Logo from '../../assets/logo.png';
+import Logo from '../../assets/1128logo.png';
 import { successMsg } from '../../components/toast';
 import { logout } from '../../store/reducers/auth/authenticationSlice';
 import Cart from '../../assets/icons/cart.svg';
@@ -92,7 +92,7 @@ const Navbar: React.FC = () => {
           <div className="flex flex-wrap items-center  max-w-screen-xl">
 
             <Link to="/home" className="flex items-center">
-              {/* <img src={Logo} className="h-20 sm:h-16" alt="Logo" /> */}
+              <img src={Logo} className="h-20 sm:h-16" alt="Logo" />
             </Link>
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
 

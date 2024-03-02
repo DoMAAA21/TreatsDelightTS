@@ -1,6 +1,5 @@
 import './home.css';
 import Logo from '../../assets/1128Logo.png';
-import MobileGrocery from '../../assets/home/mobilegrocery.svg';
 import Drinks from '../../assets/home/drinks.svg';
 
 
