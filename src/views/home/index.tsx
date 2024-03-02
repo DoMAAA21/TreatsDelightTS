@@ -1,6 +1,7 @@
 import './home.css';
 import Logo from '../../assets/1128Logo.png';
 import Drinks from '../../assets/home/drinks.svg';
+import background from '../../assets/1128-background.jpg';
 
 
 const HomePage = () => {
@@ -9,7 +10,7 @@ const HomePage = () => {
             <div className="w-full max-w-full" id="heading">
                 <div
                     className="relative bg-cover bg-center h-screen flex flex-col lg:flex-row items-center homepage-container"
-                    style={{ backgroundImage: `url(https://cdn.animaapp.com/projects/6543a2d33a69872920c03d1c/releases/65abbd4440ec8d74c3e49952/img/copy-of-invitation-for-seminar--1.png)` }}
+                    style={{ backgroundImage: `url(${background})` }}
                 >
                     <div className="container lg:pl-20 px-4">
                         <div className="lg:flex items-center mt-[-50px]">
