@@ -24,7 +24,7 @@ interface UpdateContractData {
     storeId: number | string;
     startedAt: Date;
     expiration: Date;
-    image: File | null;
+    file: File | null;
 }
 
 export const updateContract = createAsyncThunk<UpdateContractResponse, UpdateContractData>('updateContract/updateContract', async (contractData, { rejectWithValue, dispatch }) => {

@@ -7,8 +7,7 @@ import MetaData from '../../../components/MetaData';
 import TableLoader from '../../../components/loaders/TableLoader';
 import { colors } from '../../../components/theme';
 import ContractModal from './contractModal';
-import ViewContractModal from './viewContractModal';
-import { successMsg } from '../../../components/toast';
+import { errorMsg, successMsg } from '../../../components/toast';
 
 
 interface Store {
@@ -27,9 +26,8 @@ interface StoresData {
 const ContractPage: FC = () => {
     const dispatch = useAppDispatch();
     const { stores, loading } = useAppSelector((state) => state.allStores);
-    const { success } = useAppSelector((state) => state.contract);
+    const { success, error } = useAppSelector((state) => state.contract);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isContractModalOpen, setIsContractModalOpen] = useState(false);
     const [selectedRowId, setSelectedRowId] = useState<string | number>("");
 
     const openModal = (id: string | number) => {
@@ -41,14 +39,7 @@ const ContractPage: FC = () => {
         setIsModalOpen(false);
     };
 
-    const openContractModal = (id: string | number) => {
-        setSelectedRowId(id);
-        setIsContractModalOpen(true);
-    };
-
-    const closeContractModal = () => {
-        setIsContractModalOpen(false);
-    };
+   
 
     useEffect(() => {
         dispatch(fetchAllStores());
@@ -59,11 +50,16 @@ const ContractPage: FC = () => {
             successMsg('Contract Updated');
             dispatch(updateContractReset());
         }
+        if (error) {
+            errorMsg(error);
+        }
 
-    }, [dispatch, success]);
+    }, [dispatch, success, error]);
 
 
-
+    const openNewPdfTab = (url: string) => {
+        window.open(url, '_blank');
+    };
 
 
     const calculateExpirationColor = (expirationDate: Date | undefined): React.ReactNode => {
@@ -124,7 +120,7 @@ const ContractPage: FC = () => {
                     </button>
                     {store.contract?.startedAt && store.contract?.expiration &&
                         (
-                            <button onClick={() => openContractModal(store._id)} className={`${colors.info}  py-2 px-4 rounded-lg`}>
+                            <button onClick={() => openNewPdfTab(`${store?.contract?.url}`)} className={`${colors.info}  py-2 px-4 rounded-lg`}>
                                 View
                             </button>
                         )
@@ -162,7 +158,7 @@ const ContractPage: FC = () => {
                 )}
 
                 <ContractModal isOpen={isModalOpen} onClose={closeModal} id={selectedRowId} />
-                <ViewContractModal isOpen={isContractModalOpen} onClose={closeContractModal} id={selectedRowId} />
+                
 
 
             </div>

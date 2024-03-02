@@ -94,6 +94,7 @@ const AppRoutes: FC = () => {
         { path: 'analytics', element: <AnalyticsPage /> },
         { path: 'permits', element: <PermitPage /> },
         { path: 'contracts', element: <ContractPage /> },
+  
       ]
     },
     {
