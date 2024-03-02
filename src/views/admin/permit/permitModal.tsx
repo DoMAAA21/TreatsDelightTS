@@ -39,7 +39,7 @@ const PermitModal: React.FC<PermitModalProps> = ({ isOpen, onClose, id }) => {
 
 
     useEffect(() => {
-        if (id !== undefined && store && store._id !== id && id !== "") {
+        if (id !== undefined && store && store._id !== id && id !== "" && isOpen) {
             dispatch(getStoreDetails(id));
         }
         const imageUrl = store?.permit?.url ?? BlankLogo;
