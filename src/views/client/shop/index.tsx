@@ -85,13 +85,13 @@ const ShoppingPage: React.FC = () => {
       <div className="container mx-auto p-4">
         <div className="mx-4 flex flex-wrap items-center justify-between">
         <div className="relative">
-          {/* <input
+          <input
           type="text"
           placeholder="Search"
           value={searchQuery}
           onChange={e => dispatch(setSearchQuery(e.target.value))}
           className="my-4 p-3 border border-gray-400 rounded-3xl w-full lg:w-96 pr-12"
-          /> */}
+          />
           <img
           src={Search}
           className="absolute top-1/2 -translate-y-1/2 right-3 w-8 h-8" 
