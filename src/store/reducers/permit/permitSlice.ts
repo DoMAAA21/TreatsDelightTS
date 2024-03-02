@@ -39,8 +39,6 @@ export const updatePermit = createAsyncThunk<UpdatePermitResponse, UpdatePermitD
             `${import.meta.env.VITE_BASE_URL}/api/v1/admin/update-permit`, permitData, { withCredentials: true, ...config }
         );
 
-        console.log(data);
-
         dispatch(updatePermitSuccess(data));
         return data;
     } catch (error) {

@@ -39,8 +39,6 @@ export const updateContract = createAsyncThunk<UpdateContractResponse, UpdateCon
             `${import.meta.env.VITE_BASE_URL}/api/v1/admin/update-contract`, contractData, { withCredentials: true, ...config }
         );
 
-        console.log(data);
-
         dispatch(updateContractSuccess(data));
         return data;
     } catch (error) {
