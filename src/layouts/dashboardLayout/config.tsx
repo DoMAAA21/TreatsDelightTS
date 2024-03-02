@@ -12,6 +12,7 @@ import WaterIcon from '../../components/icons/WaterIcon';
 import ElectricityIcon from '../../components/icons/ElectricityIcon';
 import MaintenanceIcon from '../../components/icons/MaintenanceIcon';
 import InventoryIcon from '../../components/icons/InventoryIcon';
+import PermitIcon from '../../components/icons/PermitIcon';
 
 interface NavItem {
   title: string;
@@ -95,8 +96,8 @@ export const useNav = () => {
       {
         title: 'Permits',
         path: '/admin/permits',
-        defaultIcon: <InventoryIcon color="#000" />,
-        activeIcon: <InventoryIcon color="#fff" />
+        defaultIcon: <PermitIcon color="#000" />,
+        activeIcon: <PermitIcon color="#fff" />
       },
       {
         title: 'Inventory',

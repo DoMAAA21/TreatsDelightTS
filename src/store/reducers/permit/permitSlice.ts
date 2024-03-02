@@ -8,73 +8,78 @@ interface Permit {
  
 }
 
-interface NewPermitState {
+interface UpdatePermitState {
     loading: boolean;
     success: boolean;
     error: string | null;
     permits: Permit[];
 }
 
-interface NewPermitResponse {
+interface UpdatePermitResponse {
     success: boolean;
     permit: Permit[];
 }
 
-interface NewPermitData {
+interface UpdatePermitData {
     storeId: number | string;
     startedAt: Date;
     expiration: Date;
+    image: File | null;
 }
 
-export const newPermit = createAsyncThunk<NewPermitResponse, NewPermitData>('newPermit/newPermit', async (permitData, { rejectWithValue, dispatch }) => {
+export const updatePermit = createAsyncThunk<UpdatePermitResponse, UpdatePermitData>('updatePermit/updatePermit', async (permitData, { rejectWithValue, dispatch }) => {
+
+    console.log(permitData);
     try {
-        dispatch(newPermitRequest());
+        dispatch(updatePermitRequest());
         const config = {
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             },
         };
-
-        const { data } = await axios.post<NewPermitResponse>(
-            `${import.meta.env.VITE_BASE_URL}/api/v1/admin/permit/new`, permitData, { withCredentials: true, ...config }
+        const { data } = await axios.patch<UpdatePermitResponse>(
+            `${import.meta.env.VITE_BASE_URL}/api/v1/admin/update-permit`, permitData, { withCredentials: true, ...config }
         );
-        dispatch(newPermitSuccess(data));
+
+        console.log(data);
+
+        dispatch(updatePermitSuccess(data));
         return data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            dispatch(newPermitFail(error.response?.data?.message || 'An error occurred'));
+            dispatch(updatePermitFail(error.response?.data?.message || 'An error occurred'));
             return rejectWithValue(error.response?.data?.message || 'An error occurred');
         }
-        dispatch(newPermitFail('An error occurred'));
+        dispatch(updatePermitFail('An error occurred'));
         return rejectWithValue('An error occurred');
     }
 }
 );
 
-const initialState: NewPermitState = {
+const initialState: UpdatePermitState = {
     loading: false,
     success: false,
     error: null,
     permits: [],
 };
 
-const newPermitSlice = createSlice({
-    name: 'newPermit',
+const updatePermitSlice = createSlice({
+    name: 'updatePermit',
     initialState,
     reducers: {
-        newPermitRequest: (state) => {
+        updatePermitRequest: (state) => {
             state.loading = true;
         },
-        newPermitSuccess: (state, action: PayloadAction<NewPermitResponse>) => {
+        updatePermitSuccess: (state, action: PayloadAction<UpdatePermitResponse>) => {
             state.loading = false;
             state.success = action.payload.success;
             state.permits = action.payload.permit;
         },
-        newPermitFail: (state, action: PayloadAction<string>) => {
+        updatePermitFail: (state, action: PayloadAction<string>) => {
             state.loading = false;
             state.error = action.payload;
         },
-        newPermitReset: (state) => {
+        updatePermitReset: (state) => {
             state.success = false;
             state.error = null;
         },
@@ -87,10 +92,10 @@ const newPermitSlice = createSlice({
 });
 
 export const {
-    newPermitRequest,
-    newPermitSuccess,
-    newPermitFail,
-    newPermitReset,
-} = newPermitSlice.actions;
+    updatePermitRequest,
+    updatePermitSuccess,
+    updatePermitFail,
+    updatePermitReset,
+} = updatePermitSlice.actions;
 
-export default newPermitSlice.reducer;
+export default updatePermitSlice.reducer;

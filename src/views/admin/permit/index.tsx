@@ -1,15 +1,14 @@
 import { FC, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllStores } from '../../../store/reducers/store/allStoressSlice';
-import { deleteStoreReset } from '../../../store/reducers/store/storeSlice';
+import { updatePermitReset } from '../../../store/reducers/permit/permitSlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
-import { successMsg } from '../../../components/toast';
 import TableLoader from '../../../components/loaders/TableLoader';
-import ArrowRightIcon from '../../../assets/icons/arrowright.svg';
 import { colors } from '../../../components/theme';
 import PermitModal from './permitModal';
+import ViewPermitModal from './viewPermitModal';
+import { successMsg } from '../../../components/toast';
 
 
 interface Store {
@@ -28,10 +27,13 @@ interface StoresData {
 const PermitPage: FC = () => {
     const dispatch = useAppDispatch();
     const { stores, loading } = useAppSelector((state) => state.allStores);
-    const { isDeleted } = useAppSelector((state) => state.store);
+    const { success } = useAppSelector((state) => state.permit);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPermitModalOpen, setIsPermitModalOpen] = useState(false);
+    const [selectedRowId, setSelectedRowId] = useState<string | number>("");
 
-    const openModal = () => {
+    const openModal = (id: string | number) => {
+        setSelectedRowId(id);
         setIsModalOpen(true);
     };
 
@@ -39,28 +41,59 @@ const PermitPage: FC = () => {
         setIsModalOpen(false);
     };
 
+    const openPermitModal = (id: string | number) => {
+        setSelectedRowId(id);
+        setIsPermitModalOpen(true);
+    };
+
+    const closePermitModal = () => {
+        setIsPermitModalOpen(false);
+    };
+
     useEffect(() => {
         dispatch(fetchAllStores());
 
-        if (isDeleted) {
+        if (success) {
             dispatch(fetchAllStores());
-            dispatch(deleteStoreReset());
-            successMsg('Store deleted successfully');
+            closeModal();
+            successMsg('Permit Updated');
+            dispatch(updatePermitReset());
         }
-    }, [dispatch, isDeleted]);
+
+    }, [dispatch, success]);
 
 
 
-    // const renderRentStatus = (rent: number) => {
-    //     const rentValue = rent || 0;
-    //     const rentClass = rentValue >= 0 ? 'text-green-600' : 'text-red-600';
 
-    //     return (
-    //         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-semibold ${rentClass}`}>
-    //             {rentValue}
-    //         </span>
-    //     );
-    // };
+
+    const calculateExpirationColor = (expirationDate: Date | undefined): React.ReactNode => {
+        if (!expirationDate) {
+            return (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-gray-400 text-white">
+                    No Updated Permit Yet.
+                </span>
+            );
+        }
+        const currentDate = new Date();
+        const timeDifference = expirationDate.getTime() - currentDate.getTime();
+        const dateString = expirationDate.toISOString().slice(0, 10);
+        let colorClassName: string;
+        if (timeDifference > 30 * 24 * 60 * 60 * 1000) {
+            colorClassName = 'bg-green-600';
+        } else if (timeDifference > 0) {
+            colorClassName = 'bg-yellow-500';
+        } else {
+            colorClassName = 'bg-red-600';
+        }
+        return (
+            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-white ${colorClassName}`}>
+                {dateString}
+            </span>
+        );
+    };
+
+
+
 
     const storesData: StoresData = {
         columns: [
@@ -73,8 +106,8 @@ const PermitPage: FC = () => {
         rows: stores.map((store) => ({
             _id: store._id,
             name: store.name,
-            startedAt: store?.permit?.startedAt,
-            expiration: store?.permit?.expiration,
+            startedAt: store?.permit?.startedAt ? new Date(store.permit.startedAt).toISOString().slice(0, 10) : 'No updated permit yet.',
+            expiration: store?.permit?.expiration ? calculateExpirationColor(new Date(store.permit.expiration)) : 'No updated permit yet.',
             active: store.active ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Yes
@@ -86,14 +119,16 @@ const PermitPage: FC = () => {
             ),
             actions: (
                 <div className="flex items-center  justify-center ml-6">
-                    <Link to={`/admin/rent/store/${store._id}`} className="mr-2 w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8">
-                        <img
-                            src={ArrowRightIcon}
-                            alt="Edit Icon"
-                            className="transition duration-300 ease-in-out transform hover:scale-110"
-                        />
-                    </Link>
-
+                    <button onClick={() => openModal(store._id)} className={`${colors.danger} py-2 px-4 rounded-lg mr-2`}>
+                        Update
+                    </button>
+                    {store.permit?.startedAt && store.permit?.expiration &&
+                        (
+                            <button onClick={() => openPermitModal(store._id)} className={`${colors.info}  py-2 px-4 rounded-lg`}>
+                                View
+                            </button>
+                        )
+                    }
                 </div>
             ),
         })),
@@ -116,9 +151,7 @@ const PermitPage: FC = () => {
                 <div className="p-4">
                     <h1 className="text-2xl font-semibold">Permits</h1>
                 </div>
-                <button onClick={openModal} className={`${colors.primary} font-bold py-2 px-4 rounded-lg`}>
-                    Add +
-                </button>
+
             </div>
 
             <div className="ph-4">
@@ -128,7 +161,8 @@ const PermitPage: FC = () => {
                     <DataTable columns={storesData.columns} rows={storesData.rows} />
                 )}
 
-                <PermitModal isOpen={isModalOpen} onClose={closeModal} />
+                <PermitModal isOpen={isModalOpen} onClose={closeModal} id={selectedRowId} />
+                <ViewPermitModal isOpen={isPermitModalOpen} onClose={closePermitModal} id={selectedRowId} />
 
 
             </div>

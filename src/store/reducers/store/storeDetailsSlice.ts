@@ -15,6 +15,10 @@ interface StoreDetails {
         rent: number;
         electricity: number;
         water: number;
+        permit?: {
+            url?: string;
+        };
+
     };
     loading: boolean;
     error: string | null;
@@ -37,7 +41,7 @@ const initialState: StoreDetails = {
     error: null,
 };
 
-export const getStoreDetails = createAsyncThunk('storeDetails/getStoreDetails', async (id: string | number |undefined, { dispatch, rejectWithValue }) => {
+export const getStoreDetails = createAsyncThunk('storeDetails/getStoreDetails', async (id: string | number , { dispatch, rejectWithValue }) => {
     try {
         dispatch(storeDetailsRequest());
 
