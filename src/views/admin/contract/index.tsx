@@ -136,7 +136,7 @@ const ContractPage: FC = () => {
 
     return (
         <>
-            <MetaData title={'Rents'} />
+            <MetaData title={'Contracts'} />
             <div
                 style={{
                     display: 'flex',

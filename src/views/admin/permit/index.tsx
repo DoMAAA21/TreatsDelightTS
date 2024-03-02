@@ -136,7 +136,7 @@ const PermitPage: FC = () => {
 
     return (
         <>
-            <MetaData title={'Rents'} />
+            <MetaData title={'Permits'} />
             <div
                 style={{
                     display: 'flex',
