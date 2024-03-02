@@ -18,6 +18,9 @@ interface StoreDetails {
         permit?: {
             url?: string;
         };
+        contract?: {
+            url?: string;
+        };
 
     };
     loading: boolean;

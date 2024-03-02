@@ -15,6 +15,10 @@ interface Store {
   permit?:{
     startedAt?: Date,
     expiration?: Date,
+  },
+  contract?:{
+    startedAt?: Date,
+    expiration?: Date,
   }
 }
 
