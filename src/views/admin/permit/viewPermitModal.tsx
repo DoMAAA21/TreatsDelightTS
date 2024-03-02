@@ -17,9 +17,8 @@ const ViewPermitModal: React.FC<ViewPermitModalProps> = ({ isOpen, onClose, id }
     const [permitImage, setPermitImage] = useState("");
 
     useEffect(() => {
-        if (store && id != "" && isOpen) {
+        if (id != "" && isOpen) {
             dispatch(getStoreDetails(id));
-
         }
         const imageUrl = store?.permit?.url ?? BlankLogo;
         setPermitImage(imageUrl);
