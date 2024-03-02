@@ -1,0 +1,4 @@
+const ContractIcon: React.FC<{ color: string }> = ({ color }) => (
+    <svg viewBox="0 0 1024 1024" height="30px" width="30px" className="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill={color}><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M182.88 146.2h585.14v365.71h73.14V73.06H109.74v877.71h402.28v-73.14H182.88z" fill={color}></path><path d="M256.01 219.34h438.86v73.14H256.01zM256.01 365.63h365.71v73.14H256.01zM256.01 511.91h219.43v73.14H256.01zM731.44 545.76L548.59 646.33v201.14l182.86 100.57L914.3 847.47V646.33L731.44 545.76z m109.72 258.46l-109.71 60.34-109.71-60.34V689.58l109.71-60.34 109.71 60.34v114.64z" fill={color}></path><path d="M731.44 746.9m-36.57 0a36.57 36.57 0 1 0 73.14 0 36.57 36.57 0 1 0-73.14 0Z" fill={color}></path></g></svg>
+)
+export default ContractIcon
