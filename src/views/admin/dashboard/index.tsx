@@ -5,6 +5,7 @@ import WidgetNav from './widgetNav';
 import ChartCard from './chartCard';
 import ExpensesWidget from './expensesWidget';
 import SalesWidget from './salesWidget';
+import DocumentWidget from './documentWidget';
 
 
 
@@ -25,6 +26,12 @@ const DashboardPage = () => {
                     data-aos="fade-left"
                     data-aos-delay={100}
                 >
+                    {user && (user.role.toLowerCase() === "owner" || user.role.toLowerCase() === "employee") &&
+                        <div className="pb-2">
+                        <DocumentWidget />
+                        </div>
+                    }
+
                     {user && user.role && <ChartCard role={user.role} />}
                 </div>
                 {user && user?.role.toLowerCase() === "admin" && (
@@ -43,7 +50,7 @@ const DashboardPage = () => {
                             data-aos-delay={100}
                         >
                             <div>
-                               <SalesWidget  />
+                                <SalesWidget />
                             </div>
                             <div className="mt-6">
                                 <ExpensesWidget />

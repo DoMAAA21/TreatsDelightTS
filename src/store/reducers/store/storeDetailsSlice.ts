@@ -17,9 +17,13 @@ interface StoreDetails {
         water: number;
         permit?: {
             url?: string;
+            startedAt?: Date;
+            expiration?: Date;
         };
         contract?: {
             url?: string;
+            startedAt?: Date;
+            expiration?: Date;
         };
 
     };
