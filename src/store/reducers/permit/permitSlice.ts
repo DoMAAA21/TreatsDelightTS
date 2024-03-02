@@ -28,8 +28,6 @@ interface UpdatePermitData {
 }
 
 export const updatePermit = createAsyncThunk<UpdatePermitResponse, UpdatePermitData>('updatePermit/updatePermit', async (permitData, { rejectWithValue, dispatch }) => {
-
-    console.log(permitData);
     try {
         dispatch(updatePermitRequest());
         const config = {
