@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-export const home = () => {
+export const home1 = () => {
   return (
     <div className="index">
       <div className="div">
@@ -9,11 +9,11 @@ export const home = () => {
           <div className="overlap-group">
             <div className="text-wrapper">Login/Signup</div>
             <div className="text-wrapper-2">Order Now</div>
-            {/* <img
+            <img
               className="capstone-logo"
               alt="Capstone logo"
               src="https://cdn.animaapp.com/projects/6543a2d33a69872920c03d1c/releases/65abbd4440ec8d74c3e49952/img/capstone-logo-1.png"
-            /> */}
+            />
           </div>
         </div>
         <div className="main-heading">
@@ -171,4 +171,4 @@ export const home = () => {
   );
 };
 
-export default home;
+export default home1;

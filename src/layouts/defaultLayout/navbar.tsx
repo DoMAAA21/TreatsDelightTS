@@ -88,11 +88,11 @@ const Navbar: React.FC = () => {
   return (
     <>
       <header>
-        <nav className="bg-[#306844] border-gray-200 px-4 lg:px-6 py-2 border">
+        <nav className="bg-slate-300 border-gray-200 px-4 lg:px-6 py-2 border">
           <div className="flex flex-wrap items-center  max-w-screen-xl">
 
             <Link to="/home" className="flex items-center">
-              <img src={Logo} className="h-20 sm:h-16" alt="Logo" />
+              {/* <img src={Logo} className="h-20 sm:h-16" alt="Logo" /> */}
             </Link>
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
 
@@ -148,8 +148,8 @@ const Navbar: React.FC = () => {
                   <li key={item.title}>
                     <Link
                       to={item.path}
-                      className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-[#FFDC95]' : 'text-white'}
-                      } hover:text-[#FFDC95]`}
+                      className={`block py-2 pr-4 pl-4 text-xl ${isLinkActive(item.path) ? 'text-lime-950' : 'text-teal-700'}
+                      } hover:text-sky-500`}
                     >
                       {item.title}
                     </Link>

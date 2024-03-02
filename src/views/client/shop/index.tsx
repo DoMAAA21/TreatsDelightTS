@@ -85,13 +85,13 @@ const ShoppingPage: React.FC = () => {
       <div className="container mx-auto p-4">
         <div className="mx-4 flex flex-wrap items-center justify-between">
         <div className="relative">
-          <input
+          {/* <input
           type="text"
           placeholder="Search"
           value={searchQuery}
           onChange={e => dispatch(setSearchQuery(e.target.value))}
           className="my-4 p-3 border border-gray-400 rounded-3xl w-full lg:w-96 pr-12"
-          />
+          /> */}
           <img
           src={Search}
           className="absolute top-1/2 -translate-y-1/2 right-3 w-8 h-8" 
@@ -113,7 +113,7 @@ const ShoppingPage: React.FC = () => {
               <img className="h-4 w-4" src={ChevronDown} alt="chevron-down" />
             </div>
           </div>
-          <div className="w-full flex justify-center">
+          {/* <div className="w-full flex justify-center">
             <div className="my-4 flex flex-wrap gap-2 content-center">
               {categories.map((category) => (
               <button
@@ -125,7 +125,7 @@ const ShoppingPage: React.FC = () => {
               </button>
             ))}
             </div>
-          </div>
+          </div> */}
         </div>
 
         {loading && !items.length ? (
