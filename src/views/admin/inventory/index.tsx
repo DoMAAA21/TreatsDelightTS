@@ -26,7 +26,7 @@ interface CartItem extends Product {
 
 const App: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { products, loading } = useAppSelector((state) => state.allProducts);
+    const { products } = useAppSelector((state) => state.allProducts);
 
     useEffect(() => {
         dispatch(fetchAllStoreItems());

@@ -5,14 +5,14 @@ import hide from '../../../assets/svg/hide-password.svg'
 import show from '../../../assets/svg/show-password.svg'
 interface CardProps {}
 
-interface Employee {
-  _id: number | string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  religion: string;
-  role: string;
-}
+// interface Employee {
+//   _id: number | string;
+//   firstname: string;
+//   lastname: string;
+//   email: string;
+//   religion: string;
+//   role: string;
+// }
 
 const Profile: React.FC<CardProps> = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -75,7 +75,7 @@ const Profile: React.FC<CardProps> = () => {
     
     <div className="flex justify-between mb-2">
       <div className="font-bold">Religion</div>
-      <div >{user?.religion}</div>
+      {/* <div >{user?.religion}</div> */}
     </div>
     
     <div className="flex justify-between mb-2">
@@ -96,9 +96,9 @@ const Profile: React.FC<CardProps> = () => {
                       ) : (<img src={show} alt="Show Password" className="svg-icon" />)}
                     </button>
                   </div>
-                    <div style={{ width: '60%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginLeft: '0%' }}>
+                    {/* <div style={{ width: '60%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginLeft: '0%' }}>
                       {showPassword? (<>{user?.password}</>): '*'.repeat(Math.min(30, user?.password.length))}
-                      </div>
+                      </div> */}
     </div>
   </div>
   <button className={`${colors.primary} font-bold py-1 px-4 rounded-full absolute bottom-16 right-8 md:right-[40%]`}>
