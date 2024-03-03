@@ -6,7 +6,7 @@ import PlugIcon from '../../../assets/svg/plug.svg';
 
 
 const getExpirationColor = (expireDate: string): string => {
-    if (!expireDate) {
+    if (!expireDate || isNaN(Date.parse(expireDate))) {
         return 'black';
     }
     const differenceInMilliseconds = new Date(expireDate).getTime() - new Date().getTime();
