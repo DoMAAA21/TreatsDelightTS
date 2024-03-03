@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { errorMsg, successMsg } from '../../../components/toast';
+import React from 'react';
 import { colors } from '../../../components/theme';
-import { addItemToCart } from '../../../store/reducers/cart/cartSlice';
-import Swal from 'sweetalert2';
-import AddToCart from '../../../assets/svg/add-to-cart.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductImage {
   index?: number;
@@ -15,53 +10,23 @@ interface ProductImage {
 interface ProductCardProps {
   _id: number | string;
   name: string;
+  description?: string;
+  costPrice?: number;
   sellPrice: number;
-  images: ProductImage[];
+  stock: number;
   store?: {
     storeId: string;
     name: string;
-  };
+  }
+  category?: string;
+  active: boolean | string;
+  images: ProductImage[];
+
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ _id, name, sellPrice, images, store }) => {
-  const { id } = useParams();
-  const { product } = useAppSelector(state => state.productDetails);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const [quantity, setQuantity] = useState(1);
 
-  const handleAddToCart = () => {
-    if (!_id) {
-      errorMsg('Product not available');
-      return;
-    }
-  
-    const productId = String(_id); // Explicitly convert _id to string
-  
-    if (productId) {
-      if (product?.nutrition?.cholesterol >= 50) {
-        Swal.fire({
-          title: 'High Cholesterol Content',
-          text: 'This product has high cholesterol content. Do you still want to add it to your cart?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, add to cart',
-          cancelButtonText: 'No, cancel',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            dispatch(addItemToCart({ id: productId, quantity })).then(() => {
-              successMsg('Added to Cart');
-            });
-          }
-        });
-      } else {
-        dispatch(addItemToCart({ id: productId, quantity })).then(() => {
-          successMsg('Added to Cart');
-        });
-      }
-    }
-  };
-  
+  const navigate = useNavigate();
 
   return (
     <div className="max-w-md bg-white rounded-xl overflow-hidden shadow-lg mb-10 mx-4 transform transition-transform hover:scale-105">
