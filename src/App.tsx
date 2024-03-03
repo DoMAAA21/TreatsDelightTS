@@ -9,8 +9,17 @@ import 'aos/dist/aos.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import AOS from 'aos';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+
 
 AOS.init();
+
+const initialOptions = {
+  clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+  currency: "PHP",
+  intent: "capture",
+};
+
 function App() {
  
   return (
@@ -18,10 +27,12 @@ function App() {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <HelmetProvider>
+          <PayPalScriptProvider  options={initialOptions}>
             <Router>
               <ScrollToTop />
               <AppRoutes />
             </Router>
+            </PayPalScriptProvider>
           </HelmetProvider>
         </PersistGate>
       </Provider>

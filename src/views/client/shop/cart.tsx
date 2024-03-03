@@ -1,3 +1,5 @@
+
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart, checkoutCart, clearQrCode } from "../../../store/reducers/cart/cartSlice";
@@ -5,29 +7,58 @@ import { colors } from "../../../components/theme";
 import EmptyCart from "../../../assets/svg/emptycart.svg";
 import MetaData from "../../../components/MetaData";
 import { successMsg, topErrorMsg } from "../../../components/toast";
+import PaypalCheckoutButton from "./paypalCheckoutButton";
+
 
 const CartPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
     const { cartItems } = useAppSelector(state => state.cart);
-    const { isAuthenticated } = useAppSelector(state => state.auth)
-
-
+    const { isAuthenticated } = useAppSelector(state => state.auth);
+    const [ isPaypalReady , setIsPaypalReady ] = useState(true);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2);
 
 
-
-    const incrementQty = (id: string) => {
+    const debounceReload = (func: () => void, delay: number): (() => void) => {
+        let timer: ReturnType<typeof setTimeout> | null = null;
+        return () => {
+          clearTimeout(timer!);
+          setIsPaypalReady(false)
+          timer = setTimeout(() => {
+            setIsPaypalReady(true);
+            func();
+          }, delay);
+        };
+      };
+      
+      let delayedReload: (() => void) | null = null; 
+      
+      delayedReload = debounceReload(() => {
+        location.reload();
+      }, 2000);
+      
+      const startReloadTimer = () => {
+        if (delayedReload) {
+          delayedReload();
+        }
+      };
+      
+      const incrementQty = (id: string) => {
         dispatch(increaseItemQuantity(id));
-    }
-    const decrementQty = (id: string) => {
-        dispatch(decreaseItemQuantity(id))
-    }
-    const removeItem = (id: string) => {
-        dispatch(removeItemFromCart(id))
-    }
-
+        startReloadTimer();
+      };
+      
+      const decrementQty = (id: string) => {
+        dispatch(decreaseItemQuantity(id));
+        startReloadTimer();
+      };
+      
+      const removeItem = (id: string) => {
+        dispatch(removeItemFromCart(id));
+        startReloadTimer();
+      };
+      
+      
     const checkoutHandler = async () => {
         dispatch(clearQrCode());
         const isReserve = false;
@@ -45,23 +76,23 @@ const CartPage = () => {
 
     };
 
-    const reserveHandler = async () => {
-        dispatch(clearQrCode());
-        const isReserve = true;
-        if (cartItems.length === 0) {
-            topErrorMsg('Empty Cart')
-            return;
-        }
-        const totalPrice: number = parseFloat(
-            cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
-        );
+    // const reserveHandler = async () => {
+    //     dispatch(clearQrCode());
+    //     const isReserve = true;
+    //     if (cartItems.length === 0) {
+    //         topErrorMsg('Empty Cart')
+    //         return;
+    //     }
+    //     const totalPrice: number = parseFloat(
+    //         cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
+    //     );
 
-        await dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
-            navigate('/receipt');
-            successMsg('Checkout Success')
-        })
+    //     await dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
+    //         navigate('/receipt');
+    //         successMsg('Checkout Success')
+    //     })
 
-    };
+    // };
 
     return (
         <>
@@ -124,11 +155,12 @@ const CartPage = () => {
                                 <span className="text-xl font-semibold">Total</span>
                                 <span className="float-right text-lg">₱{totalPrice}</span>
                             </div>
-                            {isAuthenticated ? (
-                                <button onClick={reserveHandler} className={`${colors.primary} px-4 py-2  w-full rounded-xl text-lg mb-4`}>
-                                    Reserve
-                                </button>
+                            {isAuthenticated && isPaypalReady ? (
+                                <>
+                                    <PaypalCheckoutButton amount={totalPrice} />
+                                </>
                             ) : null}
+
 
                             <button onClick={checkoutHandler} className={`${colors.secondary} px-4 py-2  w-full rounded-xl text-lg`}>
                                 Checkout
