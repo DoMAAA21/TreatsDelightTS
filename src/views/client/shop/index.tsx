@@ -5,9 +5,9 @@ import ProductList from './productList';
 import ProductLoader from '../../../components/loaders/ProductLoader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import MetaData from '../../../components/MetaData';
-import { fetchAllItems, setSearchQuery, setSelectedStore, setLastSelectedStore } from '../../../store/reducers/product/allProductsSlice';
+import { fetchAllItems, setSearchQuery, setLastSelectedStore } from '../../../store/reducers/product/allProductsSlice';
 import { fetchStores } from '../../../store/reducers/store/allStoressSlice';
-import ChevronDown from '../../../assets/icons/chevrondown.svg';
+// import ChevronDown from '../../../assets/icons/chevrondown.svg';
 import Search from '../../../assets/icons/search.svg';
 
 // interface Category {
@@ -29,7 +29,7 @@ import Search from '../../../assets/icons/search.svg';
 const ShoppingPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { items, loading, hasMore, currentPage, searchQuery, selectedStore, lastSelectedStore } = useAppSelector(state => state.allProducts);
-  const { stores } = useAppSelector(state => state.allStores);
+  // const { stores } = useAppSelector(state => state.allStores);
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const debouncedSearchQueryRef = useRef<string>(debouncedSearchQuery);
 
@@ -75,9 +75,9 @@ const ShoppingPage: React.FC = () => {
   //   dispatch(setSelectedCategory(categoryValue));
   // };
 
-  const handleStoreChange = (storeValue: string) => {
-    dispatch(setSelectedStore(storeValue));
-  };
+  // const handleStoreChange = (storeValue: string) => {
+  //   dispatch(setSelectedStore(storeValue));
+  // };
 
   return (
     <>
@@ -98,7 +98,7 @@ const ShoppingPage: React.FC = () => {
           alt="Search Icon"
           />
           </div>
-          <div className="my-4 relative border border-gray-300 rounded-md bg-indigo-100 w-96">
+          {/* <div className="my-4 relative border border-gray-300 rounded-md bg-indigo-100 w-96">
             <select
               className="appearance-none border-none bg-transparent py-2 px-4 pr-8 rounded-md focus:outline-none w-full"
               value={lastSelectedStore}
@@ -112,7 +112,7 @@ const ShoppingPage: React.FC = () => {
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
               <img className="h-4 w-4" src={ChevronDown} alt="chevron-down" />
             </div>
-          </div>
+          </div> */}
           {/* <div className="w-full flex justify-center">
             <div className="my-4 flex flex-wrap gap-2 content-center">
               {categories.map((category) => (
