@@ -4,10 +4,8 @@ import { PayPalButtons } from "@paypal/react-paypal-js"
 import { errorMsg, topErrorMsg, successMsg } from "../../../components/toast";
 import { clearQrCode, checkoutCart } from "../../../store/reducers/cart/cartSlice";
 
-interface PaypalCheckoutButtonProps {
-    amount: number | string;
-}
-const PaypalCheckoutButton: React.FC<PaypalCheckoutButtonProps> = ({ amount }) => {
+
+const PaypalCheckoutButton: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

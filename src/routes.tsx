@@ -45,7 +45,9 @@ import RegisterPage from './views/auth/register';
 import ShoppingPage from './views/client/shop';
 import ProductDetails from './views/client/shop/productDetails';
 import CartPage from './views/client/shop/cart';
+import PaymentPage from './views/client/shop/payment';
 import Receipt from './views/client/shop/receipt';
+
 
 //HomePage
 import HomePage from './views/home';
@@ -106,6 +108,7 @@ const AppRoutes: FC = () => {
         { path: 'shop', element: <ShoppingPage /> },
         { path: 'shop/product/:id', element: <ProductDetails /> },
         { path: 'cart', element: <CartPage /> },
+        { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
 
       ]

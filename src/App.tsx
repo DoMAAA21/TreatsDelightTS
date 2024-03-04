@@ -18,6 +18,7 @@ const initialOptions = {
   clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
   currency: "PHP",
   intent: "capture",
+  disableFunding: "card",
 };
 
 function App() {
