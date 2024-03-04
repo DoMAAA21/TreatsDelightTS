@@ -25,7 +25,7 @@ const HomePage = () => {
                             </div>
 
                             <div className="text-white mr-10 " data-aos="fade-right" data-aos-delay={500}>
-                                <h1 className="text-6xl font-bold lg:text-9xl mb-4">1128 Bonapetite</h1>
+                                <h1 className="text-6xl font-bold lg:text-9xl mb-4">1128 TUPT</h1>
                                 {/* <p className="text-2xl lg:text-2xl">A Digital Transformation of TUP-T Canteen</p> */}
 
                                 <div className="flex mt-6" >
