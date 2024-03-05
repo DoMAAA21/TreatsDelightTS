@@ -18,6 +18,7 @@ interface User {
 
 interface AuthState {
   user: User | null;
+  token: string | null;
   loading: boolean;
   error: string | null;
   isAuthenticated: boolean;
@@ -41,6 +42,7 @@ interface RegisterPayload {
 
 const initialState: AuthState = {
   user: null,
+  token: null,
   loading: false,
   error: null,
   isAuthenticated: false,
@@ -58,8 +60,10 @@ export const login = createAsyncThunk<User, AuthPayload>('auth/login', async ({ 
     };
 
     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/login`, { email, password }, config);
-
+    
+    dispatch(setToken(data.token));
     dispatch(loginSuccess(data.user));
+    
     return data.user;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -84,7 +88,8 @@ export const register = createAsyncThunk<User, RegisterPayload>('auth/register',
     };
 
     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/register`, userData, config);
-
+    localStorage.setItem('token',data.token);
+    dispatch(setToken(data.token));
     dispatch(registerSuccess(data.user));
     return data.user;
   } catch (error) {
@@ -104,6 +109,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
 
 
     localStorage.removeItem('cartItems');
+    dispatch(destroyToken());
     return dispatch(logoutSuccess(data.success));
 
   } catch (error) {
@@ -123,6 +129,12 @@ const authSlice = createSlice({
     loginRequest(state) {
       state.loading = true;
       state.isAuthenticated = false;
+    },
+    setToken(state, action) {
+        state.token = action.payload.token;
+    },
+    destroyToken(state){
+      state.token = null;
     },
     loginSuccess(state, action: PayloadAction<User>) {
       state.loading = false;
@@ -167,7 +179,7 @@ const authSlice = createSlice({
 });
 
 export const { loginRequest, loginSuccess, loginFail, logoutSuccess, registerRequest,
-  registerSuccess, registerFail,
+  registerSuccess, registerFail, setToken, destroyToken,
   logoutFail, clearErrors } = authSlice.actions;
 
 export default authSlice.reducer;
