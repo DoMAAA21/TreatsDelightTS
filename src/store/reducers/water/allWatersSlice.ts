@@ -33,6 +33,7 @@ export const fetchAllWaters = createAsyncThunk('allWaters/fetchAllWaters', async
         dispatch(allWatersRequest());
 
         const config = {
+            withCredentials: true ,
             headers: {
               Authorization: `${localStorage.getItem('token')}`, //
             },
