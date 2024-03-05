@@ -62,6 +62,7 @@ export const login = createAsyncThunk<User, AuthPayload>('auth/login', async ({ 
     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/login`, { email, password }, config);
     
     dispatch(setToken(data.token));
+    localStorage.setItem('token',data.token);
     dispatch(loginSuccess(data.user));
     
     return data.user;

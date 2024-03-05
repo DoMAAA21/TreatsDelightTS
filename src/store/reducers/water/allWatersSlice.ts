@@ -34,7 +34,7 @@ export const fetchAllWaters = createAsyncThunk('allWaters/fetchAllWaters', async
 
         const config = {
             headers: {
-              Authorization: `${localStorage.getItem('token')}`,
+              Authorization: `${localStorage.getItem('token')}`, //
             },
           };
         
