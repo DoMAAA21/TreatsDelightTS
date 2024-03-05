@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllUsers } from '../../../store/reducers/user/allUsersSlice';
-import FinanceLogo from '../../../assets/svg/finance.svg';
 import UsersLogo from '../../../assets/svg/users.svg';
 import SalesLogo from '../../../assets/svg/sales.svg';
 
