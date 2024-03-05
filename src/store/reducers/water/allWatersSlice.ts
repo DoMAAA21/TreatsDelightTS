@@ -28,21 +28,44 @@ const initialState: AllWaterState = {
     error: null,
 };
 
+// export const fetchAllWaters = createAsyncThunk('allWaters/fetchAllWaters', async (id: string, { rejectWithValue, dispatch }) => {
+//     try {
+//         dispatch(allWatersRequest());
+//         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/store/${id}`, { withCredentials: true });
+//         dispatch(allWatersSuccess(data.waters));
+//         return data.waters;
+//     } catch (error) {
+//         if (axios.isAxiosError(error)) {
+//             dispatch(allWatersFail(error.response?.data?.message || 'An error occurred'));
+//             return rejectWithValue(error.response?.data?.message || 'An error occurred');
+//         }
+//         dispatch(allWatersFail('An error occurred'));
+//         return rejectWithValue('An error occurred');
+//     }
+// });
+
 export const fetchAllWaters = createAsyncThunk('allWaters/fetchAllWaters', async (id: string, { rejectWithValue, dispatch }) => {
     try {
         dispatch(allWatersRequest());
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/store/${id}`, { withCredentials: true });
+        
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/store/${id}`, { 
+            method: 'GET',
+            credentials: 'include' // 'include' will send cookies along with the request
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const data = await response.json();
         dispatch(allWatersSuccess(data.waters));
         return data.waters;
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            dispatch(allWatersFail(error.response?.data?.message || 'An error occurred'));
-            return rejectWithValue(error.response?.data?.message || 'An error occurred');
-        }
-        dispatch(allWatersFail('An error occurred'));
-        return rejectWithValue('An error occurred');
+    } catch (error: any) {
+        dispatch(allWatersFail(error.message || 'An error occurred'));
+        return rejectWithValue(error.message || 'An error occurred');
     }
 });
+
 
 export const fetchArchivedWaters = createAsyncThunk('allWaters/fetchAllWaters', async (id: string, { rejectWithValue, dispatch }) => {
     try {
