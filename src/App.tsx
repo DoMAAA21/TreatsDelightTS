@@ -4,12 +4,12 @@ import { HelmetProvider } from 'react-helmet-async';
 import { store, persistor } from './store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import ScrollToTop from './helpers/ScrollToTop';
 import 'aos/dist/aos.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import AOS from 'aos';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import ScrollToTop from './helpers/ScrollToTop'; //import
 
 
 AOS.init();
