@@ -28,67 +28,21 @@ const initialState: AllWaterState = {
     error: null,
 };
 
-// export const fetchAllWaters = createAsyncThunk('allWaters/fetchAllWaters', async (id: string, { rejectWithValue, dispatch }) => {
-//     try {
-//         dispatch(allWatersRequest());
-
-//         const config = {
-//             withCredentials: true ,
-//             headers: {
-//               Authorization: `${localStorage.getItem('token')}`, //
-//             },
-//           };
-        
-//         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/store/${id}`, config);
-//         dispatch(allWatersSuccess(data.waters));
-//         return data.waters;
-//     } catch (error) {
-//         if (axios.isAxiosError(error)) {
-//             dispatch(allWatersFail(error.response?.data?.message || 'An error occurred'));
-//             return rejectWithValue(error.response?.data?.message || 'An error occurred');
-//         }
-//         dispatch(allWatersFail('An error occurred'));
-//         return rejectWithValue('An error occurred');
-//     }
-// });
-
 export const fetchAllWaters = createAsyncThunk('allWaters/fetchAllWaters', async (id: string, { rejectWithValue, dispatch }) => {
     try {
         dispatch(allWatersRequest());
-
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-            throw new Error('No token found in localStorage');
-        }
-
-        const headers = {
-            Authorization: token
-        };
-
-        const config = {
-            method: 'GET',
-            credentials: 'include' as RequestCredentials,
-            headers: headers
-        };
-
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/store/${id}`, config);
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
-        }
-
-        const data = await response.json();
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/water/store/${id}`, { withCredentials: true });
         dispatch(allWatersSuccess(data.waters));
         return data.waters;
-    } catch (error: any) {
-        dispatch(allWatersFail(error.message || 'An error occurred'));
-        return rejectWithValue(error.message || 'An error occurred');
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            dispatch(allWatersFail(error.response?.data?.message || 'An error occurred'));
+            return rejectWithValue(error.response?.data?.message || 'An error occurred');
+        }
+        dispatch(allWatersFail('An error occurred'));
+        return rejectWithValue('An error occurred');
     }
 });
-
-
-
 
 export const fetchArchivedWaters = createAsyncThunk('allWaters/fetchAllWaters', async (id: string, { rejectWithValue, dispatch }) => {
     try {
