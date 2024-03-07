@@ -14,6 +14,8 @@ import MaintenanceIcon from '../../components/icons/MaintenanceIcon';
 import InventoryIcon from '../../components/icons/InventoryIcon';
 import PermitIcon from '../../components/icons/PermitIcon';
 import ContractIcon from '../../components/icons/ContractIcon';
+import TransactionIcon from '../../components/icons/TransactionIcon';
+
 
 interface NavItem {
   title: string;
@@ -106,24 +108,29 @@ export const useNav = () => {
         defaultIcon: <ContractIcon color="#000" />,
         activeIcon: <ContractIcon color="#fff" />
       },
-      
       {
         title: 'Inventory',
         path: '/admin/inventory',
         defaultIcon: <InventoryIcon color="#000" />,
         activeIcon: <InventoryIcon color="#fff" />
       },
+      {
+        title: 'Transactions',
+        path: '/admin/transactions',
+        defaultIcon: <TransactionIcon color="#000" />,
+        activeIcon: <TransactionIcon color="#fff" />
+      },
 
     ];
 
     //Role Filtering
     if (user?.role === 'Employee') {
-      const filteredNav = ['Dashboard','Analytics','Products','Meals','Inventory'];
+      const filteredNav = ['Dashboard','Analytics','Products','Meals','Inventory','Transactions'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
     
     if (user?.role === 'Owner') {
-      const filteredNav = ['Dashboard','Analytics','Employees','Products','Meals','Inventory'];
+      const filteredNav = ['Dashboard','Analytics','Employees','Products','Meals','Inventory','Transactions'];
       return defaultConfig.filter((item) => filteredNav.includes(item.title));
     }
 
