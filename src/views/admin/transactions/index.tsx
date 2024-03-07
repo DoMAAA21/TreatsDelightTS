@@ -24,7 +24,7 @@ interface TransactionsData {
 
 const TransactionPage: FC = () => {
     const dispatch = useAppDispatch();
-    const { transactions } = useAppSelector((state) => state.allTransaction);
+    const { transactions, loading } = useAppSelector((state) => state.allTransaction);
     const [ isFetched, setIsFetched ] = useState(false);
     const { isUpdated } = useAppSelector((state) => state.transaction);
     useEffect(() => {
@@ -79,7 +79,7 @@ const TransactionPage: FC = () => {
             ) : null,
             actions: (
                 <div className="flex items-center justify-center">
-                    <button className="w-8 h-8 md:h-14 md:w-12 lg:h-8 lg:w-8" onClick={() => updateTransactionHandler(transaction.orderItems.id)}>
+                    <button className="w-8 h-8 md:h-14 md:w-12 lg:h-8 lg:w-8" disabled={loading} onClick={() => updateTransactionHandler(transaction.orderItems.id)}>
                         <img
                             src={SwitchIcon}
                             alt="Switch Icon"
