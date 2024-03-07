@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../hooks";
 import Logo from "../../../assets/logo.png";
 import QRCode from 'react-qr-code';
@@ -14,8 +15,9 @@ interface CartItem {
 }
 
 const Receipt: React.FC = () => {
+    const navigate = useNavigate();
     const { receipt, qrCode } = useAppSelector(state => state.cart);
-    const datePart = receipt?.paidAt ? new Date(receipt.paidAt).toISOString().split('T')[0] : '';
+    const datePart = receipt?.paidAt ? new Date(receipt.paidAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
 
     interface OrderItem extends CartItem {
 
@@ -37,13 +39,15 @@ const Receipt: React.FC = () => {
         }, {});
     };
 
-    useEffect(()=>{
-        return()=>{
-
+    useEffect(() => {
+        if (receipt.orderItems.length === 0) {
+            navigate('/home')
         }
-    },[])
-
+    }, [receipt.orderItems])
     const groupedItems = groupItemsByStoreId(receipt?.orderItems);
+    if (receipt.orderItems.length === 0) {
+        return;
+    }
 
     return (
         <div className="flex justify-center">
@@ -53,17 +57,24 @@ const Receipt: React.FC = () => {
                         <img src={Logo} alt="Logo" className="h-16" />
                         <h1 className="text-2xl font-bold mb-0">Receipt</h1>
                     </div>
+
                     <div className="border-b border-black mb-2" />
                     <div className="mb-2">
-                        <p ><span className="font-semibold">Receipt ID: </span>{receipt?._id}</p>
-                        <p ><span className="font-semibold">Date: </span>{datePart}</p>
+                        {receipt?._id && <p><span className="font-semibold">Receipt ID: </span>{receipt?._id}</p>}
+                        <p><span className="font-semibold">Date: </span>{datePart}</p>
                     </div>
                     <div className="border-b border-black mb-2" />
-                    <div className="mb-2">
-                        <span className="font-semibold text-lg mb-2">Customer Information</span>
-                        <p ><span className="font-semibold">Name: </span>{receipt?.user?.name}</p>
-                    </div>
-                    <div className="border-b border-black mb-2" />
+                    {receipt?.user?.name && (
+                        <>
+                            <div className="mb-2">
+                                <span className="font-semibold text-lg mb-2">Customer Information</span>
+                                <p ><span className="font-semibold">Name: </span>{receipt?.user?.name}</p>
+                            </div>
+                            <div className="border-b border-black mb-2" />
+                        </>
+                    )}
+
+
                     <div className="flex justify-between">
                         <span className="font-semibold text-lg">Items</span>
                     </div>
@@ -93,15 +104,15 @@ const Receipt: React.FC = () => {
                         <span className="font-semibold">Total:</span>
                         <span className="font-semibold">₱{receipt?.totalPrice.toFixed(2)}</span>
                     </div>
-                    {qrCode && 
-                    <div className="flex justify-center items-center">                   
-                        <QRCode value={qrCode} className="bg-white shadow-md p-4 rounded-lg"  height={400}/>
-                    </div>
-                }
+                    {qrCode &&
+                        <div className="flex justify-center items-center">
+                            <QRCode value={qrCode} className="bg-white shadow-md p-4 rounded-lg" height={400} />
+                        </div>
+                    }
 
 
                 </div>
-                
+
             </div>
         </div>
     );

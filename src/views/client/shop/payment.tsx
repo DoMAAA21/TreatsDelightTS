@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { successMsg, topErrorMsg } from "../../../components/toast";
-import { checkoutCart, clearQrCode } from "../../../store/reducers/cart/cartSlice";
+import { kioskCheckout, clearQrCode } from "../../../store/reducers/cart/cartSlice";
 import PaypalCheckoutButton from "./paypalCheckoutButton";
 
 const PaymentPage: React.FC = () => {
@@ -19,7 +19,6 @@ const PaymentPage: React.FC = () => {
 
     const checkoutHandler = async () => {
         dispatch(clearQrCode());
-        const isReserve = false;
         if (cartItems.length === 0) {
             topErrorMsg('Empty Cart')
             return;
@@ -27,7 +26,7 @@ const PaymentPage: React.FC = () => {
         const totalPrice: number = parseFloat(
             cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
         );
-        await dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
+        await dispatch(kioskCheckout({ cartItems, totalPrice })).then(() => {
             navigate('/receipt');
             successMsg('Checkout Success')
         })
