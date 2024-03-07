@@ -37,13 +37,14 @@ const PaymentPage: React.FC = () => {
                     {isAuthenticated ? (
                         <>
                             <PaypalCheckoutButton />
+                            <div className="text-center">
+                                <span className="font-semibold text-md"> Or</span>
+                            </div>
                         </>
                     ) : null}
-                    <div className="text-center">
-                        <span className="font-semibold text-md"> Or</span>
-                    </div>
-                    <button onClick={checkoutHandler} className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
-                        Checkout
+
+                    <button onClick={checkoutHandler} className="w-full bg-green-500 text-white py-4 rounded hover:bg-green-600">
+                        Checkout <span>(Mobile Kiosk)</span>
                     </button>
                 </div>
             </div>
