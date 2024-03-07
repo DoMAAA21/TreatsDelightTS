@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { successMsg, topErrorMsg } from "../../../components/toast";
@@ -10,6 +10,12 @@ const PaymentPage: React.FC = () => {
     const navigate = useNavigate();
     const { cartItems } = useAppSelector(state => state.cart);
     const { isAuthenticated } = useAppSelector(state => state.auth);
+
+    useEffect(() => {
+        if (cartItems.length == 0) {
+            navigate('/');
+        }
+    }, [cartItems])
 
     const checkoutHandler = async () => {
         dispatch(clearQrCode());
@@ -28,7 +34,9 @@ const PaymentPage: React.FC = () => {
 
     };
 
-
+    if(cartItems.length===0){
+        return;
+    }
     return (
         <div className="flex justify-center items-center pt-16">
             <div className="bg-white p-8 rounded-lg shadow-md w-1/3 pb-20">
@@ -43,7 +51,7 @@ const PaymentPage: React.FC = () => {
                         </>
                     ) : null}
 
-                    <button onClick={checkoutHandler} className="w-full bg-green-500 text-white py-4 rounded hover:bg-green-600">
+                    <button onClick={checkoutHandler} className="w-full bg-green-500 text-white font-semibold py-4 rounded hover:bg-green-600">
                         Checkout <span>(Mobile Kiosk)</span>
                     </button>
                 </div>
