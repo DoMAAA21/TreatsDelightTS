@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import MetaData from "../../../components/MetaData";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { successMsg, topErrorMsg } from "../../../components/toast";
 import { kioskCheckout, clearQrCode } from "../../../store/reducers/cart/cartSlice";
@@ -33,29 +34,32 @@ const PaymentPage: React.FC = () => {
 
     };
 
-    if(cartItems.length===0){
+    if (cartItems.length === 0) {
         return;
     }
     return (
-        <div className="flex justify-center items-center pt-16">
-            <div className="bg-white p-8 rounded-lg shadow-md w-1/3 pb-20">
-                <h2 className="text-2xl text-center mb-4">Choose Payment Type</h2>
-                <div className="space-y-4">
-                    {isAuthenticated ? (
-                        <>
-                            <PaypalCheckoutButton />
-                            <div className="text-center">
-                                <span className="font-semibold text-md"> Or</span>
-                            </div>
-                        </>
-                    ) : null}
+        <>
+            <MetaData title={'Payment'} />
+            <div className="flex justify-center items-center pt-16">
+                <div className="bg-white p-8 rounded-lg shadow-md w-1/3 pb-20">
+                    <h2 className="text-2xl text-center mb-4">Choose Payment Type</h2>
+                    <div className="space-y-4">
+                        {isAuthenticated ? (
+                            <>
+                                <PaypalCheckoutButton />
+                                <div className="text-center">
+                                    <span className="font-semibold text-md"> Or</span>
+                                </div>
+                            </>
+                        ) : null}
 
-                    <button onClick={checkoutHandler} className="w-full bg-green-500 text-white font-semibold py-4 rounded hover:bg-green-600">
-                        Checkout <span>(Mobile Kiosk)</span>
-                    </button>
+                        <button onClick={checkoutHandler} className="w-full bg-green-500 text-white font-semibold py-4 rounded hover:bg-green-600">
+                            Checkout <span>(Mobile Kiosk)</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
