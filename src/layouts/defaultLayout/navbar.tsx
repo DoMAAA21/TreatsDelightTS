@@ -175,7 +175,7 @@ const Navbar: React.FC = () => {
 
               ) :
                 <div className="bg-indigo-500 rounded-lg px-3 py-2">
-                  <a className="hover:text-indigo-500 cursor-pointer my-3 font-medium text-md text-white" onClick={() => { navigate('/login') }} >Login</a>
+                  <a className=" text-md text-white my-3 font-medium cursor-pointer" onClick={() => { navigate('/login') }} >Login</a>
                 </div>
               }
               {isOptionsOpen && (
