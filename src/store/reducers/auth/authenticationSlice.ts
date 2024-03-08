@@ -56,7 +56,6 @@ export const login = createAsyncThunk<User, AuthPayload>('auth/login', async ({ 
       headers: {
         'Content-Type': 'application/json',
       },
-      // withCredentials: true,
     };
 
     const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/login`, { email, password }, config);
