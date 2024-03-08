@@ -193,6 +193,10 @@ const Navbar: React.FC = () => {
                           <a className="hover:text-indigo-500 cursor-pointer" onClick={() => { navigate('/admin') }} >Dashboard</a>
                         </li>
                       )}
+
+                    <li>
+                      <a className="hover:text-indigo-500 cursor-pointer" onClick={logoutHandler}>Logout</a>
+                    </li>
                   </ul>
                 </div>
               )}
@@ -227,9 +231,6 @@ const Navbar: React.FC = () => {
 
                 </li>
               ))}
-              <li>
-                <a className="block py-2 pr-4 pl-4 text-xl text-gray-700 hover:text-violet-700" onClick={logoutHandler}>Logout</a>
-              </li>
 
             </ul>
           </div>
