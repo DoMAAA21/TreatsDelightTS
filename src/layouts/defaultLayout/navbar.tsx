@@ -163,7 +163,7 @@ const Navbar: React.FC = () => {
 
           <div className="absolute lg:flex right-3 lg:top-2 md:top-6 top-6 h-16 items-center z-10" ref={dropdownRef}>
             <div className="relative">
-              {isAuthenticated ? (
+              { isAuthenticated ? (
                 <button
                   onClick={toggleDropdown}
                   type="button"
