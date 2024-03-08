@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
 
             <div className="flex items-center lg:order-2">
-              <Link to="/cart" className={`absolute lg:right-20 md:right-15 ${isAuthenticated ? 'right-20' : 'right-16'}`}>
+              <Link to="/cart" className="absolute lg:right-20 md:right-15 right-20">
                 <img src={Cart} className="w-8 h-8" alt="Cart Icon" />
                 {cartItems.length > 0 && (
                   <span className="absolute bottom-4 left-4 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{cartItems.length}</span>
