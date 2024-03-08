@@ -119,7 +119,7 @@ const ShoppingPage: React.FC = () => {
               <button
               key={category.value} onClick={() => handleCategoryChange(category.value)}
               className={`px-4 py-2 rounded-md border font-semibold border-gray-300 
-              ${ selectedCategory === category.value ? 'bg-green-800 text-white' : 'bg-yellow-400'}`}
+              ${ selectedCategory === category.value ? 'bg-red-700 text-white' : 'bg-gray-200'}`}
               >
                 {category.label}
               </button>

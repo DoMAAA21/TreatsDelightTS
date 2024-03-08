@@ -115,6 +115,7 @@ export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartP
       const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/order/new`, order);
 
       dispatch(showReceipt(data.order));
+      console.log(data.order);
       dispatch(checkoutSuccess(data.success));
       dispatch(setQrCode(data.qrCodeURL));
       dispatch(clearCart());
@@ -127,6 +128,29 @@ export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartP
       throw 'An error occurred';
     }
   });
+
+export const kioskCheckout = createAsyncThunk<{ success: boolean }, { cartItems: any[], totalPrice: number }, { state: RootState }>('cart/checkoutCart', async ({ cartItems, totalPrice }, { dispatch }) => {
+  try {
+    dispatch(checkoutRequest());
+    
+    const order = {
+      orderItems: cartItems,
+      totalPrice
+    }
+
+    dispatch(showReceipt(order));
+    dispatch(checkoutSuccess(true));
+    dispatch(clearCart());
+
+    return { success: true };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw error.response?.data?.message || 'An error occurred';
+    }
+    throw 'An error occurred';
+  }
+}
+);
 
 
 const cartSlice = createSlice({

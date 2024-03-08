@@ -39,6 +39,7 @@ import InventoryPage from './views/admin/inventory';
 import AnalyticsPage from './views/admin/analytic';
 import PermitPage from './views/admin/permit';
 import ContractPage from './views/admin/contract';
+import TransactionPage from './views/admin/transactions';
 //Client
 import LoginPage from './views/auth/login';
 import RegisterPage from './views/auth/register';
@@ -96,7 +97,7 @@ const AppRoutes: FC = () => {
         { path: 'analytics', element: <AnalyticsPage /> },
         { path: 'permits', element: <PermitPage /> },
         { path: 'contracts', element: <ContractPage /> },
-  
+        { path: 'transactions', element: <TransactionPage /> },
       ]
     },
     {

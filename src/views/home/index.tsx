@@ -1,4 +1,5 @@
 import './home.css';
+import MetaData from '../../components/MetaData';
 import Logo from '../../assets/logo.png';
 import MobileGrocery from '../../assets/home/mobilegrocery.svg';
 import OrderConfirmed from '../../assets/home/orderconfirmed.svg';
@@ -13,7 +14,10 @@ import Chicken from '../../assets/home/chicken.svg';
 import Soup from '../../assets/home/soup.svg';
 
 const HomePage = () => {
+
     return (
+        <>
+        <MetaData title={'Home'}/>
         <div className="overflow-x-hidden">
             <div className="w-full max-w-full" id="heading">
                 <div
@@ -217,6 +221,7 @@ const HomePage = () => {
 
 
         </div>
+        </>
 
     );
 };

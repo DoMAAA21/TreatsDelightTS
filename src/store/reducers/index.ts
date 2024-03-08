@@ -37,6 +37,8 @@ import topStoresReducer from './analytic/topStoresSlice';
 import salesReducer from './analytic/salesSlice';
 import permitReducer from './permit/permitSlice';
 import contractReducer from './contract/contractSlice';
+import allTransactionReducer from './transaction/allTransactionSlice';
+import transactionReducer from './transaction/transactionSlice';
 
 
 const rootReducer = combineReducers({
@@ -77,7 +79,9 @@ const rootReducer = combineReducers({
     topStores : topStoresReducer,
     sales : salesReducer,
     permit : permitReducer,
-    contract : contractReducer
+    contract : contractReducer,
+    allTransaction : allTransactionReducer,
+    transaction : transactionReducer
 })
 
 export default rootReducer;

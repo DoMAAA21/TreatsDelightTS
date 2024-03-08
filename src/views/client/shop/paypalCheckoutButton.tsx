@@ -40,7 +40,6 @@ const PaypalCheckoutButton: React.FC = () => {
         try {
             const order = await actions.order.capture();
             console.log("order", order);
-            alert('order approved');
 
             dispatch(clearQrCode());
             const isReserve = true;
