@@ -26,8 +26,8 @@ const LoginPage = () => {
               <h1 className="text-2xl xl:text-3xl font-extrabold">
                 Log in
               </h1>
-              <div className="w-full flex-1 mt-8">
-                <div className="flex flex-col items-center">
+              <div className="w-full flex-1 mt-24">
+                {/* <div className="flex flex-col items-center">
                   <button
                     className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                     <div className="bg-white p-2 rounded-full">
@@ -57,7 +57,7 @@ const LoginPage = () => {
                     className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
                     Or
                   </div>
-                </div>
+                </div> */}
                 <LoginForm />
               </div>
               <p className="text-gray-600 text-sm mt-4">Don't have an account? <Link to="/register" className="text-blue-500">Register</Link></p>
