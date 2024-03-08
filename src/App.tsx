@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import AOS from 'aos';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import ScrollToTop from './helpers/ScrollToTop'; //import
+//import
 
 
 AOS.init();
@@ -30,7 +30,7 @@ function App() {
           <HelmetProvider>
           <PayPalScriptProvider  options={initialOptions}>
             <Router>
-              <ScrollToTop />
+              
               <AppRoutes />
             </Router>
             </PayPalScriptProvider>
