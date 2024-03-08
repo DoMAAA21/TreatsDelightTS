@@ -29,7 +29,7 @@ const RegisterPage = () => {
                         <div className="mt-2 flex flex-col items-center">
 
                             <div className="w-full flex-1 mt-2">
-                                <div className="flex flex-col items-center">
+                                {/* <div className="flex flex-col items-center">
                                     <button
                                         className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
                                         <div className="bg-white p-2 rounded-full">
@@ -58,8 +58,9 @@ const RegisterPage = () => {
                                     <div
                                         className="leading-none  inline-block text-sm text-gray-600 tracking-wide font-medium bg-white ">
                                         Or
-                                    </div>
+                                    </div> 
                                 </div>
+                                */}
                                 <RegisterForm />
                             </div>
                             <p className="text-gray-600 text-sm mt-4">Already have an account? <Link to="/login" className="text-blue-500">Login</Link></p>
