@@ -57,7 +57,7 @@ const TransactionPage: FC = () => {
         rows: transactions.map((transaction) => ({
             _id: transaction.orderItems.id,
             name: transaction.orderItems.name,
-            customerName: transaction.user.name,
+            customerName: transaction?.user?.name || 'Guest',
             quantity: transaction.orderItems.quantity,
             price: transaction.orderItems.price,
             status: transaction.orderItems.status.toLowerCase() === 'pending' ? (

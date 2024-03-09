@@ -17,6 +17,7 @@ import productReducer from './product/productSlice';
 import newProductReducer from './product/newProductSlice';
 import productDetailsReducer from './product/productDetailsSlice';
 import cartReducer from './cart/cartSlice';
+import inventoryReducer from './cart/inventorySlice';
 import allRentsReducer from './rent/allRentsSlice';
 import newRentReducer from './rent/newRentSlice';
 import rentReducer from './rent/rentSlice';
@@ -60,6 +61,7 @@ const rootReducer = combineReducers({
     newProduct : newProductReducer,
     productDetails : productDetailsReducer,
     cart : cartReducer,
+    inventory : inventoryReducer,
     allRent : allRentsReducer,
     newRent : newRentReducer,
     rent : rentReducer,

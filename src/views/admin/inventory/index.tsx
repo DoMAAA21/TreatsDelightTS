@@ -1,13 +1,16 @@
+import './inventory.css';
 import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllStoreItems } from '../../../store/reducers/product/allProductsSlice';
+import { inventoryCheckout, clearErrors } from '../../../store/reducers/cart/inventorySlice';
 import CategoryList from './categoryList';
 import ProductList from './productList';
 import CartTable from './cartTable';
 import { categories } from '../../../components/inputs';
 import MetaData from '../../../components/MetaData';
-import './inventory.css';
-import { successMsg } from '../../../components/toast';
+import { errorMsg, successMsg } from '../../../components/toast';
+
+
 
 interface Product {
     _id: number | string;
@@ -27,10 +30,22 @@ interface CartItem extends Product {
 const App: React.FC = () => {
     const dispatch = useAppDispatch();
     const { products } = useAppSelector((state) => state.allProducts);
+    const { success, error } = useAppSelector((state) => state.inventory);
 
     useEffect(() => {
         dispatch(fetchAllStoreItems());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (success) {
+            successMsg('Checkout success');
+            setCart([]);
+        }
+        if (error) {
+            errorMsg(`Checkout Error: ${error}`);
+            dispatch(clearErrors());
+        }
+    }, [success, error])
 
     const [cart, setCart] = useState<CartItem[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -41,20 +56,29 @@ const App: React.FC = () => {
 
     const handleAddToCart = (product: Product) => {
         const existingCartItemIndex = cart.findIndex((cartItem) => cartItem._id === product._id);
+
         if (existingCartItemIndex !== -1) {
             const updatedCart = [...cart];
-            updatedCart[existingCartItemIndex].quantity += 1;
-            setCart(updatedCart);
-        } else {
-            setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
+            if (product.stock > updatedCart[existingCartItemIndex].quantity) {
+                updatedCart[existingCartItemIndex].quantity += 1;
+                setCart(updatedCart);
+                return;
+            }
+
+            errorMsg('Insufficient Stock available');
+            return;
         }
+        setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
+
     };
 
     const handleCheckout = () => {
-        if (cart.length > 0) {
-            successMsg('Checkout success')
-            setCart([]);
+        if (cart.length === 0) {
+            errorMsg('No items in cart');
+            return;
         }
+        const totalPrice = cart.reduce((acc, item) => acc + item.sellPrice * (item?.quantity ?? 0), 0);
+        dispatch(inventoryCheckout({ cartItems: cart, totalPrice }));
     }
 
     const handleRemoveFromCart = (itemId: number | string) => {
@@ -71,7 +95,7 @@ const App: React.FC = () => {
             <div className="flex overflow-x-hidden">
                 <CategoryList categories={categories} onSelectCategory={onSelectCategory} />
                 <ProductList products={filteredProducts} onAddToCart={handleAddToCart} />
-                <CartTable cart={cart} handleCheckout={handleCheckout}  handleRemoveItem={handleRemoveFromCart}/>
+                <CartTable cart={cart} handleCheckout={handleCheckout} handleRemoveItem={handleRemoveFromCart} />
             </div>
         </>
     );
