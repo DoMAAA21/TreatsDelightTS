@@ -48,10 +48,14 @@ import ProductDetails from './views/client/shop/productDetails';
 import CartPage from './views/client/shop/cart';
 import PaymentPage from './views/client/shop/payment';
 import Receipt from './views/client/shop/receipt';
-
-
 //HomePage
 import HomePage from './views/home';
+
+//errors
+import RestrictedPage from './views/error/restricted';
+import NotFoundPage from './views/error/404';
+//Protected Route
+import ProtectedRoute from './ProtectedRoute'; //allowed roles should be lowercase all
 
 
 
@@ -64,40 +68,40 @@ const AppRoutes: FC = () => {
       element: <DashboardLayout />,
       children: [
         { path: '', element: <Navigate to="dashboard" /> },
-        { path: 'dashboard', element: <DashboardPage /> },
-        { path: 'owner-all', element: <UserPage /> },
-        { path: 'owner-add', element: <AddOwnerPage /> },
-        { path: 'owner/:id', element: <EditOwnerPage /> },
-        { path: 'store-all', element: <StorePage /> },
-        { path: 'store-archived', element: <StoreArchivesPage /> },
-        { path: 'store-add', element: <AddStorePage /> },
-        { path: 'store/:id', element: <EditStorePage /> },
-        { path: 'employee-all', element: <EmployeePage /> },
-        { path: 'employee-add', element: <AddEmployeePage /> },
-        { path: 'employee/:id', element: <EditEmployeePage /> },
-        { path: 'product-all', element: <ProductPage /> },
-        { path: 'product-add', element: <AddProductPage /> },
-        { path: 'product/:id', element: <EdiProductPage /> },
-        { path: 'meal-all', element: <MealPage /> },
-        { path: 'meal-add', element: <AddMealPage /> },
-        { path: 'meal/:id', element: <EdiMealPage /> },
-        { path: 'rent-all', element: <RentPage /> },
-        { path: 'rent/store/:id', element: <RentTransaction /> },
-        { path: 'rent/store-archived/:id', element: <RentArchivesPage /> },
-        { path: 'water-all', element: <WaterPage /> },
-        { path: 'water/store/:id', element: <WaterTransaction /> },
-        { path: 'water/store-archived/:id', element: <WaterArchivesPage /> },
-        { path: 'electricity-all', element: <ElectricityPage /> },
-        { path: 'electricity/store/:id', element: <ElectricityTransaction /> },
-        { path: 'electricity/store-archived/:id', element: <ElectricityArchivesPage /> },
-        { path: 'maintenance-all', element: <MaintenancePage /> },
-        { path: 'maintenance/store/:id', element: <MaintenanceTransaction /> },
-        { path: 'maintenance/store-archived/:id', element: <MaintenanceArchivesPage /> },
-        { path: 'inventory', element: <InventoryPage /> },
-        { path: 'analytics', element: <AnalyticsPage /> },
-        { path: 'permits', element: <PermitPage /> },
-        { path: 'contracts', element: <ContractPage /> },
-        { path: 'transactions', element: <TransactionPage /> },
+        { path: 'dashboard', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee']}><DashboardPage /></ProtectedRoute> },
+        { path: 'owner-all', element: <ProtectedRoute allowedRoles={['admin']}> <UserPage /></ProtectedRoute> },
+        { path: 'owner-add', element: <ProtectedRoute allowedRoles={['admin']}>  <AddOwnerPage />  </ProtectedRoute> },
+        { path: 'owner/:id', element: <ProtectedRoute allowedRoles={['admin']}> <EditOwnerPage /> </ProtectedRoute> },
+        { path: 'store-all', element: <ProtectedRoute allowedRoles={['admin']}><StorePage /></ProtectedRoute> },
+        { path: 'store-archived', element: <ProtectedRoute allowedRoles={['admin']}><StoreArchivesPage /></ProtectedRoute> },
+        { path: 'store-add', element: <ProtectedRoute allowedRoles={['admin']}> <AddStorePage /> </ProtectedRoute> },
+        { path: 'store/:id', element: <ProtectedRoute allowedRoles={['admin']}><EditStorePage /></ProtectedRoute> },
+        { path: 'employee-all', element: <ProtectedRoute allowedRoles={['owner']}><EmployeePage /> </ProtectedRoute> },
+        { path: 'employee-add', element: <ProtectedRoute allowedRoles={['owner']}> <AddEmployeePage /></ProtectedRoute> },
+        { path: 'employee/:id', element: <ProtectedRoute allowedRoles={['owner']}><EditEmployeePage /> </ProtectedRoute> },
+        { path: 'product-all', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><ProductPage /></ProtectedRoute> },
+        { path: 'product-add', element: <ProtectedRoute allowedRoles={['owner', 'employee']}> <AddProductPage /></ProtectedRoute> },
+        { path: 'product/:id', element: <ProtectedRoute allowedRoles={['owner', 'employee']}> <EdiProductPage /> </ProtectedRoute> },
+        { path: 'meal-all', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><MealPage /> </ProtectedRoute> },
+        { path: 'meal-add', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><AddMealPage /></ProtectedRoute> },
+        { path: 'meal/:id', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><EdiMealPage /> </ProtectedRoute> },
+        { path: 'rent-all', element: <ProtectedRoute allowedRoles={['admin']}><RentPage /></ProtectedRoute> },
+        { path: 'rent/store/:id', element: <ProtectedRoute allowedRoles={['admin']}><RentTransaction /></ProtectedRoute> },
+        { path: 'rent/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><RentArchivesPage /></ProtectedRoute> },
+        { path: 'water-all', element: <ProtectedRoute allowedRoles={['admin']}><WaterPage /></ProtectedRoute> },
+        { path: 'water/store/:id', element: <ProtectedRoute allowedRoles={['admin']}><WaterTransaction /></ProtectedRoute> },
+        { path: 'water/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><WaterArchivesPage /></ProtectedRoute> },
+        { path: 'electricity-all', element: <ProtectedRoute allowedRoles={['admin']}><ElectricityPage /></ProtectedRoute> },
+        { path: 'electricity/store/:id', element: <ProtectedRoute allowedRoles={['admin']}><ElectricityTransaction /></ProtectedRoute> },
+        { path: 'electricity/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><ElectricityArchivesPage /></ProtectedRoute> },
+        { path: 'maintenance-all', element: <ProtectedRoute allowedRoles={['admin']}><MaintenancePage /></ProtectedRoute> },
+        { path: 'maintenance/store/:id', element: <ProtectedRoute allowedRoles={['admin']}><MaintenanceTransaction /></ProtectedRoute> },
+        { path: 'maintenance/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><MaintenanceArchivesPage /></ProtectedRoute> },        
+        { path: 'inventory', element: <ProtectedRoute allowedRoles={['owner','employee']}><InventoryPage /></ProtectedRoute>  },
+        { path: 'analytics', element: <ProtectedRoute allowedRoles={['admin','owner','employee']}><AnalyticsPage /></ProtectedRoute> },
+        { path: 'permits', element: <ProtectedRoute allowedRoles={['admin']}> <PermitPage /> </ProtectedRoute> },
+        { path: 'contracts', element: <ProtectedRoute allowedRoles={['admin']}><ContractPage /></ProtectedRoute>  },
+        { path: 'transactions', element: <ProtectedRoute allowedRoles={['owner','employee']}><TransactionPage /></ProtectedRoute>},
       ]
     },
     {
@@ -116,6 +120,8 @@ const AppRoutes: FC = () => {
     },
     { path: '/login', element: <LoginPage /> },
     { path: '/register', element: <RegisterPage /> },
+    { path: '/restricted', element: <RestrictedPage /> },
+    { path: '*', element: <NotFoundPage /> },
   ];
 
 
