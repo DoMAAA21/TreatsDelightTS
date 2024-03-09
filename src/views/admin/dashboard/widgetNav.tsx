@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllUsers } from '../../../store/reducers/user/allUsersSlice';
+import { fetchAllProductsSold, fetchAllTotalSale } from '../../../store/reducers/analytic/productsSoldSlice';
 import UsersLogo from '../../../assets/svg/users.svg';
 import SalesLogo from '../../../assets/svg/sales.svg';
 
@@ -8,20 +9,21 @@ const WidgetNav = () => {
     const dispatch = useAppDispatch();
 
 
-    const { users } = useAppSelector((state) => state.allUsers);
+    const { users } = useAppSelector(state => state.allUsers);
+    const { allProductsSold, allTotalSale } = useAppSelector(state => state.productsSold)
 
     const userCount = users.length;
-
+    
     useEffect(() => {
         dispatch(fetchAllUsers());
-
-        
+        dispatch(fetchAllProductsSold());
+        dispatch(fetchAllTotalSale());
     }, [dispatch]);
 
     const dashboardnavs = [
         { title: 'Total Users', qty: userCount, icon: UsersLogo, subtitle: 'Using this app.' },
-        { title: 'Total Sales', qty: '$50000', icon: SalesLogo, subtitle: 'Using this app' },
-        { title: 'Total Orders', qty: 125, icon: UsersLogo, subtitle: 'Made in this app' },
+        { title: 'Total Sales', qty: `₱${allTotalSale}`, icon: SalesLogo, subtitle: 'Using this app' },
+        { title: 'Total Orders', qty: allProductsSold, icon: UsersLogo, subtitle: 'Made in this app' },
     ];
 
     return (
