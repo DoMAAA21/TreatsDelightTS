@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+//TODO BETTER REFRACTOR THIS for better code readibility 
 interface Image {
     url: string;
     public_id: string;
 }
 
-interface InventoryCartItem {
+interface InventoryCartItem { //TODO: Refractor the ? (undefineds)
     _id: number | string;
     name: string;
     description: string;
