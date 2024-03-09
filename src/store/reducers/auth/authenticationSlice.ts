@@ -9,6 +9,7 @@ interface User {
   }
   fname: string;
   lname: string;
+  religion?: string;
   role: string;
   store?: {
     storeId?: string | number;
