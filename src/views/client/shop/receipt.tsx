@@ -55,7 +55,7 @@ const Receipt: React.FC = () => {
             <MetaData title={'Receipt'} />
             <div className="flex justify-center">
                 <div className="flex w-auto">
-                    <div className="max-w-md mx-auto bg-white p-8 border border-gray-200 shadow-lg mt-20 rounded-lg">
+                    <div className="max-w-xs w-96 mx-auto bg-white p-8 border border-gray-200 shadow-lg mt-20 rounded-lg">
                         <div className="flex items-center mb-2">
                             <img src={Logo} alt="Logo" className="h-16" />
                             <h1 className="text-2xl font-bold mb-0">Receipt</h1>
@@ -113,10 +113,13 @@ const Receipt: React.FC = () => {
                             </div>
                         }
 
+                        <p className="italic text-xs">**Reservations require a minimum 10-minute pickup window,
+                            which may vary by store, with a maximum pickup time of 4pm.</p>
 
                     </div>
 
                 </div>
+
             </div>
         </>
     );
