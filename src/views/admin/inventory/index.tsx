@@ -39,6 +39,7 @@ const App: React.FC = () => {
     useEffect(() => {
         if (success) {
             successMsg('Checkout success');
+            dispatch(fetchAllStoreItems());
             dispatch(checkoutReset());
             setCart([]);
         }
@@ -58,6 +59,11 @@ const App: React.FC = () => {
     const handleAddToCart = (product: Product) => {
         const existingCartItemIndex = cart.findIndex((cartItem) => cartItem._id === product._id);
 
+        if(product.stock <= 0){
+            errorMsg('Insufficient Stock available');
+            return;
+        }
+        
         if (existingCartItemIndex !== -1) {
             const updatedCart = [...cart];
             if (product.stock > updatedCart[existingCartItemIndex].quantity) {
@@ -69,6 +75,8 @@ const App: React.FC = () => {
             errorMsg('Insufficient Stock available');
             return;
         }
+
+        
         setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
 
     };
