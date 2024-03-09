@@ -2,7 +2,7 @@ import './inventory.css';
 import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllStoreItems } from '../../../store/reducers/product/allProductsSlice';
-import { inventoryCheckout, clearErrors } from '../../../store/reducers/cart/inventorySlice';
+import { inventoryCheckout, checkoutReset, clearErrors } from '../../../store/reducers/cart/inventorySlice';
 import CategoryList from './categoryList';
 import ProductList from './productList';
 import CartTable from './cartTable';
@@ -39,6 +39,7 @@ const App: React.FC = () => {
     useEffect(() => {
         if (success) {
             successMsg('Checkout success');
+            dispatch(checkoutReset());
             setCart([]);
         }
         if (error) {
