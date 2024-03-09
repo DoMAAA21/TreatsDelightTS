@@ -4,6 +4,7 @@ import { fetchAllUsers } from '../../../store/reducers/user/allUsersSlice';
 import { fetchAllProductsSold, fetchAllTotalSale } from '../../../store/reducers/analytic/productsSoldSlice';
 import UsersLogo from '../../../assets/svg/users.svg';
 import SalesLogo from '../../../assets/svg/sales.svg';
+import OrderLogo from '../../../assets/svg/order.svg';
 
 const WidgetNav = () => {
     const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const WidgetNav = () => {
     const dashboardnavs = [
         { title: 'Total Users', qty: userCount, icon: UsersLogo, subtitle: 'Using this app.' },
         { title: 'Total Sales', qty: `₱${allTotalSale}`, icon: SalesLogo, subtitle: 'Using this app' },
-        { title: 'Total Orders', qty: allProductsSold, icon: UsersLogo, subtitle: 'Made in this app' },
+        { title: 'Total Orders', qty: allProductsSold, icon: OrderLogo, subtitle: 'Made in this app' },
     ];
 
     return (
