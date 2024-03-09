@@ -13,15 +13,15 @@ const PaymentPage: React.FC = () => {
     const { isAuthenticated } = useAppSelector(state => state.auth);
 
     useEffect(() => {
-        if (cartItems.length == 0) {
+        if (cartItems.length === 0) {
             navigate('/');
         }
-    }, [cartItems])
+    }, [cartItems, navigate]);
 
     const checkoutHandler = async () => {
         dispatch(clearQrCode());
         if (cartItems.length === 0) {
-            topErrorMsg('Empty Cart')
+            topErrorMsg('Empty Cart');
             return;
         }
         const totalPrice: number = parseFloat(
@@ -29,29 +29,29 @@ const PaymentPage: React.FC = () => {
         );
         await dispatch(kioskCheckout({ cartItems, totalPrice })).then(() => {
             navigate('/receipt');
-            successMsg('Checkout Success')
-        })
-
+            successMsg('Checkout Success');
+        });
     };
 
     if (cartItems.length === 0) {
-        return;
+        return null;
     }
+
     return (
         <>
             <MetaData title={'Payment'} />
-            <div className="flex justify-center items-center pt-16">
-                <div className="bg-white p-8 rounded-lg shadow-md w-1/3 pb-20">
+            <div className="flex justify-center items-center pt-16 p-4">
+                <div className="bg-white p-4 md:p-8 rounded-lg shadow-md w-full md:w-1/2 lg:w-1/3 pb-20"> 
                     <h2 className="text-2xl text-center mb-4">Choose Payment Type</h2>
                     <div className="space-y-4">
-                        {isAuthenticated ? (
+                        {isAuthenticated && ( 
                             <>
                                 <PaypalCheckoutButton />
                                 <div className="text-center">
                                     <span className="font-semibold text-md"> Or</span>
                                 </div>
                             </>
-                        ) : null}
+                        )}
 
                         <button onClick={checkoutHandler} className="w-full bg-green-500 text-white font-semibold py-4 rounded hover:bg-green-600">
                             Checkout <span>(Mobile Kiosk)</span>
