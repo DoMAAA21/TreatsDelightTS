@@ -9,8 +9,6 @@ import MetaData from "../../../components/MetaData";
 import { errorMsg } from "../../../components/toast";
 
 
-
-
 const CartPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -45,10 +43,6 @@ const CartPage = () => {
         dispatch(removeItemFromCart(id));
 
     };
-
-
-
-
 
     return (
         <>
