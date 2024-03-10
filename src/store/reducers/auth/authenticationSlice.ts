@@ -130,6 +130,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginRequest(state) {
+      axios.defaults.withCredentials = true;
       state.loading = true;
       state.isAuthenticated = false;
     },
@@ -168,6 +169,7 @@ const authSlice = createSlice({
       state.error = action.payload;
     },
     logoutSuccess(state) {
+      axios.defaults.withCredentials = false;
       state.isAuthenticated = false;
       state.loading = false;
       state.user = null;
