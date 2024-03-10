@@ -1,7 +1,8 @@
 
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart } from "../../../store/reducers/cart/cartSlice";
+import { increaseItemQuantity, decreaseItemQuantity, removeItemFromCart, clearError } from "../../../store/reducers/cart/cartSlice";
 import { colors } from "../../../components/theme";
 import EmptyCart from "../../../assets/svg/emptycart.svg";
 import MetaData from "../../../components/MetaData";
@@ -13,10 +14,15 @@ import { errorMsg } from "../../../components/toast";
 const CartPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { cartItems } = useAppSelector(state => state.cart);
+    const { cartItems, error } = useAppSelector(state => state.cart);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2);
 
-
+    useEffect(()=>{
+        if(error){
+            errorMsg(error);
+            dispatch(clearError());
+        }
+    },[error])
     const proceedHandler = () => {
         if (cartItems.length === 0) {
             errorMsg('No items in cart');
@@ -73,7 +79,7 @@ const CartPage = () => {
                                         <div key={item._id} className="flex p-6 mb-2 border border-gray-200 shadow-md rounded">
                                             <div className="flex flex-col w-4/5">
                                                 <span className="text-red-800 text-lg font-semibold mb-2">{item.name}</span>
-                                                <span className="text-gray-500 text-sm">{item.name}</span>
+                                                <span className="text-gray-500 text-sm">{item.storeName}</span>
                                             </div>
                                             <div className="flex items-center w-2/6">
                                                 <button className="p-3 py-1 bg-red-500 text-white rounded-3xl" onClick={() => decrementQty(item._id)}>-</button>

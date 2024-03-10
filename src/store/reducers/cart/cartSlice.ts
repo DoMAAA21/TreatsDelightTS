@@ -9,7 +9,10 @@ interface CartItem {
   image: string;
   storeId: string;
   storeName: string;
+  stock: number;
+  category: string;
   quantity: number;
+
 }
 
 
@@ -37,7 +40,9 @@ interface CartState {
   }
   qrCode?: string | null;
   success: boolean;
+  addToCartSuccess: boolean;
   loading: boolean;
+  error: string | null;
 }
 
 
@@ -64,6 +69,8 @@ const initialState: CartState = {
   qrCode: '',
   success: false,
   loading: false,
+  addToCartSuccess: false,
+  error: null,
 };
 
 export const addItemToCart = createAsyncThunk(
@@ -71,6 +78,11 @@ export const addItemToCart = createAsyncThunk(
   async ({ id, quantity }: { id: string; quantity: number }, { dispatch }) => {
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/product/${id}`);
+      if (data.product.category.toLowerCase() !== "meals" && quantity > data.product.stock) {
+        dispatch(addToCartFail('Insufficient Stock'));
+        return;
+      }
+
       const cartItem: CartItem = {
         _id: data.product._id,
         name: data.product.name,
@@ -78,8 +90,11 @@ export const addItemToCart = createAsyncThunk(
         image: data.product.images[0].url,
         storeId: data.product.store.storeId,
         storeName: data.product.store.name,
+        category: data.product.category,
+        stock: data.product.stock,
         quantity,
       };
+
       dispatch(addToCart(cartItem));
       return cartItem;
     } catch (error) {
@@ -132,7 +147,7 @@ export const checkoutCart = createAsyncThunk<{ success: boolean }, CheckoutCartP
 export const kioskCheckout = createAsyncThunk<{ success: boolean }, { cartItems: any[], totalPrice: number }, { state: RootState }>('cart/checkoutCart', async ({ cartItems, totalPrice }, { dispatch }) => {
   try {
     dispatch(checkoutRequest());
-    
+
     const order = {
       orderItems: cartItems,
       totalPrice
@@ -168,21 +183,62 @@ const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const item = action.payload;
       const isItemExist = state.cartItems.find((i) => i._id === item._id);
-
       if (isItemExist) {
-        state.cartItems = state.cartItems.map((i) => (i._id === isItemExist._id ? { ...i, quantity: i.quantity + item.quantity } : i));
+        const totalQuantity = isItemExist.quantity + item.quantity;
+    
+        if (item.category.toLowerCase() !== "meals") {
+          // Check stock validation only if the category is not "meals"
+          if (totalQuantity <= item.stock) {
+            state.cartItems = state.cartItems.map((i) => (i._id === isItemExist._id ? { ...i, quantity: totalQuantity } : i));
+            state.addToCartSuccess = true;
+          } else {
+            state.error = "Cannot add more quantity. Insufficient stock.";
+            return;
+          }
+        } else {
+          // For "meals" category, allow adding without stock validation
+          state.cartItems = state.cartItems.map((i) => (i._id === isItemExist._id ? { ...i, quantity: totalQuantity } : i));
+          state.addToCartSuccess = true;
+        }
       } else {
         state.cartItems = [...state.cartItems, item];
+        state.addToCartSuccess = true;
       }
-      localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+    },
+    
+    addToCartSuccess: (state) => {
+      state.addToCartSuccess = true;
+    },
+    addToCartFail: (state, action) => {
+      state.error = action.payload;
+    },
+    addToCartReset: (state) => {
+      state.addToCartSuccess = false;
     },
     increaseItemQuantity: (state, action: PayloadAction<string>) => {
       const id = action.payload;
-      state.cartItems = state.cartItems.map((item) =>
-        item._id === id ? { ...item, quantity: item.quantity + 1 } : item
-      );
-      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      const itemToUpdate = state.cartItems.find((item) => item._id === id);
+    
+      if (itemToUpdate) {
+        // Check if the item's category is not "meals" and if increasing quantity exceeds available stock
+        if (itemToUpdate.category.toLowerCase() !== "meals" && itemToUpdate.quantity + 1 <= itemToUpdate.stock) {
+          state.cartItems = state.cartItems.map((item) =>
+            item._id === id ? { ...item, quantity: item.quantity + 1 } : item
+          );
+          localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        } else if (itemToUpdate.category.toLowerCase() === "meals") {
+          // If the category is "meals", allow increasing quantity without stock validation
+          state.cartItems = state.cartItems.map((item) =>
+            item._id === id ? { ...item, quantity: item.quantity + 1 } : item
+          );
+          localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        } else {
+          state.error = "Cannot increase quantity. Insufficient stock.";
+        }
+      }
     },
+    
     decreaseItemQuantity: (state, action: PayloadAction<string>) => {
       const id = action.payload;
       state.cartItems = state.cartItems
@@ -208,10 +264,13 @@ const cartSlice = createSlice({
     showReceipt: (state, action) => {
       state.receipt = action.payload;
     },
+    clearError: (state) => {
+      state.error = null;
+    }
   },
 });
 
-export const { clearCart, removeItemFromCart, addToCart, increaseItemQuantity, decreaseItemQuantity,
-  checkoutRequest, checkoutSuccess, showReceipt, setQrCode, clearQrCode } = cartSlice.actions;
+export const { clearCart, removeItemFromCart, addToCart, addToCartSuccess, addToCartReset, addToCartFail, increaseItemQuantity, decreaseItemQuantity,
+  checkoutRequest, checkoutSuccess, showReceipt, setQrCode, clearQrCode, clearError } = cartSlice.actions;
 
 export default cartSlice.reducer;

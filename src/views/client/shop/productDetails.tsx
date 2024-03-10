@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getItemDetails } from '../../../store/reducers/product/productDetailsSlice';
 import { colors } from '../../../components/theme';
-import { addItemToCart } from '../../../store/reducers/cart/cartSlice';
+import { addItemToCart, clearError, addToCartReset } from '../../../store/reducers/cart/cartSlice';
 import ProductDetailsLoader from '../../../components/loaders/ProductDetailsLoader';
 import { errorMsg, successMsg } from '../../../components/toast';
 import Swal from 'sweetalert2';
@@ -19,7 +19,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { product } = useAppSelector(state => state.productDetails);
-  const { cartItems } = useAppSelector(state => state.cart);
+  const { addToCartSuccess, error } = useAppSelector(state => state.cart);
   const [quantity, setQuantity] = useState(1);
   const [images, setImages] = useState<ProductImage[]>([]);
   const [fetchLoading, setFetchLoading] = useState(true);
@@ -30,8 +30,18 @@ const ProductDetails = () => {
         setImages(product.images);
         setFetchLoading(false)
       });
-    console.log(cartItems)
   }, [id, fetchLoading]);
+
+  useEffect(()=>{
+    if(error){
+      errorMsg(error);
+      dispatch(clearError());
+    }
+    if(addToCartSuccess){
+      successMsg('Item added to cart.');;
+      dispatch(addToCartReset());
+    }
+  },[error , addToCartSuccess])
 
   const settings = {
     infinite: true,
@@ -45,6 +55,12 @@ const ProductDetails = () => {
   const handleAddToCart = () => {
     if (!id) {
       errorMsg('Product not available');
+      return ;
+    }
+    
+    if(product.category.toLowerCase() !== "meals" && quantity > product.stock){
+      errorMsg('Quantity not available');
+      return;
     }
     if (id) {
       if (product?.nutrition?.cholesterol >= 50) {
@@ -57,16 +73,11 @@ const ProductDetails = () => {
           cancelButtonText: 'No, cancel',
         }).then((result) => {
           if (result.isConfirmed) {
-            dispatch(addItemToCart({ id: id, quantity })).then(() => {
-              successMsg('Added to Cart')
-            });
-
+            dispatch(addItemToCart({ id: id, quantity }));
           }
         });
       } else {
-        dispatch(addItemToCart({ id: id, quantity })).then(() => {
-          successMsg('Added to Cart')
-        });
+        dispatch(addItemToCart({ id: id, quantity }));
       }
     }
   };
@@ -91,10 +102,13 @@ const ProductDetails = () => {
           <div className="w-2/6 bg-white shadow-md p-4 text-justify flex flex-col rounded-tr-2xl rounded-br-2xl border border-gray-200">
             <div className="flex-grow">
               <h2 className="text-3xl font-bold mb-4">{product.name}</h2>
+              {product.category.toLocaleLowerCase() !== "meals" ? (
+                 <p className="text-gray-600 text-sm mb-4 italic">Stock: {product.stock}</p>
+              )  : null}
               <p className="text-gray-600 text-xl mb-4">{product.description}</p>
               <p className="text-green-500 text-xl font-semibold mb-2">₱{product?.sellPrice.toFixed(2)}</p>
+
               <div className="mb-1">
-                {/* <h3 className="text-xl font-semibold mb-2">Nutritional Facts</h3> */}
                 <ul className="text-gray-500">
                   <ul className="">
                     <li><span className="font-semibold">{product.nutrition?.calories}</span> kcal of calories</li>
