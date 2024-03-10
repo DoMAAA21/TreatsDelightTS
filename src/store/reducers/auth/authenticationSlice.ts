@@ -111,6 +111,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
 
 
     localStorage.removeItem('cartItems');
+    localStorage.removeItem('token');
     dispatch(destroyToken());
     return dispatch(logoutSuccess(data.success));
 
