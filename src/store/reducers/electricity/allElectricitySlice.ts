@@ -12,6 +12,8 @@ interface Electricity {
     paymentType: string;
     note?: string;
     issuedAt: Date;
+    startAt: Date;
+    endAt: Date;
     paidAt: Date;
 }
 

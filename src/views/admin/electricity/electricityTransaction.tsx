@@ -22,6 +22,7 @@ interface Store {
     additionals: number;
     issuedAt: Date;
     paidAt: Date;
+    billingPeriod: Date | string;
     type: string;
     actions: React.ReactNode;
 
@@ -102,7 +103,7 @@ const ElectricityPage: FC = () => {
 
     const electricityData: StoresData = {
         columns: [
-            { label: 'Electricity ID', field: '_id' },
+            { label: 'Billing Period', field: 'billingPeriod' },
             { label: 'Electricity Total', field: 'electricity' },
             { label: 'Consumed x watts', field: 'pxc' },
             { label: 'Additionals', field: 'additionals' },
@@ -113,7 +114,7 @@ const ElectricityPage: FC = () => {
 
         ],
         rows: electricity.map((electricity) => ({
-            _id: electricity._id,
+            billingPeriod: `${new Date(electricity.startAt).toISOString().slice(0, 10)} to ${new Date(electricity.endAt).toISOString().slice(0, 10)}`,
             electricity: electricity.total ? renderElectricityStatus(electricity?.total) : 'No payment yet',
             pxc: `${electricity.consumed} x ${electricity.price}`,
             additionals: electricity.additionals,
