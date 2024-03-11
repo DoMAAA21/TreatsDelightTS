@@ -13,7 +13,8 @@ interface Transaction {
   },
   user: {
     name: string;
-  }
+  },
+  createdAt: Date;
 }
 
 interface AllTransactionsState {

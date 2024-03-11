@@ -14,6 +14,7 @@ interface Transaction {
     price: number;
     status: string;
     customerName: string;
+    date: Date;
     actions: React.ReactNode;
 }
 
@@ -51,6 +52,7 @@ const TransactionPage: FC = () => {
             { label: 'Product Name', field: 'name' },
             { label: 'Quantity', field: 'quantity' },
             { label: 'Price', field: 'price' },
+            { label: 'Date', field: 'date' },
             { label: 'Status', field: 'status' },
             { label: 'Actions', field: 'actions' },
         ],
@@ -60,6 +62,7 @@ const TransactionPage: FC = () => {
             customerName: transaction?.user?.name || 'Guest',
             quantity: transaction.orderItems.quantity,
             price: transaction.orderItems.price,
+            date: new Date(transaction.createdAt).toISOString().slice(0, 10),
             status: transaction.orderItems.status.toLowerCase() === 'pending' ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-yellow-500 text-white">
                     Pending
