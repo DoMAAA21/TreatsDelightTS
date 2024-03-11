@@ -49,6 +49,11 @@ import CartPage from './views/client/shop/cart';
 import PaymentPage from './views/client/shop/payment';
 import Receipt from './views/client/shop/receipt';
 import ProfilePage from './views/auth/profile';
+
+//Doctor
+import DoctorProductPage from './views/doctor/product';
+import DoctorEdiProductPage from './views/doctor/product/editProduct';
+
 //HomePage
 import HomePage from './views/home';
 
@@ -68,7 +73,7 @@ const AppRoutes: FC = () => {
       element: <DashboardLayout />,
       children: [
         { path: '', element: <Navigate to="dashboard" /> },
-        { path: 'dashboard', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee']}><DashboardPage /></ProtectedRoute> },
+        { path: 'dashboard', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee','doctor']}><DashboardPage /></ProtectedRoute> },
         { path: 'owner-all', element: <ProtectedRoute allowedRoles={['admin']}> <UserPage /></ProtectedRoute> },
         { path: 'owner-add', element: <ProtectedRoute allowedRoles={['admin']}>  <AddOwnerPage />  </ProtectedRoute> },
         { path: 'owner/:id', element: <ProtectedRoute allowedRoles={['admin']}> <EditOwnerPage /> </ProtectedRoute> },
@@ -96,13 +101,20 @@ const AppRoutes: FC = () => {
         { path: 'electricity/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><ElectricityArchivesPage /></ProtectedRoute> },
         { path: 'maintenance-all', element: <ProtectedRoute allowedRoles={['admin']}><MaintenancePage /></ProtectedRoute> },
         { path: 'maintenance/store/:id', element: <ProtectedRoute allowedRoles={['admin']}><MaintenanceTransaction /></ProtectedRoute> },
-        { path: 'maintenance/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><MaintenanceArchivesPage /></ProtectedRoute> },        
-        { path: 'inventory', element: <ProtectedRoute allowedRoles={['owner','employee']}><InventoryPage /></ProtectedRoute>  },
-        { path: 'analytics', element: <ProtectedRoute allowedRoles={['admin','owner','employee']}><AnalyticsPage /></ProtectedRoute> },
+        { path: 'maintenance/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><MaintenanceArchivesPage /></ProtectedRoute> },
+        { path: 'inventory', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><InventoryPage /></ProtectedRoute> },
+        { path: 'analytics', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee']}><AnalyticsPage /></ProtectedRoute> },
         { path: 'permits', element: <ProtectedRoute allowedRoles={['admin']}> <PermitPage /> </ProtectedRoute> },
-        { path: 'contracts', element: <ProtectedRoute allowedRoles={['admin']}><ContractPage /></ProtectedRoute>  },
-        { path: 'transactions', element: <ProtectedRoute allowedRoles={['owner','employee']}><TransactionPage /></ProtectedRoute>},
+        { path: 'contracts', element: <ProtectedRoute allowedRoles={['admin']}><ContractPage /></ProtectedRoute> },
+        { path: 'transactions', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><TransactionPage /></ProtectedRoute> },
       ]
+    }, {
+      path: '/doctor',
+      element: <DashboardLayout />,
+      children: [
+        { path: 'product-all', element: <ProtectedRoute allowedRoles={['doctor']}><DoctorProductPage /></ProtectedRoute> },
+        { path: 'product/:id', element: <ProtectedRoute allowedRoles={['doctor']}> <DoctorEdiProductPage /> </ProtectedRoute> },
+      ],
     },
     {
       path: '/',
@@ -116,8 +128,6 @@ const AppRoutes: FC = () => {
         { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
         { path: 'me', element: <ProfilePage /> },
-     
-
 
       ]
     },

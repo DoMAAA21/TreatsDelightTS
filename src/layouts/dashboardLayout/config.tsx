@@ -163,7 +163,7 @@ export const useNav = () => {
     }
 
     if (user?.role.toLowerCase() === 'doctor') {
-      const filteredNav = ['doctor-products'];
+      const filteredNav = ['dashboard','doctor-products'];
       return defaultConfig.filter((item) => filteredNav.includes(item.id));
     }
 

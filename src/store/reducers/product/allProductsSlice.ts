@@ -121,6 +121,25 @@ export const fetchAllStoreItems = createAsyncThunk<Product[], void, { state: Roo
   }
 );
 
+export const fetchDoctorAllItems = createAsyncThunk<Product[], void >(
+  'allProducts/fetchAllStoreItems',
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      dispatch(allProductsRequest());
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/doctor/all-items`, { withCredentials: true });
+      dispatch(allProductsSuccess(data.products));
+      return data.products;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(allProductsFail(error.response?.data?.message || 'An error occurred'));
+        return rejectWithValue(error.response?.data?.message || 'An error occurred');
+      }
+      dispatch(allProductsFail('An error occurred'));
+      return rejectWithValue('An error occurred');
+    }
+  }
+);
+
 export const fetchAllItems = createAsyncThunk<Product[], { page: number; searchQuery?: string; category?: string; store?: string; }, { state: RootState }>(
   'allItems/fetchAllItems',
   async ({ page, searchQuery, category, store }, { rejectWithValue, dispatch }) => {

@@ -16,13 +16,13 @@ const LoginForm = () => {
   useEffect(() => {
     if (isAuthenticated) {
       if (user?.role.toLowerCase() === "admin") {
-        return navigate("/admin/dashboard");
+        return navigate("/admin");
       } 
       if (user?.role.toLowerCase() === "employee" || user?.role.toLowerCase() === "owner") {
         return navigate("/admin");
       } 
       if(user?.role.toLowerCase() === "doctor"){
-        return navigate("/doctor/product-all");
+        return navigate("/admin");
       }
       navigate("/");
     }
