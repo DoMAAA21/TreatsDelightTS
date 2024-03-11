@@ -15,11 +15,11 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      if (user?.role === "Admin") {
+      if (user?.role.toLowerCase() === "admin") {
         return navigate("/admin/dashboard");
-      } else if (user?.role === "Employee" || user?.role === "Owner") {
+      } else if (user?.role.toLowerCase() === "employee" || user?.role.toLowerCase() === "owner") {
         return navigate("/admin");
-      } else if(user?.role === "Doctor"){
+      } else if(user?.role.toLowerCase() === "doctor"){
         return navigate("/doctor/product-all");
       }
 
