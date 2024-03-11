@@ -17,12 +17,13 @@ const LoginForm = () => {
     if (isAuthenticated) {
       if (user?.role.toLowerCase() === "admin") {
         return navigate("/admin/dashboard");
-      } else if (user?.role.toLowerCase() === "employee" || user?.role.toLowerCase() === "owner") {
+      } 
+      if (user?.role.toLowerCase() === "employee" || user?.role.toLowerCase() === "owner") {
         return navigate("/admin");
-      } else if(user?.role.toLowerCase() === "doctor"){
+      } 
+      if(user?.role.toLowerCase() === "doctor"){
         return navigate("/doctor/product-all");
       }
-
       navigate("/");
     }
 
