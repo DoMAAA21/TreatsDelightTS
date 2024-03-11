@@ -163,6 +163,20 @@ const ProductDetails = () => {
             <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
             <p className="text-gray-600 mb-4">{product.description}</p>
             <p className="text-gray-800 font-semibold mb-4">₱{product?.sellPrice.toFixed(2)}</p>
+            <div className="mb-1">
+                <ul className="text-gray-500">
+                  <ul className="">
+                    <li><span className="font-semibold">{product.nutrition?.calories}</span> kcal of calories</li>
+                    <li><span className="font-semibold">{product.nutrition?.protein}</span> g of protein</li>
+                    <li><span className="font-semibold">{product.nutrition?.carbs}</span> g of carbohydrates</li>
+                    <li><span className="font-semibold">{product.nutrition?.fat}</span> g of fats</li>
+                    <li><span className="font-semibold">{product.nutrition?.fiber}</span> g of fiber</li>
+                    <li><span className="font-semibold">{product.nutrition?.sugar}</span> g of sugar</li>
+                    <li><span className="font-semibold">{product.nutrition?.sodium}</span> mg of sodium</li>
+                    <li><span className="font-semibold">{product.nutrition?.cholesterol}</span> mg of cholesterol</li>
+                  </ul>
+                </ul>
+              </div>
             <div className="flex items-center mb-4">
               <label htmlFor="quantity" className="text-md text-gray-600 mr-2">
                 Quantity:
