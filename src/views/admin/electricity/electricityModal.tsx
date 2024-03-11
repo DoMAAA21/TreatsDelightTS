@@ -39,7 +39,7 @@ const validationSchema = Yup.object({
 const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
-    const { loading } = useAppSelector(state => state.electricity);
+    const { loading } = useAppSelector(state => state.newElectricity);
     const [showIssuedAt, setShowIssuedAt] = useState(false);
     const [showPaidAt, setShowPaidAt] = useState(false);
     const [showStartAt, setShowStartAt] = useState(false);
