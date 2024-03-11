@@ -108,7 +108,7 @@ const Receipt: React.FC = () => {
                             <span className="font-semibold">₱{receipt?.totalPrice.toFixed(2)}</span>
                         </div>
                         {qrCode &&
-                            <div className="flex justify-center items-center">
+                            <div className="flex justify-center items-center mb-4">
                                 <QRCode value={qrCode} className="bg-white shadow-md p-4 rounded-lg" height={400} />
                             </div>
                         }
