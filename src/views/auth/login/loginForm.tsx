@@ -19,6 +19,8 @@ const LoginForm = () => {
         return navigate("/admin/dashboard");
       } else if (user?.role === "Employee" || user?.role === "Owner") {
         return navigate("/admin");
+      } else if(user?.role === "Doctor"){
+        return navigate("/doctor/product-all");
       }
 
       navigate("/");
