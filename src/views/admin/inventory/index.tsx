@@ -59,22 +59,23 @@ const App: React.FC = () => {
     const handleAddToCart = (product: Product) => {
         const existingCartItemIndex = cart.findIndex((cartItem) => cartItem._id === product._id);
 
-        if(product.stock <= 0){
+        if(product.category.toLowerCase() !== "meals" && product.stock <= 0){
             errorMsg('Insufficient Stock available');
             return;
         }
         
         if (existingCartItemIndex !== -1) {
             const updatedCart = [...cart];
-            if (product.stock > updatedCart[existingCartItemIndex].quantity) {
-                updatedCart[existingCartItemIndex].quantity += 1;
-                setCart(updatedCart);
+            if (product.category.toLowerCase() !== "meals" && product.stock <= updatedCart[existingCartItemIndex].quantity) {
+                errorMsg('Insufficient Stock available');
                 return;
             }
-
-            errorMsg('Insufficient Stock available');
+        
+            updatedCart[existingCartItemIndex].quantity += 1;
+            setCart(updatedCart);
             return;
         }
+        
 
         
         setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
