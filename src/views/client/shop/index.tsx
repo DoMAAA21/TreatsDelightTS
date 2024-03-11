@@ -67,7 +67,7 @@ const ShoppingPage: React.FC = () => {
   const fetchMoreItems = () => {
     if (hasMore) {
       console.log('Fetching more items. Current page:', currentPage + 1);
-      dispatch(fetchAllItems({ page: currentPage + 1, category: selectedCategory }));
+      dispatch(fetchAllItems({ page: currentPage + 1, category: selectedCategory, store: selectedStore}));
     }
   };
 
