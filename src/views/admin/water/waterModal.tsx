@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { newWater } from '../../../store/reducers/water/newWaterSlice';
 import { colors } from '../../../components/theme';
 import Datepicker from "tailwind-datepicker-react"
@@ -20,6 +20,8 @@ interface FormData {
     total: number;
     type: string;
     storeId: number | string;
+    startAt: Date;
+    endAt: Date;
     issuedAt: Date;
     paidAt: Date;
 
@@ -37,12 +39,18 @@ const validationSchema = Yup.object({
 const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
+    const { loading } = useAppSelector(state => state.water);
     const [showIssuedAt, setShowIssuedAt] = useState(false);
     const [showPaidAt, setShowPaidAt] = useState(false);
+    const [showStartAt, setShowStartAt] = useState(false);
+    const [showEndAt, setShowEndAt] = useState(false);
     const [isPaid, setIsPaid] = useState(false);
     const [type, setType] = useState("topay");
     const [issuedAt, setIssuedAt] = useState(new Date());
     const [paidAt, setPaidAt] = useState(new Date());
+    const [startAt, setStartAt] = useState(new Date());
+    const [endAt, setEndAt] = useState(new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())); //add 1 month
+
 
     const initialValues = {
         consumed: 0,
@@ -52,7 +60,9 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
         type: '',
         issuedAt: new Date(),
         storeId: '',
-        paidAt: new Date()
+        paidAt: new Date(),
+        startAt: new Date(),
+        endAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate())
     }
 
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -72,6 +82,8 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                 total: data.total,
                 type: type,
                 storeId: id,
+                startAt,
+                endAt,
                 issuedAt,
                 paidAt
             };
@@ -114,7 +126,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                             <div className="mb-4 flex">
                                                 <div className="flex-1 mr-2">
                                                     <label htmlFor="consumed" className="block text-sm font-medium text-gray-700">
-                                                        Consumed
+                                                        Cubic Meter <span className="text-gray-500 text-sm">(Consumed)</span>
                                                     </label>
                                                     <Field
                                                         type="number"
@@ -150,7 +162,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
 
                                             <div className="mb-4">
                                                 <label htmlFor="additionals" className="block text-sm font-medium text-gray-700">
-                                                    Additionals/ Deductions 
+                                                    Additionals/ Deductions
                                                 </label>
                                                 <Field
                                                     type="number"
@@ -196,6 +208,23 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                 </select>
                                             </div>
 
+                                            <div className="flex flex-wrap -mx-2">
+                                                <div className="w-full md:w-1/2 px-2 mb-2">
+                                                    <label htmlFor="startAt" className="block text-sm font-medium text-gray-700">
+                                                        Start At
+                                                    </label>
+                                                    <Datepicker options={options} onChange={(date) => setStartAt(date)} show={showStartAt} setShow={(show) => setShowStartAt(show)} value={startAt} />
+                                                </div>
+
+                                                <div className="w-full md:w-1/2 px-2 mb-2">
+                                                    <label htmlFor="endAt" className="block text-sm font-medium text-gray-700">
+                                                        End At
+                                                    </label>
+                                                    <Datepicker options={options} onChange={(date) => setEndAt(date)} show={showEndAt} setShow={(show) => setShowEndAt(show)} value={endAt} />
+                                                </div>
+
+                                            </div>
+
                                             <div className="mb-2">
                                                 <label htmlFor="issuedAt" className="block text-sm font-medium text-gray-700">
                                                     Issued At
@@ -211,25 +240,11 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                 </div>
                                             )}
 
-                                            <div className="mb-4">
-                                                <label htmlFor="note" className="block text-sm font-medium text-gray-700">
-                                                    Note
-                                                </label>
-                                                <Field
-                                                    as="textarea"
-                                                    id="note"
-                                                    name="note"
-                                                    className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                                />
-                                                <ErrorMessage name="note" component="div" className="text-red-500" />
-                                            </div>
-
-
-
                                             <button
                                                 type="submit"
+                                                disabled={loading}
                                                 className={`mt-6 ${colors.primary} py-2 px-4 rounded-lg w-full`}>
-                                                Submit
+                                                {loading ? '...' : 'Submit'}
                                             </button>
                                         </Form>
                                     )}

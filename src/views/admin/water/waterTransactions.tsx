@@ -23,6 +23,7 @@ interface Store {
     issuedAt: Date;
     paidAt: Date;
     type: string;
+    billingPeriod: Date | String;
     actions: React.ReactNode;
 
 }
@@ -103,9 +104,9 @@ const WaterPage: FC = () => {
 
     const watersData: StoresData = {
         columns: [
-            { label: 'Water ID', field: '_id' },
+            { label: 'Billing Period', field: 'billingPeriod' },
             { label: 'Water Total', field: 'water' },
-            { label: 'Consumed x m³', field: 'pxc' },
+            { label: 'Consumption x m³', field: 'pxc' },
             { label: 'Additionals', field: 'additionals' },
             { label: 'Issued At', field: 'issuedAt' },
             { label: 'Paid At', field: 'paidAt' },
@@ -114,7 +115,7 @@ const WaterPage: FC = () => {
 
         ],
         rows: waters.map((water) => ({
-            _id: water._id,
+            billingPeriod: `${new Date(water.startAt).toISOString().slice(0, 10)} to ${new Date(water.endAt).toISOString().slice(0, 10)}`,
             water: water.total ? renderWaterStatus(water?.total) : 'No payment yet',
             pxc: `${water.consumed} x ${water.price}`,
             additionals: water.additionals,

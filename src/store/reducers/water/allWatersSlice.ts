@@ -13,6 +13,8 @@ interface Water {
     note?: string;
     issuedAt: Date;
     paidAt: Date;
+    startAt: Date;
+    endAt: Date;
 }
 
 
