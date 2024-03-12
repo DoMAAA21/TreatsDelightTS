@@ -5,7 +5,8 @@ import { errorMsg } from "../../components/toast";
 const PaypalCheckoutButton: React.FC = () => {
     let totalPrice: number; 
     window.onload = () => {
-        totalPrice = +(window as any).totalPrice;
+        alert('test')
+        totalPrice = parseFloat((window as any).totalPrice);
         if (!isNaN(totalPrice)) {
             alert(totalPrice)
         } else {
