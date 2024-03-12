@@ -1,11 +1,13 @@
 import { PayPalButtons } from "@paypal/react-paypal-js"
 import { errorMsg } from "../../components/toast";
-
+import { useParams } from "react-router-dom";
 
 const PaypalCheckoutButton: React.FC = () => {
-    const totalPrice: number | undefined = parseFloat(document.getElementById("totalPrice")?.getAttribute('value') ?? 'NaN');
+    const { payment } = useParams();
+    
+    const totalPrice = payment && parseFloat(payment);
 
-    alert(totalPrice)
+    alert(totalPrice);
 
     const createOrder = async (data: any, actions: any): Promise<any> => {  
         console.log(data);
