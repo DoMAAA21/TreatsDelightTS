@@ -3,7 +3,9 @@ import { errorMsg } from "../../components/toast";
 
 
 const PaypalCheckoutButton: React.FC = () => {
-   
+    const totalPrice: number | undefined = parseFloat(document.getElementById("totalPrice")?.getAttribute('value') ?? 'NaN');
+
+    alert(totalPrice)
 
     const createOrder = async (data: any, actions: any): Promise<any> => {  
         console.log(data);
@@ -13,7 +15,7 @@ const PaypalCheckoutButton: React.FC = () => {
                 {
                     description: "Total Order",
                     amount: {
-                        value: 24
+                        value: totalPrice
                     }
                 },
             ]
@@ -42,6 +44,7 @@ const PaypalCheckoutButton: React.FC = () => {
                 onApprove={onApprove}
                 onCancel={() => errorMsg('Order Cancelled')}
             />
+            <input type="hidden" id="totalPrice" ></input>
         </div>
     )
 }
