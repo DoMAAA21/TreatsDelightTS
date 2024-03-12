@@ -13,21 +13,22 @@ const PaypalCheckoutButton: React.FC = () => {
     const { cartItems } = useAppSelector(state => state.cart);
 
     const createOrder = async (data: any, actions: any): Promise<any> => {
-        if (cartItems.length === 0) {
-            topErrorMsg('Empty Cart')
-            return data;
-        }
+        // if (cartItems.length === 0) {
+        //     topErrorMsg('Empty Cart')
+        //     return data;
+        // }
+        console.log(data);
 
-        const totalPrice: number = parseFloat(
-                    cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
-        );
+        // const totalPrice: number = parseFloat(
+        //             cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
+        // );
        
         const creatorder = await actions.order.create({
             purchase_units: [
                 {
                     description: "Total Order",
                     amount: {
-                        value: totalPrice
+                        value: 20
                     }
                 },
             ]
