@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../../components/MetaData";
 import { useAppDispatch, useAppSelector } from "../../hooks";
@@ -12,11 +12,11 @@ const PaymentPage: React.FC = () => {
     const { cartItems } = useAppSelector(state => state.cart);
 
 
-    useEffect(() => {
-        if (cartItems.length === 0) {
-            navigate('/');
-        }
-    }, [cartItems, navigate]);
+    // useEffect(() => {
+    //     if (cartItems.length === 0) {
+    //         navigate('/');
+    //     }
+    // }, [cartItems, navigate]);
 
     const checkoutHandler = async () => {
         dispatch(clearQrCode());
@@ -33,9 +33,9 @@ const PaymentPage: React.FC = () => {
         });
     };
 
-    if (cartItems.length === 0) {
-        return null;
-    }
+    // if (cartItems.length === 0) {
+    //     return null;
+    // }
 
     return (
         <>
