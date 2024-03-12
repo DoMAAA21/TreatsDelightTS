@@ -136,7 +136,7 @@ const AppRoutes: FC = () => {
     { path: '/login', element: <LoginPage /> },
     { path: '/register', element: <RegisterPage /> },
     { path: '/restricted', element: <RestrictedPage /> },
-    { path: 'mobile-payment', element: <MobilePaymentPage /> },
+    { path: '/mobile-payment', element: <MobilePaymentPage /> },
     { path: '*', element: <NotFoundPage /> },
 
   ];
