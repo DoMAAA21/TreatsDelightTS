@@ -63,6 +63,8 @@ import NotFoundPage from './views/error/404';
 //Protected Route
 import ProtectedRoute from './ProtectedRoute'; //allowed roles should be lowercase all
 
+//Mobile gateway
+import MobilePaymentPage from './views/mobile/payment';
 
 
 
@@ -134,7 +136,9 @@ const AppRoutes: FC = () => {
     { path: '/login', element: <LoginPage /> },
     { path: '/register', element: <RegisterPage /> },
     { path: '/restricted', element: <RestrictedPage /> },
+    { path: 'mobile-payment', element: <MobilePaymentPage /> },
     { path: '*', element: <NotFoundPage /> },
+
   ];
 
 
