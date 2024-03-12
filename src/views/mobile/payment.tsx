@@ -3,7 +3,16 @@ import MetaData from "../../components/MetaData";
 import PaypalCheckoutButton from "./paypalCheckoutButton";
 
 const PaymentPage: React.FC = () => {
-
+    let totalPrice: number; 
+    window.onload = () => {
+        alert('test')
+        totalPrice = parseFloat((window as any).totalPrice);
+        if (!isNaN(totalPrice)) {
+            alert(totalPrice)
+        } else {
+            alert('asdas')
+        }
+    };
     return (
         <>
             <MetaData title={'Payment'} />
