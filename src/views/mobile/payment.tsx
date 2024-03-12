@@ -4,7 +4,7 @@ import PaypalCheckoutButton from "./paypalCheckoutButton";
 
 const PaymentPage: React.FC = () => {
     let totalPrice: number; 
-    window.onload = () => {
+ 
         alert('test')
         totalPrice = parseFloat((window as any).totalPrice);
         if (!isNaN(totalPrice)) {
@@ -12,7 +12,7 @@ const PaymentPage: React.FC = () => {
         } else {
             alert('asdas')
         }
-    };
+    
     return (
         <>
             <MetaData title={'Payment'} />
