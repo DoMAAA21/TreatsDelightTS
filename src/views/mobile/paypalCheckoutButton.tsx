@@ -1,32 +1,27 @@
 import { PayPalButtons } from "@paypal/react-paypal-js"
-import { errorMsg, successMsg } from "../../components/toast";
-// import { clearQrCode, checkoutCart } from "../../store/reducers/cart/cartSlice";
+import { errorMsg } from "../../components/toast";
 
 
 const PaypalCheckoutButton: React.FC = () => {
+    let totalPrice: number; 
+    window.onload = () => {
+        totalPrice = +(window as any).totalPrice;
+        if (!isNaN(totalPrice)) {
+            console.log("Total Price:", totalPrice);
+        } else {
+            console.error("Total Price is not a valid number");
+        }
+    };
 
-    // const dispatch = useAppDispatch();
-    // const navigate = useNavigate();
-
-    // const { cartItems } = useAppSelector(state => state.cart);
-
-    const createOrder = async (data: any, actions: any): Promise<any> => {
-        // if (cartItems.length === 0) {
-        //     topErrorMsg('Empty Cart')
-        //     return data;
-        // }
+    const createOrder = async (data: any, actions: any): Promise<any> => {  
         console.log(data);
 
-        // const totalPrice: number = parseFloat(
-        //             cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
-        // );
-       
         const creatorder = await actions.order.create({
             purchase_units: [
                 {
                     description: "Total Order",
                     amount: {
-                        value: 20
+                        value: totalPrice
                     }
                 },
             ]
@@ -42,23 +37,6 @@ const PaypalCheckoutButton: React.FC = () => {
             console.log(data);
             // dispatch(clearQrCode());
             (window as any).ReactNativeWebView.postMessage('asds');
-            window.postMessage({ type: 'paypal_success' }, 'asdsa');
-                 successMsg('Checkout Success');
-
-            // const isReserve = true;
-            // if (cartItems.length === 0) {
-            //     topErrorMsg('Empty Cart')
-            //     return data;
-            // }
-            // const totalPrice: number = parseFloat(
-            //     cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
-            // );
-
-            // dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
-            //     navigate('/receipt');
-                // successMsg('Checkout Success');
-            // })
-
         } catch (error) {
             console.error("An error occurred:", error);
         }
