@@ -7,9 +7,9 @@ const PaypalCheckoutButton: React.FC = () => {
     window.onload = () => {
         totalPrice = +(window as any).totalPrice;
         if (!isNaN(totalPrice)) {
-            console.log("Total Price:", totalPrice);
+            alert(totalPrice)
         } else {
-            console.error("Total Price is not a valid number");
+            alert('asdas')
         }
     };
 
