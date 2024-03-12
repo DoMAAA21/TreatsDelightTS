@@ -7,11 +7,8 @@ const PaypalCheckoutButton: React.FC = () => {
     
     const totalPrice = payment && parseFloat(payment);
 
-    alert(totalPrice);
-
     const createOrder = async (data: any, actions: any): Promise<any> => {  
         console.log(data);
-
         const creatorder = await actions.order.create({
             purchase_units: [
                 {
@@ -31,7 +28,7 @@ const PaypalCheckoutButton: React.FC = () => {
             const order = await actions.order.capture();
             console.log("order", order);
             console.log(data);
-            // dispatch(clearQrCode());
+
             (window as any).ReactNativeWebView.postMessage('asds');
         } catch (error) {
             console.error("An error occurred:", error);
