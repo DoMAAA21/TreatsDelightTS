@@ -1,16 +1,14 @@
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { useNavigate } from "react-router-dom";
 import { PayPalButtons } from "@paypal/react-paypal-js"
-import { errorMsg, successMsg } from "../../components/toast";
-import { clearQrCode, checkoutCart } from "../../store/reducers/cart/cartSlice";
+import { errorMsg } from "../../components/toast";
+// import { clearQrCode, checkoutCart } from "../../store/reducers/cart/cartSlice";
 
 
 const PaypalCheckoutButton: React.FC = () => {
 
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    // const dispatch = useAppDispatch();
+    // const navigate = useNavigate();
 
-    const { cartItems } = useAppSelector(state => state.cart);
+    // const { cartItems } = useAppSelector(state => state.cart);
 
     const createOrder = async (data: any, actions: any): Promise<any> => {
         // if (cartItems.length === 0) {
@@ -42,20 +40,22 @@ const PaypalCheckoutButton: React.FC = () => {
             const order = await actions.order.capture();
             console.log("order", order);
             console.log(data);
-            dispatch(clearQrCode());
-            const isReserve = true;
+            // dispatch(clearQrCode());
+            window.postMessage({ type: 'paypal_success' }, '*');
+
+            // const isReserve = true;
             // if (cartItems.length === 0) {
             //     topErrorMsg('Empty Cart')
             //     return data;
             // }
-            const totalPrice: number = parseFloat(
-                cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
-            );
+            // const totalPrice: number = parseFloat(
+            //     cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
+            // );
 
-            dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
-                navigate('/receipt');
-                successMsg('Checkout Success');
-            })
+            // dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
+            //     navigate('/receipt');
+            //     successMsg('Checkout Success');
+            // })
 
         } catch (error) {
             console.error("An error occurred:", error);

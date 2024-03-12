@@ -11,6 +11,7 @@ const PaymentPage: React.FC = () => {
     const navigate = useNavigate();
     const { cartItems } = useAppSelector(state => state.cart);
 
+  
 
     // useEffect(() => {
     //     if (cartItems.length === 0) {
@@ -46,6 +47,7 @@ const PaymentPage: React.FC = () => {
                     <div className="space-y-4">
 
                         <PaypalCheckoutButton />
+
                         <div className="text-center">
                             <span className="font-semibold text-md"> Or</span>
                         </div>
