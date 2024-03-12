@@ -1,5 +1,5 @@
 import { PayPalButtons } from "@paypal/react-paypal-js"
-import { errorMsg } from "../../components/toast";
+import { errorMsg, successMsg } from "../../components/toast";
 // import { clearQrCode, checkoutCart } from "../../store/reducers/cart/cartSlice";
 
 
@@ -41,7 +41,9 @@ const PaypalCheckoutButton: React.FC = () => {
             console.log("order", order);
             console.log(data);
             // dispatch(clearQrCode());
-            window.postMessage({ type: 'paypal_success' }, '*');
+            (window as any).ReactNativeWebView.postMessage('asds');
+            window.postMessage({ type: 'paypal_success' }, 'asdsa');
+                 successMsg('Checkout Success');
 
             // const isReserve = true;
             // if (cartItems.length === 0) {
@@ -54,7 +56,7 @@ const PaypalCheckoutButton: React.FC = () => {
 
             // dispatch(checkoutCart({ cartItems, totalPrice, isReserve })).then(() => {
             //     navigate('/receipt');
-            //     successMsg('Checkout Success');
+                // successMsg('Checkout Success');
             // })
 
         } catch (error) {
