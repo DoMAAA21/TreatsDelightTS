@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import { PayPalButtons } from "@paypal/react-paypal-js"
-import { errorMsg, topErrorMsg, successMsg } from "../../components/toast";
+import { errorMsg, successMsg } from "../../components/toast";
 import { clearQrCode, checkoutCart } from "../../store/reducers/cart/cartSlice";
 
 
@@ -41,13 +41,13 @@ const PaypalCheckoutButton: React.FC = () => {
         try {
             const order = await actions.order.capture();
             console.log("order", order);
-
+            console.log(data);
             dispatch(clearQrCode());
             const isReserve = true;
-            if (cartItems.length === 0) {
-                topErrorMsg('Empty Cart')
-                return data;
-            }
+            // if (cartItems.length === 0) {
+            //     topErrorMsg('Empty Cart')
+            //     return data;
+            // }
             const totalPrice: number = parseFloat(
                 cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)
             );
