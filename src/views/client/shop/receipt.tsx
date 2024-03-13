@@ -112,12 +112,9 @@ const Receipt: React.FC = () => {
                                 <QRCode value={qrCode} className="bg-white shadow-md p-4 rounded-lg" height={400} />
                             </div>
                         }
-
                         <p className="italic text-xs">**Reservations require a minimum 10-minute pickup window,
                             which may vary by store, with a maximum pickup time of 4pm.</p>
-
                     </div>
-
                 </div>
 
             </div>
