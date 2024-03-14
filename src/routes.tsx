@@ -49,7 +49,7 @@ import CartPage from './views/client/shop/cart';
 import PaymentPage from './views/client/shop/payment';
 import Receipt from './views/client/shop/receipt';
 import ProfilePage from './views/auth/profile';
-
+import MyOrderPage from './views/client/myorder';
 //Doctor
 import DoctorProductPage from './views/doctor/product';
 import DoctorEdiProductPage from './views/doctor/product/editProduct';
@@ -130,6 +130,7 @@ const AppRoutes: FC = () => {
         { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
         { path: 'me', element: <ProfilePage /> },
+        { path: 'me/my-orders', element: <MyOrderPage /> },
 
       ]
     },

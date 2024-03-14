@@ -185,6 +185,11 @@ const Navbar: React.FC = () => {
                       <Link to="/me" onClick={()=>setOptionsOpen(false)} className="hover:text-indigo-500 cursor-pointer">
                         Profile
                       </Link>
+                    </li> 
+                    <li className="mb-2">
+                      <Link to="/me/my-orders" onClick={()=>setOptionsOpen(false)} className="hover:text-indigo-500 cursor-pointer">
+                        My Orders
+                      </Link>
                     </li>
                     {user && allowedOnAdminRoles.includes(user.role.toLowerCase())
                       &&

@@ -40,6 +40,7 @@ import permitReducer from './permit/permitSlice';
 import contractReducer from './contract/contractSlice';
 import allTransactionReducer from './transaction/allTransactionSlice';
 import transactionReducer from './transaction/transactionSlice';
+import myOrdersReducer from './myorder/myOrdersSlice';
 
 
 const rootReducer = combineReducers({
@@ -83,7 +84,8 @@ const rootReducer = combineReducers({
     permit : permitReducer,
     contract : contractReducer,
     allTransaction : allTransactionReducer,
-    transaction : transactionReducer
+    transaction : transactionReducer,
+    myOrders : myOrdersReducer
 })
 
 export default rootReducer;
