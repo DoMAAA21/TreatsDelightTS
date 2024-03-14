@@ -45,3 +45,75 @@ export const topErrorMsg = (message: any) =>
         color: 'white',
         showConfirmButton: false,
     });
+
+
+export const infoNotificationMsg = (message: string) =>
+    Swal.fire({
+        text: `${message}`,
+        icon: 'info',
+        iconColor: 'white',
+        timer: 3500,
+        timerProgressBar: true,
+        toast: true,
+        position: 'bottom-start',
+        background: '#2196F3',
+        color: 'white',
+        showConfirmButton: false,
+        showCloseButton: true, 
+        customClass: {
+            container: 'p-2'
+        }
+    });
+
+export const successNotificationMsg = (message: string) =>
+    Swal.fire({
+        text: `${message}`,
+        icon: 'info',
+        iconColor: 'white',
+        timer: 3500,
+        timerProgressBar: true,
+        toast: true,
+        position: 'bottom-start',
+        background: '#4CAF50',
+        color: 'white',
+        showConfirmButton: false,
+        showCloseButton: true, 
+        customClass: {
+            container: 'p-2'
+        }
+    });
+
+export const warningNotificationMsg = (message: string) =>
+    Swal.fire({
+        text: `${message}`,
+        icon: 'warning',
+        iconColor: 'white',
+        timer: 3500,
+        timerProgressBar: true,
+        toast: true,
+        position: 'bottom-start',
+        background: '#D97706',
+        color: 'white',
+        showConfirmButton: false,
+        showCloseButton: true, 
+        customClass: {
+            container: 'p-2'
+        }
+    });
+
+export const neutralNotificationMsg = (message: string) =>
+    Swal.fire({
+        text: `${message}`,
+        iconColor: 'white',
+        timer: 2000,
+        timerProgressBar: true,
+        toast: true,
+        position: 'bottom-start',
+        background: ' #757575',
+        color: 'white',
+        showConfirmButton: false,
+        showCloseButton: true, 
+        customClass: {
+            container: 'p-2'
+        }
+    });

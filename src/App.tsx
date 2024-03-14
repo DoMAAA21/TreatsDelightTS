@@ -1,6 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './routes';
 import { HelmetProvider } from 'react-helmet-async';
+import NotificationMiddleware from './socket/notificationMiddleware';
 import { store, persistor } from './store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -10,7 +11,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import AOS from 'aos';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import ResetScroll from './ResetScroll';
-
 
 AOS.init();
 
@@ -31,6 +31,7 @@ function App() {
           <PayPalScriptProvider  options={initialOptions}>
             <Router>
               <ResetScroll/>
+              <NotificationMiddleware/>
               <AppRoutes />
             </Router>
             </PayPalScriptProvider>
