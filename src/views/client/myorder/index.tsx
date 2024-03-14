@@ -47,8 +47,8 @@ const TransactionPage: FC = () => {
         ],
         rows: orders.map((orders) => ({
             id: orders.orderItems.id,
-            name: orders.orderItems.storeName,
-            store: orders?.user?.name || 'Guest',
+            name: orders.orderItems.name,
+            store: orders?.orderItems?.storeName,
             quantity: orders.orderItems.quantity,
             price: orders.orderItems.price,
             date: new Date(orders.createdAt).toISOString().slice(0, 10),
