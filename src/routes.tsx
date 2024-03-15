@@ -131,7 +131,6 @@ const AppRoutes: FC = () => {
         { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
         { path: 'me', element: <ProfilePage /> },     
-    
       ]
     },
     { path: '/login', element: <LoginPage /> },
