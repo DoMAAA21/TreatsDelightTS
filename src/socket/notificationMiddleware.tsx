@@ -17,6 +17,7 @@ const NotificationMiddleware = () => {
 
 
         socket.on("new_user_login", (data) => {
+            console.log("test");
             neutralNotificationMsg(data.message);
             const audio = new Audio(NotificationPopSound);
             audio.play();
