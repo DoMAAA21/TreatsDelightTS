@@ -9,6 +9,8 @@ const NotificationMiddleware = () => {
     const socket = io(import.meta.env.VITE_BASE_URL, { transports: ["websocket"] });
     const { user } = useAppSelector(state => state.auth);
     useEffect(() => {
+
+        socket.connect();
         socket.on("connection", () => {
             console.log("Connected to Socket io");
         });

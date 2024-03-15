@@ -6,7 +6,7 @@ import io from "socket.io-client";
 function Test() {
   const runEvent = () => {
     const socket = io(import.meta.env.VITE_BASE_URL, { transports: ["websocket"] });
-    console.log("ran 1st");
+    // console.log("ran 1st");
     socket.emit("new_user_login", { message: "User has Logged In" });
   };
 
