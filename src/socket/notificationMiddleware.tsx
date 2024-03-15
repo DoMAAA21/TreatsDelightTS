@@ -32,6 +32,12 @@ const NotificationMiddleware = () => {
             audio.play();
         });
 
+        socket.on(`notification`, (data) => {
+            neutralNotificationMsg(data.message);
+            const audio = new Audio(NotificationPopSound);
+            audio.play();
+        });
+
     }, [socket]);
 
     return null;
