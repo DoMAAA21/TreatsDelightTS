@@ -12,14 +12,12 @@ const NotificationMiddleware = () => {
       });
     const { user } = useAppSelector(state => state.auth);
     
-    socket.connect();
-    socket.on("connection", () => {
-        console.log("Connected to Socket io");
-    });
-
-
-
+   
     useEffect(() => {
+
+        socket.on("connection", () => {
+            console.log("Connected to Socket io");
+        });
 
 
         socket.on("new_user_login", (data) => {
