@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import io from "socket.io-client";
 import { dangerNotificationMsg, neutralNotificationMsg } from "../components/toast";
-import NotificationPopSound from "../assets/sounds/notification-pop.mp3";
 import { useAppSelector } from "../hooks";
+import NotificationPopSound from "../assets/sounds/notification-pop.mp3";
+import BellSound from "../assets/sounds/bell.mp3";
+
 const NotificationMiddleware = () => {
     const socket = io(import.meta.env.VITE_BASE_URL, { transports: ["websocket"] });
     const { user } = useAppSelector(state => state.auth);
@@ -26,7 +28,7 @@ const NotificationMiddleware = () => {
 
         socket.on(`danger/${user?._id}`, (data) => {
             neutralNotificationMsg(data.message);
-            const audio = new Audio(NotificationPopSound);
+            const audio = new Audio(BellSound);
             audio.play();
         });
     }, [socket]);
