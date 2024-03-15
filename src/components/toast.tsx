@@ -46,7 +46,6 @@ export const topErrorMsg = (message: any) =>
         showConfirmButton: false,
     });
 
-
 export const infoNotificationMsg = (message: string) =>
     Swal.fire({
         text: `${message}`,
@@ -59,7 +58,7 @@ export const infoNotificationMsg = (message: string) =>
         background: '#2196F3',
         color: 'white',
         showConfirmButton: false,
-        showCloseButton: true, 
+        showCloseButton: true,
         customClass: {
             container: 'p-2'
         }
@@ -77,7 +76,7 @@ export const successNotificationMsg = (message: string) =>
         background: '#4CAF50',
         color: 'white',
         showConfirmButton: false,
-        showCloseButton: true, 
+        showCloseButton: true,
         customClass: {
             container: 'p-2'
         }
@@ -89,13 +88,13 @@ export const warningNotificationMsg = (message: string) =>
         icon: 'warning',
         iconColor: 'white',
         timer: 3500,
-        timerProgressBar: true,
+        timerProgressBar: false,
         toast: true,
         position: 'bottom-start',
         background: '#D97706',
         color: 'white',
         showConfirmButton: false,
-        showCloseButton: true, 
+        showCloseButton: true,
         customClass: {
             container: 'p-2'
         }
@@ -105,14 +104,31 @@ export const neutralNotificationMsg = (message: string) =>
     Swal.fire({
         text: `${message}`,
         iconColor: 'white',
-        timer: 2000,
-        timerProgressBar: true,
+        timer: 3500,
+        timerProgressBar: false,
         toast: true,
         position: 'bottom-start',
-        background: ' #757575',
+        background: ' #000',
         color: 'white',
         showConfirmButton: false,
-        showCloseButton: true, 
+        showCloseButton: true,
+        width: "20%",
+        customClass: {
+            container: 'p-2'
+        }
+    });
+
+export const dangerNotificationMsg = (message: string) =>
+    Swal.fire({
+        text: `${message}`,
+        timer: 3500,
+        timerProgressBar: false,
+        toast: true,
+        position: 'bottom-start',
+        background: '#DC2626',
+        color: 'white',
+        showConfirmButton: false,
+        showCloseButton: true,
         customClass: {
             container: 'p-2'
         }
