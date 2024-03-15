@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import io from "socket.io-client";
-import { neutralNotificationMsg } from "../components/toast";
+// import { neutralNotificationMsg } from "../components/toast";
 
 
 function Test() {
@@ -27,10 +27,10 @@ function Test() {
       console.log("Connected to Socket io");
     });
 
-    socket.on("new_user_login", (data) => {
+    // socket.on("new_user_login", (data) => {
       
-      neutralNotificationMsg(data.message)
-    });
+    //   neutralNotificationMsg(data.message)
+    // });
   }, [socket]);
 
 
