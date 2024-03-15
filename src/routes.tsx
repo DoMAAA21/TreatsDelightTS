@@ -67,7 +67,7 @@ import ProtectedRoute from './ProtectedRoute'; //allowed roles should be lowerca
 import MobilePaymentPage from './views/mobile/payment';
 
 
-import Test from './views/test';
+
 
 const AppRoutes: FC = () => {
   const routes: RouteObject[] = [
@@ -131,8 +131,7 @@ const AppRoutes: FC = () => {
         { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
         { path: 'me', element: <ProfilePage /> },     
-        { path: 'test', element: <Test /> },     
-      
+    
       ]
     },
     { path: '/login', element: <LoginPage /> },
