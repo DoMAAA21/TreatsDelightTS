@@ -27,11 +27,12 @@ const NotificationMiddleware = () => {
             audio.play();
         });
 
-        socket.on(`notification/${user?._id}`, (callback, data) => {
-            callback();
+        socket.on(`notification/${user?._id}`, (data) => {
+         
             neutralNotificationMsg(data.message);
             const audio = new Audio(NotificationPopSound);
             audio.play();
+               // callback();
         });
 
         socket.on(`notification`, (data) => {
