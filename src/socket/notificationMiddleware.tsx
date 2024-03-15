@@ -21,6 +21,7 @@ const NotificationMiddleware = () => {
         // });
 
         socket.on(`notification/${user?._id}`, (data) => {
+            alert(data.message);
             neutralNotificationMsg(data.message);
             const audio = new Audio(NotificationPopSound);
             audio.play();
