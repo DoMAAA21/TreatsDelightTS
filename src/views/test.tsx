@@ -18,7 +18,7 @@ function Test() {
     // alert('Das');
   };
 
-  const socket = io("http://localhost:4000", { transports: ["websocket"] });
+  const socket = io(import.meta.env.VITE_BASE_URL, { transports: ["websocket"] });
   useEffect(() => {
   
 
