@@ -26,7 +26,7 @@ const NotificationMiddleware = () => {
             audio.play();
         });
 
-    }, []);
+    }, [socket]);
 
     return null;
 }
