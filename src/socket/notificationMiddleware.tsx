@@ -6,7 +6,10 @@ import NotificationPopSound from "../assets/sounds/notification-pop.mp3";
 // import BellSound from "../assets/sounds/bell.mp3";
 
 const NotificationMiddleware = () => {
-    const socket = io(import.meta.env.VITE_BASE_URL, { transports: ["websocket"] });
+    const socket = io(import.meta.env.VITE_BASE_URL,{
+        transports: ["websocket"] ,
+        withCredentials: true,
+      });
     const { user } = useAppSelector(state => state.auth);
     useEffect(() => {
 
