@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import io from "socket.io-client";
 import { neutralNotificationMsg } from "../components/toast";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import NotificationPopSound from "../assets/sounds/notification-pop.mp3";
+import Bell from "../assets/sounds/bell.mp3";
 import { fetchAllUnreadNotification, fetchAllNotification } from "../store/reducers/notification/allNotificationsSlice";
 
 
@@ -27,13 +27,13 @@ const NotificationMiddleware = () => {
         socket.on("new_user_login", (data) => {
             console.log("test");
             neutralNotificationMsg(data.message);
-            const audio = new Audio(NotificationPopSound);
+            const audio = new Audio(Bell);
             audio.play();
         });
 
         socket.on(`notification/${user?._id}`, (data) => {
             neutralNotificationMsg(data.message);
-            const audio = new Audio(NotificationPopSound);
+            const audio = new Audio(Bell);
             audio.play();
             dispatch(fetchAllUnreadNotification());
             dispatch(fetchAllNotification({ page: 1}));
@@ -41,7 +41,7 @@ const NotificationMiddleware = () => {
 
         socket.on(`notification`, (data) => {
             neutralNotificationMsg(data.message);
-            const audio = new Audio(NotificationPopSound);
+            const audio = new Audio(Bell);
             audio.play();
         });
 
