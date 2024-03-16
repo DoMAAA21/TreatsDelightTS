@@ -3,39 +3,34 @@ import { RootState } from '../../../store/index';
 import axios from 'axios';
 
 interface Notification {
-    orderItems: {
-        id: number;
-        name: string;
-        quantity: number;
-        price: number;
-        date: string;
-        status: string;
-        storeName: string;
-    },
-    user:{
-        id: string | number;
-        name: string
-    }
+    _id: string | number; 
+    message: string;
     createdAt: Date;
+    image: string;
+    webLink: string;
+    read: boolean;
 
 }
 
-
 interface AllNotificationsState {
-    orders: Notification[];
+    notifications: Notification[];
     loading: boolean;
     error: string | null;
+    totalPages: number;
+    unRead: number;
 }
 
 const initialState: AllNotificationsState = {
-    orders: [],
+    notifications: [],
     loading: false,
     error: null,
+    totalPages: 1,
+    unRead: 0
 };
 
-export const fetchAllNotification = createAsyncThunk<Notification[], void, { state: RootState }>(
+export const fetchAllNotification = createAsyncThunk<Notification[],{ page: number;} , { state: RootState }>(
     'allNotifications/fetchAllNotification',
-    async (_, { rejectWithValue, dispatch, getState }) => {
+    async ({page }, { rejectWithValue, dispatch, getState }) => {
         try {
             dispatch(allNotificationsRequest());
             const authState = getState().auth;
@@ -43,9 +38,9 @@ export const fetchAllNotification = createAsyncThunk<Notification[], void, { sta
             if (!userId) {
                 return dispatch(allNotificationsFail('User not found'));
             }
-            const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/user/${userId}/transactions`, { withCredentials: true });
-            dispatch(allNotificationsSuccess(data.orders));
-            return data.orders;
+            const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/notification/user/${userId}?page=${page}`, { withCredentials: true });
+            dispatch(allNotificationsSuccess(data));
+            return data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 dispatch(allNotificationsFail(error.response?.data?.message || 'An error occurred'));
@@ -68,7 +63,9 @@ const allNotificationSlice = createSlice({
         },
         allNotificationsSuccess: (state, action) => {
             state.loading = false;
-            state.orders = action.payload;
+            state.notifications = action.payload.notifications;
+            state.unRead = action.payload.totalUnreadNotifications;
+            state.totalPages =  action.payload.totalPages
         },
         allNotificationsFail: (state, action) => {
             state.loading = false;

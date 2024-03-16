@@ -41,7 +41,7 @@ import contractReducer from './contract/contractSlice';
 import allTransactionReducer from './transaction/allTransactionSlice';
 import transactionReducer from './transaction/transactionSlice';
 import myOrdersReducer from './myorder/myOrdersSlice';
-
+import allNotificationsReducer from './notification/allNotificationsSlice';
 
 const rootReducer = combineReducers({
     auth : authenticationReducer,
@@ -85,7 +85,8 @@ const rootReducer = combineReducers({
     contract : contractReducer,
     allTransaction : allTransactionReducer,
     transaction : transactionReducer,
-    myOrders : myOrdersReducer
+    myOrders : myOrdersReducer,
+    allNotifications: allNotificationsReducer
 })
 
 export default rootReducer;

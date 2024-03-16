@@ -6,6 +6,9 @@ import Logo from '../../assets/logo.png';
 import { successMsg } from '../../components/toast';
 import { logout } from '../../store/reducers/auth/authenticationSlice';
 import Cart from '../../assets/icons/cart.svg';
+import Bell from '../../assets/icons/bell.svg';
+import NotificationPopup from '../notification/notificationPopup';
+
 
 const Navbar: React.FC = () => {
   const { navConfig } = useNav();
@@ -17,6 +20,8 @@ const Navbar: React.FC = () => {
   const { cartItems } = useAppSelector((state) => state.cart);
   const [isOptionsOpen, setOptionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [showNotificationPopup, setShowNotificationPopup] = useState(false);
+  
 
   const closeMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -46,7 +51,12 @@ const Navbar: React.FC = () => {
   };
 
   const closeMobileMenu = () => {
+    
     setMobileMenuOpen(false);
+  };
+
+  const toggleNotificationPopup = () => {
+    setShowNotificationPopup(prevState => !prevState);
   };
 
   useEffect(() => {
@@ -54,6 +64,7 @@ const Navbar: React.FC = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         closeDropdown();
       }
+  
     };
     document.addEventListener('click', handleOutsideClick);
     return () => {
@@ -61,7 +72,7 @@ const Navbar: React.FC = () => {
     };
   }, [setOptionsOpen]);
 
-  const allowedOnAdminRoles = ["admin", "owner", "employee","doctor"];
+  const allowedOnAdminRoles = ["admin", "owner", "employee", "doctor"];
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,20 +100,31 @@ const Navbar: React.FC = () => {
     <>
       <header>
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2 border">
+
           <div className="flex flex-wrap items-center  max-w-screen-xl">
 
             <Link to="/home" className="flex items-center">
               <img src={Logo} className="h-20 sm:h-16" alt="Logo" />
             </Link>
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
 
-            <div className="flex items-center lg:order-2">
-              <Link to="/cart" className="absolute lg:right-24 md:right-15 right-20">
+            <div className="flex items-center lg:order-2 justify-between">
+              <Link to="/cart" className="absolute lg:right-40 md:right-32 right-28">
                 <img src={Cart} className="w-8 h-8" alt="Cart Icon" />
                 {cartItems.length > 0 && (
                   <span className="absolute bottom-4 left-4 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{cartItems.length}</span>
                 )}
               </Link>
+              <button
+                onClick={toggleNotificationPopup}
+                className="absolute lg:right-20 md:right-16 right-14"
+              >
+                <div className=" flex items-center justify-center w-12 h-12 rounded-full bg-gray-200">
+                  <div className="w-5 h-5">
+                    <img src={Bell} className="w-full h-full" alt="Notification Bell Icon " />
+                  </div>
+                </div>
+              </button>
+
               <button
                 onClick={toggleMobileMenu}
                 type="button"
@@ -136,9 +158,8 @@ const Navbar: React.FC = () => {
                   ></path>
                 </svg>
               </button>
-
-
             </div>
+
             <div
               className="hidden items-center w-full lg:flex lg:w-auto lg:order-1"
               id="mobile-menu-2"
@@ -159,11 +180,9 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-
-
           <div className="absolute lg:flex right-3 lg:top-2 md:top-6 top-6 h-16 items-center z-10" ref={dropdownRef}>
             <div className="relative">
-              { isAuthenticated ? (
+              {isAuthenticated ? (
                 <button
                   onClick={toggleDropdown}
                   type="button"
@@ -182,12 +201,12 @@ const Navbar: React.FC = () => {
                 <div className="absolute top-full w-32 right-0 bg-white border border-gray-200 rounded-lg shadow-lg">
                   <ul className="py-2 text-center">
                     <li className="mb-2">
-                      <Link to="/me" onClick={()=>setOptionsOpen(false)} className="hover:text-indigo-500 cursor-pointer">
+                      <Link to="/me" onClick={() => setOptionsOpen(false)} className="hover:text-indigo-500 cursor-pointer">
                         Profile
                       </Link>
-                    </li> 
+                    </li>
                     <li className="mb-2">
-                      <Link to="/me/my-orders" onClick={()=>setOptionsOpen(false)} className="hover:text-indigo-500 cursor-pointer">
+                      <Link to="/me/my-orders" onClick={() => setOptionsOpen(false)} className="hover:text-indigo-500 cursor-pointer">
                         My Orders
                       </Link>
                     </li>
@@ -210,7 +229,9 @@ const Navbar: React.FC = () => {
 
         </nav>
 
+
       </header>
+      {showNotificationPopup && <NotificationPopup />}
 
       {isMobileMenuOpen && (
         <>
