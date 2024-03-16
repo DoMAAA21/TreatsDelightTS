@@ -73,7 +73,7 @@ const TransactionPage: FC = () => {
     };
 
     return (
-        <div className="px-20 pt-2">
+        <div className="px-20 ml-8 pt-2">
             <MetaData title={'My Orders'} />
             <div
                 style={{
