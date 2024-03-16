@@ -49,10 +49,10 @@ import CartPage from './views/client/shop/cart';
 import PaymentPage from './views/client/shop/payment';
 import Receipt from './views/client/shop/receipt';
 import ProfilePage from './views/auth/profile';
-
+import MyOrderPage from './views/client/myorder';
 //Doctor
 import DoctorProductPage from './views/doctor/product';
-import DoctorEdiProductPage from './views/doctor/product/editProduct';
+import DoctorEditProductPage from './views/doctor/product/editProduct';
 
 //HomePage
 import HomePage from './views/home';
@@ -116,7 +116,7 @@ const AppRoutes: FC = () => {
       element: <DashboardLayout />,
       children: [
         { path: 'product-all', element: <ProtectedRoute allowedRoles={['doctor']}><DoctorProductPage /></ProtectedRoute> },
-        { path: 'product/:id', element: <ProtectedRoute allowedRoles={['doctor']}> <DoctorEdiProductPage /> </ProtectedRoute> },
+        { path: 'product/:id', element: <ProtectedRoute allowedRoles={['doctor']}> <DoctorEditProductPage /> </ProtectedRoute> },
       ],
     },
     {
@@ -130,7 +130,8 @@ const AppRoutes: FC = () => {
         { path: 'cart', element: <CartPage /> },
         { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
-        { path: 'me', element: <ProfilePage /> },     
+        { path: 'me', element: <ProfilePage /> }, 
+        { path: 'me/my-orders', element: <MyOrderPage /> },        
       ]
     },
     { path: '/login', element: <LoginPage /> },
