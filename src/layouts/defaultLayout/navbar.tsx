@@ -5,6 +5,8 @@ import { useNav } from './config';
 import Logo from '../../assets/logo.png';
 import { successMsg } from '../../components/toast';
 import { logout } from '../../store/reducers/auth/authenticationSlice';
+import { clearCart } from '../../store/reducers/cart/cartSlice';
+import { clearNotifications } from '../../store/reducers/notification/allNotificationsSlice';
 import Cart from '../../assets/icons/cart.svg';
 import Bell from '../../assets/icons/bell.svg';
 import NotificationPopup from '../notification/notificationPopup';
@@ -35,6 +37,8 @@ const Navbar: React.FC = () => {
 
   const logoutHandler = async () => {
     await dispatch(logout());
+    dispatch(clearCart());
+    dispatch(clearNotifications());
     navigate('/login')
     successMsg("Logged Out Successfully");
   };
