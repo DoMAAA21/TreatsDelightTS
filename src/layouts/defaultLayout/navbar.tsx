@@ -84,8 +84,7 @@ const Navbar: React.FC = () => {
         setShowNotificationPopup(false);
       }
     };
-    console.log('asdas')
-
+  
     document.addEventListener('click', handleClickOutside);
 
     return () => {
