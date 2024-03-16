@@ -39,6 +39,8 @@ export const fetchAllNotification = createAsyncThunk<Notification[],{ page: numb
                 return dispatch(allNotificationsFail('User not found'));
             }
             const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/notification/user/${userId}?page=${page}`, { withCredentials: true });
+
+            console.log(data);
             dispatch(allNotificationsSuccess(data));
             return data;
         } catch (error) {
@@ -71,6 +73,11 @@ const allNotificationSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        clearNotifications: (state) => {
+            state.notifications = [];
+            state.unRead = 0;
+            state.totalPages = 1;
+        },
         clearErrors: (state) => {
             state.error = null;
         },
@@ -81,6 +88,7 @@ export const {
     allNotificationsRequest,
     allNotificationsSuccess,
     allNotificationsFail,
+    clearNotifications,
     clearErrors,
 } = allNotificationSlice.actions;
 
