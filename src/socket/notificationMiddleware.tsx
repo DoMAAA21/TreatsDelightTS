@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { neutralNotificationMsg } from "../components/toast";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import NotificationPopSound from "../assets/sounds/notification-pop.mp3";
-import { fetchAllUnreadNotification } from "../store/reducers/notification/allNotificationsSlice";
+import { fetchAllUnreadNotification, fetchAllNotification } from "../store/reducers/notification/allNotificationsSlice";
 
 
 const NotificationMiddleware = () => {
@@ -19,9 +19,6 @@ const NotificationMiddleware = () => {
     },[dispatch])
    
     useEffect(() => {
-
-        
-
         socket.on("connection", () => {
             console.log("Connected to Socket io");
         });
@@ -38,7 +35,8 @@ const NotificationMiddleware = () => {
             neutralNotificationMsg(data.message);
             const audio = new Audio(NotificationPopSound);
             audio.play();
-
+            dispatch(fetchAllUnreadNotification());
+            dispatch(fetchAllNotification({ page: 1}));
         });
 
         socket.on(`notification`, (data) => {
