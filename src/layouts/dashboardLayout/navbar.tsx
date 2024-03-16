@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logout } from '../../store/reducers/auth/authenticationSlice';
 import { successMsg } from '../../components/toast';
+import { clearCart } from '../../store/reducers/cart/cartSlice';
+import { clearNotifications } from '../../store/reducers/notification/allNotificationsSlice';
 
 interface NavbarProps {
   isMobileMenuOpen: boolean;
@@ -26,6 +28,8 @@ const Navbar: FC<NavbarProps> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
 
   const logoutHandler  = async () => {
     await dispatch(logout());
+    dispatch(clearCart());
+    dispatch(clearNotifications());
     navigate('/login')
     successMsg("Logged Out Successfully");
   };
