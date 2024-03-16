@@ -20,19 +20,18 @@ const Navbar: React.FC = () => {
   const { cartItems } = useAppSelector((state) => state.cart);
   const [isOptionsOpen, setOptionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
   const [showNotificationPopup, setShowNotificationPopup] = useState(false);
-  
+
 
   const closeMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   }
   const toggleDropdown = () => {
     setOptionsOpen(!isOptionsOpen);
+    setShowNotificationPopup(false);
   };
 
-  const closeDropdown = () => {
-    setOptionsOpen(false);
-  };
 
   const logoutHandler = async () => {
     await dispatch(logout());
@@ -40,37 +39,47 @@ const Navbar: React.FC = () => {
     successMsg("Logged Out Successfully");
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  const toggleNotificationPopup = () => {
+    setShowNotificationPopup(!showNotificationPopup);
+    setOptionsOpen(false);
+  };
+
+
   const isLinkActive = (path: string) => {
 
     const isActiveRoute = location.pathname.startsWith(path);
     return isActiveRoute;
   };
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    
-    setMobileMenuOpen(false);
-  };
-
-  const toggleNotificationPopup = () => {
-    setShowNotificationPopup(prevState => !prevState);
-  };
 
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        closeDropdown();
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target as Node)
+      ) {
+        setOptionsOpen(false);
+        setShowNotificationPopup(false);
       }
-  
     };
-    document.addEventListener('click', handleOutsideClick);
+    console.log('asdas')
+
+    document.addEventListener('click', handleClickOutside);
+
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener('click', handleClickOutside);
     };
-  }, [setOptionsOpen]);
+  }, [setOptionsOpen, showNotificationPopup]);
 
   const allowedOnAdminRoles = ["admin", "owner", "employee", "doctor"];
 
@@ -114,11 +123,13 @@ const Navbar: React.FC = () => {
                   <span className="absolute bottom-4 left-4 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{cartItems.length}</span>
                 )}
               </Link>
+
               <button
+
                 onClick={toggleNotificationPopup}
                 className="absolute lg:right-20 md:right-16 right-14"
               >
-                <div className=" flex items-center justify-center w-12 h-12 rounded-full bg-gray-200">
+                <div ref={notificationRef} className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200">
                   <div className="w-5 h-5">
                     <img src={Bell} className="w-full h-full" alt="Notification Bell Icon " />
                   </div>
@@ -224,6 +235,8 @@ const Navbar: React.FC = () => {
                   </ul>
                 </div>
               )}
+
+              {showNotificationPopup && <NotificationPopup />}
             </div>
           </div>
 
@@ -231,7 +244,7 @@ const Navbar: React.FC = () => {
 
 
       </header>
-      {showNotificationPopup && <NotificationPopup />}
+
 
       {isMobileMenuOpen && (
         <>
