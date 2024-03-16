@@ -1,19 +1,26 @@
 import { useEffect } from "react";
 import io from "socket.io-client";
 import { neutralNotificationMsg } from "../components/toast";
-import { useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import NotificationPopSound from "../assets/sounds/notification-pop.mp3";
-// import BellSound from "../assets/sounds/bell.mp3";
+import { fetchAllUnreadNotification } from "../store/reducers/notification/allNotificationsSlice";
+
 
 const NotificationMiddleware = () => {
+    const dispatch = useAppDispatch();
     const socket = io(import.meta.env.VITE_BASE_URL,{
         transports: ["websocket"] ,
         withCredentials: true,
       });
     const { user } = useAppSelector(state => state.auth);
     
+    useEffect(()=>{
+        dispatch(fetchAllUnreadNotification());
+    },[dispatch])
    
     useEffect(() => {
+
+        
 
         socket.on("connection", () => {
             console.log("Connected to Socket io");
@@ -28,11 +35,10 @@ const NotificationMiddleware = () => {
         });
 
         socket.on(`notification/${user?._id}`, (data) => {
-         
             neutralNotificationMsg(data.message);
             const audio = new Audio(NotificationPopSound);
             audio.play();
-               // callback();
+
         });
 
         socket.on(`notification`, (data) => {

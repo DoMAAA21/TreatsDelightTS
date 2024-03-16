@@ -20,6 +20,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const { cartItems } = useAppSelector((state) => state.cart);
+  const { unRead } = useAppSelector((state) => state.allNotifications);
   const [isOptionsOpen, setOptionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
@@ -34,15 +35,13 @@ const Navbar: React.FC = () => {
     setShowNotificationPopup(false);
   };
 
+  const closeNotificationPopup = () =>{
+    setShowNotificationPopup(false);
+  }
 
-  const logoutHandler = async () => {
-    await dispatch(logout());
-    dispatch(clearCart());
-    dispatch(clearNotifications());
-    navigate('/login')
-    successMsg("Logged Out Successfully");
-  };
 
+
+  
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -55,6 +54,15 @@ const Navbar: React.FC = () => {
     setShowNotificationPopup(!showNotificationPopup);
     setOptionsOpen(false);
   };
+
+  const logoutHandler = async () => {
+    await dispatch(logout());
+    dispatch(clearCart());
+    dispatch(clearNotifications());
+    navigate('/login')
+    successMsg("Logged Out Successfully");
+  };
+
 
 
   const isLinkActive = (path: string) => {
@@ -135,6 +143,9 @@ const Navbar: React.FC = () => {
                 <div ref={notificationRef} className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200">
                   <div className="w-5 h-5">
                     <img src={Bell} className="w-full h-full" alt="Notification Bell Icon " />
+                    {unRead > 0 && (
+                       <span className="absolute bottom-6 left-7 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{unRead}</span>
+                    )}
                   </div>
                 </div>
               </button>
@@ -239,7 +250,7 @@ const Navbar: React.FC = () => {
                 </div>
               )}
 
-              {showNotificationPopup && <NotificationPopup />}
+              <NotificationPopup isOpen={showNotificationPopup} onClose={closeNotificationPopup}/>
             </div>
           </div>
 
