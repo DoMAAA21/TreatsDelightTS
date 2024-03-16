@@ -123,9 +123,8 @@ const Navbar: React.FC = () => {
                   <span className="absolute bottom-4 left-4 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{cartItems.length}</span>
                 )}
               </Link>
-
+              {isAuthenticated && (
               <button
-
                 onClick={toggleNotificationPopup}
                 className="absolute lg:right-20 md:right-16 right-14"
               >
@@ -135,7 +134,7 @@ const Navbar: React.FC = () => {
                   </div>
                 </div>
               </button>
-
+              )}
               <button
                 onClick={toggleMobileMenu}
                 type="button"
