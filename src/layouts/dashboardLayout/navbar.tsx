@@ -5,6 +5,9 @@ import { logout } from '../../store/reducers/auth/authenticationSlice';
 import { successMsg } from '../../components/toast';
 import { clearCart } from '../../store/reducers/cart/cartSlice';
 import { clearNotifications } from '../../store/reducers/notification/allNotificationsSlice';
+import Bell from '../../assets/icons/bell.svg';
+import NotificationPopup from '../notification/notificationPopup';
+
 
 interface NavbarProps {
   isMobileMenuOpen: boolean;
@@ -16,15 +19,25 @@ const Navbar: FC<NavbarProps> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const [isOptionsOpen, setOptionsOpen] = useState(false);
+  const [showNotificationPopup, setShowNotificationPopup] = useState(false);
+  const { unRead } = useAppSelector((state) => state.allNotifications);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
+
 
   const toggleDropdown = () => {
     setOptionsOpen(!isOptionsOpen);
+    setShowNotificationPopup(false);
   };
 
-  const closeDropdown = () => {
+  const toggleNotificationPopup = () => {
+    setShowNotificationPopup(!showNotificationPopup);
     setOptionsOpen(false);
   };
+
+  const closeNotificationPopup = () =>{
+    setShowNotificationPopup(false);
+  }
 
   const logoutHandler  = async () => {
     await dispatch(logout());
@@ -35,16 +48,24 @@ const Navbar: FC<NavbarProps> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
   };
 
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        closeDropdown();
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target as Node)
+      ) {
+        setOptionsOpen(false);
+        setShowNotificationPopup(false);
       }
     };
-    document.addEventListener('click', handleOutsideClick);
+  
+    document.addEventListener('click', handleClickOutside);
+
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener('click', handleClickOutside);
     };
-  }, [setOptionsOpen]);
+  }, [setOptionsOpen, showNotificationPopup]);
 
   return (
     <>
@@ -52,6 +73,21 @@ const Navbar: FC<NavbarProps> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
         <nav className="bg-white border-gray-200 border-b h-16 w-full relative">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <div className="flex items-center h-16 lg:order-2">
+            {isAuthenticated && (
+              <button
+                onClick={toggleNotificationPopup}
+                className="absolute lg:right-20 md:right-16 right-14"
+              >
+                <div ref={notificationRef} className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200">
+                  <div className="w-5 h-5">
+                    <img src={Bell} className="w-full h-full" alt="Notification Bell Icon " />
+                    {unRead > 0 && (
+                       <span className="absolute bottom-6 left-7 bg-red-500 text-white rounded-full px-2 py-1 text-xs font-black">{unRead}</span>
+                    )}
+                  </div>
+                </div>
+              </button>
+              )}
               <button
                 onClick={toggleMobileMenu}
                 type="button"
@@ -77,6 +113,8 @@ const Navbar: FC<NavbarProps> = ({ isMobileMenuOpen, toggleMobileMenu }) => {
                 >
                   {isAuthenticated ? (<img src={user?.avatar?.url} alt="User Avatar" className="h-full w-full object-cover" />) : null}
                 </button>
+
+                <NotificationPopup isOpen={showNotificationPopup} onClose={closeNotificationPopup}/>
                 {isOptionsOpen && (
                   <div className="absolute top-full w-32 right-0 bg-white border border-gray-200 rounded-lg shadow-lg">
                     <ul className="py-2 text-center">
