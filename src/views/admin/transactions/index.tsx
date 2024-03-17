@@ -5,7 +5,7 @@ import { updateTransaction, updateTransactionReset } from '../../../store/reduce
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import TableLoader from '../../../components/loaders/TableLoader';
-import SwitchIcon from '../../../assets/icons/switch.svg';
+
 
 interface Transaction {
     _id: number | string;
@@ -25,11 +25,12 @@ interface TransactionsData {
 
 const TransactionPage: FC = () => {
     const dispatch = useAppDispatch();
-    const { transactions, loading } = useAppSelector((state) => state.allTransaction);
-    const [ isFetched, setIsFetched ] = useState(false);
+    const { transactions } = useAppSelector((state) => state.allTransaction);
+    const [isFetched, setIsFetched] = useState(false);
     const { isUpdated } = useAppSelector((state) => state.transaction);
+    const [statusDefaultValue, setStatusDefaultvalue] = useState("");
     useEffect(() => {
-        dispatch(fetchAllTransactions()).then(()=>{
+        dispatch(fetchAllTransactions()).then(() => {
             setIsFetched(true);
         });
     }, [dispatch]);
@@ -40,9 +41,10 @@ const TransactionPage: FC = () => {
         }
     }, [isUpdated]);
 
-    const updateTransactionHandler = (id: number | string) => {
-        dispatch(updateTransaction(id));
+    const handleDropdownChange = (id: number | string, status: string) => {
+        dispatch(updateTransaction({ id, status }));
         dispatch(updateTransactionReset());
+        setStatusDefaultvalue("");
     };
 
     const transactionsData: TransactionsData = {
@@ -82,13 +84,17 @@ const TransactionPage: FC = () => {
             ) : null,
             actions: (
                 <div className="flex items-center justify-center">
-                    <button className="w-8 h-8 md:h-14 md:w-12 lg:h-8 lg:w-8" disabled={loading} onClick={() => updateTransactionHandler(transaction.orderItems.id)}>
-                        <img
-                            src={SwitchIcon}
-                            alt="Switch Icon"
-                            className="transition duration-300 ease-in-out transform hover:scale-110"
-                        />
-                    </button>
+                    <select
+                        value={statusDefaultValue}
+                        onChange={(e) => handleDropdownChange(transaction.orderItems.id, e.target.value)}
+                        className="block text-black border w-full py-2 pl-3 pr-10 text-base border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                        <option value="" disabled>Select</option>
+                        <option value="Pending" >Pending</option>
+                        <option value="Paid" >Paid</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Incomplete">Delete</option>
+                    </select>
                 </div>
             ),
         })),
