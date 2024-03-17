@@ -93,7 +93,7 @@ const TransactionPage: FC = () => {
                         <option value="Pending" >Pending</option>
                         <option value="Paid" >Paid</option>
                         <option value="Completed">Completed</option>
-                        <option value="Incomplete">Delete</option>
+                        <option value="Incomplete">Incomplete</option>
                     </select>
                 </div>
             ),
