@@ -39,9 +39,6 @@ const Navbar: React.FC = () => {
     setShowNotificationPopup(false);
   }
 
-
-
-  
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
