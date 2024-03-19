@@ -42,6 +42,7 @@ import allTransactionReducer from './transaction/allTransactionSlice';
 import transactionReducer from './transaction/transactionSlice';
 import myOrdersReducer from './myorder/myOrdersSlice';
 import allNotificationsReducer from './notification/allNotificationsSlice';
+import timelySalesReducer from './analytic/timelySalesSlice';
 
 const rootReducer = combineReducers({
     auth : authenticationReducer,
@@ -86,7 +87,8 @@ const rootReducer = combineReducers({
     allTransaction : allTransactionReducer,
     transaction : transactionReducer,
     myOrders : myOrdersReducer,
-    allNotifications: allNotificationsReducer
+    allNotifications: allNotificationsReducer,
+    timelySales : timelySalesReducer
 })
 
 export default rootReducer;

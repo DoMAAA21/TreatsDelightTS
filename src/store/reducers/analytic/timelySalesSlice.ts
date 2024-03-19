@@ -20,8 +20,9 @@ export const fetchSalesPerDay = createAsyncThunk<SalesData, void, { state: RootS
         dispatch(salesPerDayRequest());
         const authState = getState().auth;
         const storeId = authState.user?.store?.storeId;
-        const { data } = await axios.get<SalesData>(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/sales-current-month`, { withCredentials: true });
-        dispatch(salesPerDaySuccess(data));
+        const { data } = await axios.get<SalesData>(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/sales-per-day`, { withCredentials: true });
+        dispatch(salesPerDaySuccess(data.sales));
+        console.log(data.sales);
         return data; 
       } catch (error) {
         if (axios.isAxiosError(error)) {
