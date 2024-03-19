@@ -24,7 +24,7 @@ interface FormData {
 }
 
 const validationSchema = Yup.object({
-    amount: Yup.number().min(1, 'Minimum of 1').required('Amount is required'),
+    amount: Yup.number().min(0.001, 'Minimum of 0.001').required('Amount is required'),
 });
 
 
