@@ -37,6 +37,7 @@ import MaintenanceTransaction from './views/admin/maintenance/maintenanceTransac
 import MaintenanceArchivesPage from './views/admin/maintenance/archives';
 import InventoryPage from './views/admin/inventory';
 import AnalyticsPage from './views/admin/analytic';
+import DynamicAnalyticsPage from './views/admin/analytic/dynamicAnalytics';
 import PermitPage from './views/admin/permit';
 import ContractPage from './views/admin/contract';
 import TransactionPage from './views/admin/transactions';
@@ -107,6 +108,7 @@ const AppRoutes: FC = () => {
         { path: 'maintenance/store-archived/:id', element: <ProtectedRoute allowedRoles={['admin']}><MaintenanceArchivesPage /></ProtectedRoute> },
         { path: 'inventory', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><InventoryPage /></ProtectedRoute> },
         { path: 'analytics', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee']}><AnalyticsPage /></ProtectedRoute> },
+        { path: 'analytics/dynamic-reports', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee']}><DynamicAnalyticsPage /></ProtectedRoute> },
         { path: 'permits', element: <ProtectedRoute allowedRoles={['admin']}> <PermitPage /> </ProtectedRoute> },
         { path: 'contracts', element: <ProtectedRoute allowedRoles={['admin']}><ContractPage /></ProtectedRoute> },
         { path: 'transactions', element: <ProtectedRoute allowedRoles={['owner', 'employee']}><TransactionPage /></ProtectedRoute> },

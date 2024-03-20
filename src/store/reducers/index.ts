@@ -43,6 +43,7 @@ import transactionReducer from './transaction/transactionSlice';
 import myOrdersReducer from './myorder/myOrdersSlice';
 import allNotificationsReducer from './notification/allNotificationsSlice';
 import timelySalesReducer from './analytic/timelySalesSlice';
+import dynamicSalesReducer from './analytic/dynamicSalesSlice';
 
 const rootReducer = combineReducers({
     auth : authenticationReducer,
@@ -88,7 +89,8 @@ const rootReducer = combineReducers({
     transaction : transactionReducer,
     myOrders : myOrdersReducer,
     allNotifications: allNotificationsReducer,
-    timelySales : timelySalesReducer
+    timelySales : timelySalesReducer,
+    dynamicSales : dynamicSalesReducer
 })
 
 export default rootReducer;
