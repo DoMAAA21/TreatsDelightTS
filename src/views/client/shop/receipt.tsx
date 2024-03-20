@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../../../components/MetaData";
 import { useAppSelector } from "../../../hooks";
 import Logo from "../../../assets/logo.png";
 import QRCode from 'react-qr-code';
+import { toPng } from 'html-to-image';
 
 interface CartItem {
     _id: string;
@@ -15,17 +16,38 @@ interface CartItem {
     quantity: number;
 }
 
+interface OrderItem extends CartItem {
+    storeId: string;
+}
+type GroupedItems = {
+    [key: string]: OrderItem[];
+};
+
 const Receipt: React.FC = () => {
     const navigate = useNavigate();
+    const elementRef = useRef<HTMLDivElement>(null);
     const { receipt, qrCode } = useAppSelector(state => state.cart);
     const datePart = receipt?.paidAt ? new Date(receipt.paidAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
 
-    interface OrderItem extends CartItem {
 
-        storeId: string;
-    }
-    type GroupedItems = {
-        [key: string]: OrderItem[];
+
+    const htmlToImageConvert = () => {
+        if (!elementRef.current) {
+            return;
+        }
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().split('T')[0];
+        const formattedTime = currentDate.toTimeString().split(' ')[0].replace(/:/g, '-');
+        toPng(elementRef.current, { cacheBust: false })
+            .then((dataUrl: string) => {
+                const link = document.createElement("a");
+                link.download = `receipt_${formattedDate}_${formattedTime}.png`;
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch((err: Error) => {
+                console.error(err);
+            });
     };
 
     const groupItemsByStoreId = (items: OrderItem[] | undefined): GroupedItems => {
@@ -53,7 +75,11 @@ const Receipt: React.FC = () => {
     return (
         <>
             <MetaData title={'Receipt'} />
-            <div className="flex justify-center">
+            <div className="flex-col">
+            <div className="flex justify-center pt-10">
+                <button className="text-center p-2 bg-red-500 text-white rounded-lg" onClick={htmlToImageConvert}>Download Image</button>
+            </div>
+            <div ref={elementRef} className="flex justify-center">
                 <div className="flex w-auto">
                     <div className="max-w-xs w-96 mx-auto bg-white p-8 border border-gray-200 shadow-lg mt-20 rounded-lg">
                         <div className="flex items-center mb-2">
@@ -116,7 +142,7 @@ const Receipt: React.FC = () => {
                             which may vary by store, with a maximum pickup time of 4pm.</p>
                     </div>
                 </div>
-
+            </div>
             </div>
         </>
     );
