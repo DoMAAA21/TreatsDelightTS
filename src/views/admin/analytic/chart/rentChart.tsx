@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchRentBillsPerMonth } from '../../../store/reducers/analytic/rentBillsPerMonthSlice';
-import { LineChart,  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts'; // Import ResponsiveContainer from Recharts
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { fetchRentBillsPerMonth } from '../../../../store/reducers/analytic/rentBillsPerMonthSlice';
+import { AreaChart, Area,  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'; // Import ResponsiveContainer from Recharts
+import { curveCardinal } from 'd3-shape';
+
 
 interface Bill {
     month: number;
@@ -21,11 +23,11 @@ function getMonthName(monthNumber: number) {
     }
 }
 
+const cardinal = curveCardinal.tension(0.2);
+
 const RentChart = () => {
     const dispatch = useAppDispatch();
     const { rentBillsPerMonth } = useAppSelector(state => state.rentBill);
-
-    console.log(rentBillsPerMonth)
 
     useEffect(() => {
         dispatch(fetchRentBillsPerMonth());
@@ -40,13 +42,13 @@ const RentChart = () => {
         <div className="w-full">
             <h2 className="text-center text-lg font-semibold mb-8">Rent Bills per Month</h2>
             <ResponsiveContainer width="100%" aspect={2/1}>
-                <LineChart
+                <AreaChart
                     data={chartData}
                     margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
+                        top: 0,
+                        right: 15,
+                        left: 0,
+                        bottom: 0,
                     }}
                 >
                     <CartesianGrid strokeDasharray="2 2" />
@@ -60,8 +62,8 @@ const RentChart = () => {
                             { value: 'Rent Bill', type: 'circle', color: '#d03232' }
                         ]}
                     />
-                    <Line dataKey="totalBill" stroke="#d03232" type="monotone"activeDot={{ r: 8 }} />
-                </LineChart>
+                    <Area type={cardinal} dataKey="totalBill" stroke="#d03232" fill="#d03232" fillOpacity={0.3} />
+                </AreaChart>
             </ResponsiveContainer>
         </div>
     )

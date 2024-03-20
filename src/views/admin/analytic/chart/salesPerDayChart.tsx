@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { fetchSalesPerDay } from '../../../store/reducers/analytic/timelySalesSlice';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { fetchSalesPerDay } from '../../../../store/reducers/analytic/timelySalesSlice';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts'; 
 
 
@@ -16,14 +16,14 @@ const SalesPerDayChart = () => {
     return (
         <div className="w-full">
             <h2 className="text-center text-lg font-semibold mb-8">Sales Per Day</h2>
-            <ResponsiveContainer width="100%" aspect={2/1}>
+            <ResponsiveContainer width="110%" aspect={2/1}>
                 <BarChart
                     data={salesPerDay}
                     margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
+                        top: -10,
+                        right: 50,
+                        left: 0,
+                        bottom: 0,
                     }}
                 >
                     <CartesianGrid strokeDasharray="2 2" />
