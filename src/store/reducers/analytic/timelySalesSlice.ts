@@ -20,7 +20,7 @@ export const fetchSalesPerDay = createAsyncThunk<SalesData, void, { state: RootS
         dispatch(salesPerDayRequest());
         const authState = getState().auth;
         const storeId = authState.user?.store?.storeId;
-        const { data } = await axios.get<SalesData>(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/sales-per-day`, { withCredentials: true });
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/sales-per-day`, { withCredentials: true });
         dispatch(salesPerDaySuccess(data.sales));
         console.log(data.sales);
         return data; 
@@ -36,26 +36,27 @@ export const fetchSalesPerDay = createAsyncThunk<SalesData, void, { state: RootS
   );
 
 
-export const fetchSalesPerMonth = createAsyncThunk<void, void, { state: RootState }>('salesPerMonth/fetchSalesPerMonth', async (_, { rejectWithValue, dispatch, getState }) => {
-    try {
+export const fetchSalesPerMonth = createAsyncThunk<SalesData, void, { state: RootState }>(
+    'salesPerMonth/fetchSalesPerMonth',
+    async (_, { rejectWithValue, dispatch, getState }) => {
+      try {
         dispatch(salesPerMonthRequest());
         const authState = getState().auth;
         const storeId = authState.user?.store?.storeId;
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/sales-current-day`, { withCredentials: true });
-        console.log(data);
-        dispatch(salesPerMonthSuccess(data));
-       
-        return;
-    } catch (error) {
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/sales-per-month`, { withCredentials: true });
+        dispatch(salesPerMonthSuccess(data.sales));
+        return data; 
+      } catch (error) {
         if (axios.isAxiosError(error)) {
-            dispatch(salesPerMonthFail(error.response?.data?.message || 'An error occurred'));
-            return rejectWithValue(error.response?.data?.message || 'An error occurred');
+          dispatch(salesPerMonthFail(error.response?.data?.message || 'An error occurred'));
+          return rejectWithValue(error.response?.data?.message || 'An error occurred');
         }
         dispatch(salesPerMonthFail('An error occurred'));
         return rejectWithValue('An error occurred');
+      }
     }
-}
-);
+  );
+
 
 
 

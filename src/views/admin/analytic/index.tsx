@@ -2,6 +2,7 @@ import ElectricityChart from "./chart/electricityChart";
 import WaterChart from "./chart/waterChart";
 import RentChart from "./chart/rentChart";
 import SalesPerDayChart from "./chart/salesPerDayChart";
+import SalesPerMonthChart from "./chart/salesPerMonthChart";
 
 const AnalyticsPage = () => {
   return (
@@ -18,6 +19,9 @@ const AnalyticsPage = () => {
         </div>
         <div className="bg-white p-1 rounded-md">
           <SalesPerDayChart />
+        </div>
+        <div className="bg-white p-1 rounded-md">
+          <SalesPerMonthChart />
         </div>
       </div>
     </div>
