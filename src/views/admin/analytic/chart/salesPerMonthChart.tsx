@@ -56,10 +56,10 @@ const SalesPerDayChart = () => {
                     />
                     <Legend
                         payload={[
-                            { value: 'Sales', type: 'circle', color: '#8884d8' }
+                            { value: 'Monthly Sales', type: 'circle', color: '#68d391' }
                         ]}
                     />
-                    <Bar dataKey="totalSales" fill="#8884d8" stroke="#8884d8"  />
+                    <Bar dataKey="totalSales" fill="#68d391" stroke="#68d391"  />
                 </BarChart>
             </ResponsiveContainer>
         </div>
