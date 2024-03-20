@@ -15,8 +15,8 @@ const SalesPerDayChart = () => {
  
     return (
         <div className="w-full">
-            <h2 className="text-center text-lg font-semibold mb-8">Sales Per Day</h2>
-            <ResponsiveContainer width="110%" aspect={2/1}>
+            <h2 className="text-center text-lg mb-4 italic">Sales Per Day</h2>
+            <ResponsiveContainer width="110%" aspect={1.6}>
                 <BarChart
                     data={salesPerDay}
                     margin={{

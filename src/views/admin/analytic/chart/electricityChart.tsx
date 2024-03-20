@@ -39,8 +39,8 @@ const ElectricityChart = () => {
 
     return (
         <div className="w-full">
-            <h2 className="text-center text-lg font-semibold mb-8">Electricity Bills per Month</h2>
-            <ResponsiveContainer width="100%" aspect={2/1}>
+            <h2 className="text-center text-lg mb-4 italic">Electricity Bills per Month</h2>
+            <ResponsiveContainer width="100%" aspect={1.6}>
                 <AreaChart
                     data={chartData}
                     margin={{
