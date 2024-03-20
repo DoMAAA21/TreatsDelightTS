@@ -111,8 +111,8 @@ const RentPage: FC = () => {
         rows: rents.map((rent) => ({
             _id: rent._id,
             rent: rent.amount ? renderRentStatus(rent?.amount) : 'No payment yet',
-            issuedAt: new Date(rent.issuedAt).toISOString().slice(0, 10),
-            paidAt: rent?.paidAt ? new Date(rent.paidAt).toISOString().slice(0, 10) : 'Not paid yet',
+            issuedAt: new Date(rent.issuedAt).toISOString().split('T')[0],
+            paidAt: rent?.paidAt ? new Date(rent.paidAt).toISOString().split('T')[0] : 'Not paid yet',
             type: rent?.type==="paid" ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Paid
