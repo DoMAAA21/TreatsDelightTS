@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import DynamicSalesChart from "./chart/dynamicSalesChart";
-
+import DynamicSoldChart from "./chart/dynamicProductsSold";
 
 const DynamicAnalyticsPage = () => {
   const elementRef = useRef<HTMLDivElement>(null);
@@ -42,6 +42,9 @@ const DynamicAnalyticsPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-white p-1 rounded-md">
             <DynamicSalesChart />
+          </div>
+          <div className="bg-white p-1 rounded-md">
+            <DynamicSoldChart />
           </div>
         </div>
       </div>

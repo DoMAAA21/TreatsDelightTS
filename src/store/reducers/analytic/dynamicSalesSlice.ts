@@ -7,7 +7,16 @@ interface SalesData {
     sales: number[];
 }
 
+interface SoldData {
+    sales: number[];
+}
 interface FetchDynamicSalesParams {
+    period: string;
+    startDate: string | Date;
+    endDate: string | Date; 
+}
+
+interface FetchDynamicSoldParams {
     period: string;
     startDate: string | Date;
     endDate: string | Date; 
@@ -15,29 +24,55 @@ interface FetchDynamicSalesParams {
 
 const initialState = {
     sales: [],
+    sold: [],
     loading: false,
     error: null,
 };
 
 export const fetchDynamicSales = createAsyncThunk<SalesData, FetchDynamicSalesParams, { state: RootState }>(
-    'salesPerDay/fetchSalesPerDay',
+    'sales/fetchSalesDay',
     async ({ period, startDate, endDate }, { rejectWithValue, dispatch, getState }) => {
         try {
-            dispatch(salesPerDayRequest());
+            dispatch(salesRequest());
             const authState = getState().auth;
             const storeId = authState.user?.store?.storeId;
             const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/dynamic-sales`, {
                 params: { period, startDate, endDate },
                 withCredentials: true
             })
-            dispatch(salesPerDaySuccess(data.sales));
+            dispatch(salesSuccess(data.sales));
             return data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                dispatch(salesPerDayFail(error.response?.data?.message || 'An error occurred'));
+                dispatch(salesFail(error.response?.data?.message || 'An error occurred'));
                 return rejectWithValue(error.response?.data?.message || 'An error occurred');
             }
-            dispatch(salesPerDayFail('An error occurred'));
+            dispatch(salesFail('An error occurred'));
+            return rejectWithValue('An error occurred');
+        }
+    }
+);
+
+
+export const fetchDynamicSold = createAsyncThunk<SoldData, FetchDynamicSoldParams, { state: RootState }>(
+    'solds/fetchSoldDay',
+    async ({ period, startDate, endDate }, { rejectWithValue, dispatch, getState }) => {
+        try {
+            dispatch(soldRequest());
+            const authState = getState().auth;
+            const storeId = authState.user?.store?.storeId;
+            const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/chart/store/${storeId}/dynamic-sold`, {
+                params: { period, startDate, endDate },
+                withCredentials: true
+            })
+            dispatch(soldSuccess(data.sold));
+            return data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                dispatch(soldFail(error.response?.data?.message || 'An error occurred'));
+                return rejectWithValue(error.response?.data?.message || 'An error occurred');
+            }
+            dispatch(soldFail('An error occurred'));
             return rejectWithValue('An error occurred');
         }
     }
@@ -46,18 +81,31 @@ export const fetchDynamicSales = createAsyncThunk<SalesData, FetchDynamicSalesPa
 
 
 
+
+
 const salesPerDaySlice = createSlice({
     name: 'salesPerDay',
     initialState,
     reducers: {
-        salesPerDayRequest: (state) => {
+        salesRequest: (state) => {
             state.loading = true;
         },
-        salesPerDaySuccess: (state, action) => {
+        salesSuccess: (state, action) => {
             state.loading = false;
             state.sales = action.payload;
         },
-        salesPerDayFail: (state, action) => {
+        salesFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        soldRequest: (state) => {
+            state.loading = true;
+        },
+        soldSuccess: (state, action) => {
+            state.loading = false;
+            state.sold = action.payload;
+        },
+        soldFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         },
@@ -68,9 +116,12 @@ const salesPerDaySlice = createSlice({
 });
 
 export const {
-    salesPerDayRequest,
-    salesPerDaySuccess,
-    salesPerDayFail,
+    salesRequest,
+    salesSuccess,
+    salesFail,
+    soldRequest,
+    soldSuccess,
+    soldFail,
     clearErrors,
 } = salesPerDaySlice.actions;
 
