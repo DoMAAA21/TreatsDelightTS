@@ -150,7 +150,7 @@ const HomePage = () => {
 
                         <div className="bg-white shadow h-40 w-72 p-4 flex items-center justify-center rounded-3xl" data-aos="fade-left" data-aos-delay={300} data-aos-duration={800}>
                             <div className="mr-4 w-4/5">
-                                <p className="text-2xl text-indigo-500 font-bold">Nutritional Factors</p>
+                                <p className="text-2xl text-indigo-500 font-bold">Nutritional Facts</p>
 
                             </div>
                             <div className="w-1/5">
@@ -170,7 +170,7 @@ const HomePage = () => {
 
                         <div className="bg-white shadow h-40 w-72 p-4 flex items-center justify-center rounded-3xl" data-aos="fade-left" data-aos-delay={300} data-aos-duration={800}>
                             <div className="mr-4 w-4/5">
-                                <p className="text-2xl text-indigo-500 font-bold">Order Reservations</p>
+                                <p className="text-2xl text-indigo-500 font-bold">Analytics</p>
 
                             </div>
                             <div className="w-1/5">
@@ -180,7 +180,7 @@ const HomePage = () => {
 
                         <div className="bg-white shadow h-40 w-72 p-4 flex items-center justify-center rounded-3xl" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
                             <div className="mr-4 w-4/5">
-                                <p className="text-2xl text-indigo-500 font-bold">Inventory Management</p>
+                                <p className="text-2xl text-indigo-500 font-bold">AI Integration</p>
 
                             </div>
                             <div className="w-1/5">
@@ -190,7 +190,7 @@ const HomePage = () => {
 
                         <div className="bg-white shadow h-40 w-72 p-4 flex items-center justify-center rounded-3xl" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
                             <div className="mr-4 w-4/5">
-                                <p className="text-2xl text-indigo-500 font-bold">Order Reservations</p>
+                                <p className="text-2xl text-indigo-500 font-bold">Electronic Billing</p>
 
                             </div>
                             <div className="w-1/5">
@@ -201,7 +201,7 @@ const HomePage = () => {
 
                         <div className="bg-white shadow h-40 w-72 p-4 flex items-center justify-center rounded-3xl" data-aos="fade-right" data-aos-delay={300} data-aos-duration={800}>
                             <div className="mr-4 w-4/5">
-                                <p className="text-2xl text-indigo-500 font-bold">Menu Management</p>
+                                <p className="text-2xl text-indigo-500 font-bold">Expenses Management</p>
 
                             </div>
                             <div className="w-1/5">
