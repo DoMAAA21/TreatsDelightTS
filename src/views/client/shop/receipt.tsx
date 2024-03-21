@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
-import MetaData from "../../../components/MetaData";
-import { useAppSelector } from "../../../hooks";
-import Logo from "../../../assets/logo.png";
+import MetaData from '../../../components/MetaData';
+import { useAppSelector } from '../../../hooks';
+import Logo from '../../../assets/logo.png';
 import QRCode from 'react-qr-code';
 import { toPng } from 'html-to-image';
+import DownloadIcon from '../../../assets/icons/download.svg';
 
 interface CartItem {
     _id: string;
@@ -76,8 +77,12 @@ const Receipt: React.FC = () => {
         <>
             <MetaData title={'Receipt'} />
             <div className="flex-col">
-                <div className="flex justify-center pt-10">
-                    <button className="text-center p-2 bg-red-500 text-white rounded-lg" onClick={htmlToImageConvert}>Download Image</button>
+                <div className="relative">
+                    <div className="absolute inset-x-0 top-6 left-72 flex justify-center">
+                        <button className="text-center p-6" onClick={htmlToImageConvert}>
+                            <img src={DownloadIcon} className="w-7 h-7" alt="Download Icon" />
+                        </button>
+                    </div>
                 </div>
                 <div ref={elementRef} className="flex justify-center">
                     <div className="flex w-auto">
