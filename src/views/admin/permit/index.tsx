@@ -76,7 +76,7 @@ const PermitPage: FC = () => {
         }
         const currentDate = new Date();
         const timeDifference = expirationDate.getTime() - currentDate.getTime();
-        const dateString = expirationDate.toISOString().slice(0, 10);
+        const dateString = expirationDate.toISOString().split('T')[0];
         let colorClassName: string;
         if (timeDifference > 30 * 24 * 60 * 60 * 1000) {
             colorClassName = 'bg-green-600';
@@ -106,7 +106,7 @@ const PermitPage: FC = () => {
         rows: stores.map((store) => ({
             _id: store._id,
             name: store.name,
-            startedAt: store?.permit?.startedAt ? new Date(store.permit.startedAt).toISOString().slice(0, 10) : 'No updated permit yet.',
+            startedAt: store?.permit?.startedAt ? new Date(store.permit.startedAt).toISOString().split('T')[0] : 'No updated permit yet.',
             expiration: store?.permit?.expiration ? calculateExpirationColor(new Date(store.permit.expiration)) : 'No updated permit yet.',
             active: store.active ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">

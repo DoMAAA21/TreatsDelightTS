@@ -114,12 +114,12 @@ const ElectricityPage: FC = () => {
 
         ],
         rows: electricity.map((electricity) => ({
-            billingPeriod: `${new Date(electricity.startAt).toISOString().slice(0, 10)} to ${new Date(electricity.endAt).toISOString().slice(0, 10)}`,
+            billingPeriod: `${new Date(electricity.startAt).toISOString().split('T')[0]} to ${new Date(electricity.endAt).toISOString().split('T')[0]}`,
             electricity: electricity.total ? renderElectricityStatus(electricity?.total) : 'No payment yet',
             pxc: `${electricity.consumed} x ${electricity.price}`,
             additionals: electricity.additionals,
-            issuedAt: new Date(electricity.issuedAt).toISOString().slice(0, 10),
-            paidAt: electricity?.paidAt ? new Date(electricity.paidAt).toISOString().slice(0, 10) : 'Not paid yet',
+            issuedAt: new Date(electricity.issuedAt).toISOString().split('T')[0],
+            paidAt: electricity?.paidAt ? new Date(electricity.paidAt).toISOString().split('T')[0] : 'Not paid yet',
             type: electricity?.type==="paid" ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Paid

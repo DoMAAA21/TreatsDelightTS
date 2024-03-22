@@ -115,12 +115,12 @@ const WaterPage: FC = () => {
 
         ],
         rows: waters.map((water) => ({
-            billingPeriod: `${new Date(water.startAt).toISOString().slice(0, 10)} to ${new Date(water.endAt).toISOString().slice(0, 10)}`,
+            billingPeriod: `${new Date(water.startAt).toISOString().split('T')[0]} to ${new Date(water.endAt).toISOString().split('T')[0]}`,
             water: water.total ? renderWaterStatus(water?.total) : 'No payment yet',
             pxc: `${water.consumed} x ${water.price}`,
             additionals: water.additionals,
-            issuedAt: new Date(water.issuedAt).toISOString().slice(0, 10),
-            paidAt: water?.paidAt ? new Date(water.paidAt).toISOString().slice(0, 10) : 'Not paid yet',
+            issuedAt: new Date(water.issuedAt).toISOString().split('T')[0],
+            paidAt: water?.paidAt ? new Date(water.paidAt).toISOString().split('T')[0] : 'Not paid yet',
             type: water?.type==="paid" ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Paid
