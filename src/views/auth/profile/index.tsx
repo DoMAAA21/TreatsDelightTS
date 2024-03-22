@@ -7,7 +7,7 @@ const ProfilePage: React.FC = () => {
 
     return (
         <div className="px-4 md:px-20"> 
-            <div className="pt-1">
+            <div className="pt-1 px-5">
                 <div
                     style={{
                         display: "flex",
@@ -27,7 +27,6 @@ const ProfilePage: React.FC = () => {
             </div>
             <div className="pt-3">
                 <div
-                    id="graybox"
                     style={{
                         height: "auto",
                         borderRadius: "8px",
@@ -35,7 +34,7 @@ const ProfilePage: React.FC = () => {
                         position: "relative", 
                     }}
                 >
-                    <div className="bg-[#E6EFE3] rounded-[20px] p-8 md:p-20">
+                    <div className="bg-white shadow-2xl rounded-[20px] p-8 md:p-20">
                         <div className="pb-10">
                             <img src={user?.avatar?.url} alt="User Avatar" className="lg:h-4/4 lg:w-1/4 md:h-1/5 md:w-1/5 h-3/5 w-3/5 object-cover rounded-full mx-auto md:mx-0 mb-4 md:mb-0 md:float-left md:mr-4" />
                         </div>
