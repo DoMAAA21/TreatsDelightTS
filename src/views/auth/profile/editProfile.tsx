@@ -101,7 +101,7 @@ const EditProfilePage = () => {
 
     return (
         <div className="flex justify-center">
-            <div className="lg:w-100 w-11/12 mt-6">
+            <div className="lg:w-100 w-9/12 mt-6">
                 <div className="bg-white p-6 rounded-lg shadow">
                     <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
                     <Formik

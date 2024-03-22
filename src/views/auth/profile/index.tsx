@@ -65,7 +65,7 @@ const ProfilePage: React.FC = () => {
 
                         <div className="pt-20">
                             <Link to={`/me/edit-profile/${user?._id}`}>
-                                <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
                                     Edit Profile
                                 </button>
                             </Link>

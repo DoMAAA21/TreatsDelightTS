@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import { loginSuccess } from '../auth/authenticationSlice';
 interface UserState {
   loading: boolean;
   isUpdated: boolean;
@@ -114,7 +114,7 @@ export const updateProfile = createAsyncThunk<boolean, { id: string | number; us
     };
 
     const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/profile/user/${id}`, userData, { withCredentials: true, ...config });
-    
+    dispatch(loginSuccess(data.user));
     dispatch(updateUserSuccess(data.success));
     return data.success;
   } catch (error) {
