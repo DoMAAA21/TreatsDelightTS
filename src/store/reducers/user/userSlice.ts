@@ -14,7 +14,7 @@ interface UserData {
   email: string;
   password: string;
   religion: string;
-  role: string;
+  role?: string;
   avatar?: File | Blob | string | null;
 }
 
@@ -101,6 +101,32 @@ export const submitHealthDeclaration = createAsyncThunk<boolean, HealthFormData>
     }
   }
 );
+
+export const updateProfile = createAsyncThunk<boolean, { id: string | number; userData: UserData }>('user/updateUser', async ({ id, userData }, { dispatch, rejectWithValue }) => {
+  try {
+
+    dispatch(updateUserRequest());
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    const { data } = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/profile/user/${id}`, userData, { withCredentials: true, ...config });
+    
+    dispatch(updateUserSuccess(data.success));
+    return data.success;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      dispatch(updateUserFail(error.response?.data?.message || 'An error occurred'));
+      return rejectWithValue(error.response?.data?.message || 'An error occurred');
+    }
+    
+    dispatch(updateUserFail('An error occurred'));
+    return rejectWithValue('An error occurred');
+  }
+});
 
 
 const userSlice = createSlice({

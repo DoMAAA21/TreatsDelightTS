@@ -50,6 +50,7 @@ import CartPage from './views/client/shop/cart';
 import PaymentPage from './views/client/shop/payment';
 import Receipt from './views/client/shop/receipt';
 import ProfilePage from './views/auth/profile';
+import EditProfilePage from './views/auth/profile/editProfile';
 import MyOrderPage from './views/client/myorder';
 import HealthDeclarationForm from './views/client/health';
 //Doctor
@@ -78,7 +79,7 @@ const AppRoutes: FC = () => {
       element: <DashboardLayout />,
       children: [
         { path: '', element: <Navigate to="dashboard" /> },
-        { path: 'dashboard', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee','doctor']}><DashboardPage /></ProtectedRoute> },
+        { path: 'dashboard', element: <ProtectedRoute allowedRoles={['admin', 'owner', 'employee', 'doctor']}><DashboardPage /></ProtectedRoute> },
         { path: 'owner-all', element: <ProtectedRoute allowedRoles={['admin']}> <UserPage /></ProtectedRoute> },
         { path: 'owner-add', element: <ProtectedRoute allowedRoles={['admin']}>  <AddOwnerPage />  </ProtectedRoute> },
         { path: 'owner/:id', element: <ProtectedRoute allowedRoles={['admin']}> <EditOwnerPage /> </ProtectedRoute> },
@@ -133,9 +134,10 @@ const AppRoutes: FC = () => {
         { path: 'cart', element: <CartPage /> },
         { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
-        { path: 'me', element: <ProfilePage /> }, 
-        { path: 'me/my-orders', element: <MyOrderPage /> },   
-        { path: 'me/health', element: <HealthDeclarationForm /> },         
+        { path: 'me', element: <ProtectedRoute allowedRoles={['user', 'admin', 'owner', 'employee', 'doctor']}><ProfilePage /></ProtectedRoute> },
+        { path: 'me/edit-profile/:id', element: <ProtectedRoute allowedRoles={['user', 'admin', 'owner', 'employee', 'doctor']}> <EditProfilePage /> </ProtectedRoute> },
+        { path: 'me/my-orders', element: <ProtectedRoute allowedRoles={['user', 'admin', 'owner', 'employee', 'doctor']}><MyOrderPage /> </ProtectedRoute> },
+        { path: 'me/health', element: <ProtectedRoute allowedRoles={['user', 'admin', 'owner', 'employee', 'doctor']}> <HealthDeclarationForm /> </ProtectedRoute> },
       ]
     },
     { path: '/login', element: <LoginPage /> },

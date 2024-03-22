@@ -63,6 +63,23 @@ export const getUserDetails = createAsyncThunk('userDetails/getUserDetails', asy
     }
 });
 
+
+export const getUserProfile = createAsyncThunk('userDetails/getUserDetails', async (id: string | undefined, { dispatch, rejectWithValue }) => {
+    try {
+        dispatch(userDetailsRequest());
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/profile/user/${id}`, { withCredentials: true });
+        dispatch(userDetailsSuccess(data.user));
+        return data.user;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            dispatch(userDetailsFail(error.response?.data?.message || 'An error occurred'));
+            return rejectWithValue(error.response?.data?.message || 'An error occurred');
+        }
+        dispatch(userDetailsFail('An error occurred'));
+        return rejectWithValue('An error occurred');
+    }
+});
+
 export const getUserHealth = createAsyncThunk('userDetails/getUserDetails', async (_, { dispatch, rejectWithValue }) => {
     try {
         dispatch(userDetailsRequest());
