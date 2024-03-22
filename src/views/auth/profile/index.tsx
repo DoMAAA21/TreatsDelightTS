@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../../hooks';
+import { Link } from 'react-router-dom';
 
 const ProfilePage: React.FC = () => {
     const { user } = useAppSelector((state) => state.auth);
@@ -63,11 +64,13 @@ const ProfilePage: React.FC = () => {
                             <div >{user?.email}</div>
                         </div>
 
-                       {/* <div className="pt-20">
-                        <button className={`${colors.primary} font-bold py-2 px-4 rounded-full absolute bottom-4 left-4 right-4 md:bottom-16 lg:right-[40%] md:left-auto md:right-8 `}>
-                            Edit Profile
-                        </button>
-                        </div> */}
+                        <div className="pt-20">
+                            <Link to="/me/health">
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                    Health Declaration
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
