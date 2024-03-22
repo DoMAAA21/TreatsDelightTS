@@ -13,10 +13,6 @@ import defaultAvatar from '../../../assets/defaultavatar.png';
 import { successMsg, errorMsg } from '../../../components/toast';
 
 
-
-
-
-
 interface UserFormData {
     fname: string;
     lname: string;
@@ -24,8 +20,6 @@ interface UserFormData {
     password: string;
     religion: string;
     avatar: File | Blob | string | null;
-    storeId: string;
-    storeName?: string;
 }
 
 const validationSchema = Yup.object({
@@ -88,15 +82,12 @@ const EditProfilePage = () => {
 
     const onSubmit = (data: UserFormData) => {
 
-        const [storeId, storeName] = data.storeId.split('-');
         const userData: UserFormData = {
             fname: data.fname,
             lname: data.lname,
             email: data.email,
             password: data.password,
             religion: data.religion,
-            storeId: storeId,
-            storeName: storeName,
             avatar: compressedImage,
         };
         if (id) {
