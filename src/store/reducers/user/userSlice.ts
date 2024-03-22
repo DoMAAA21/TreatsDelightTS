@@ -8,14 +8,6 @@ interface UserState {
   error: string | null;
 }
 
-const initialState: UserState = {
-  loading: false,
-  isUpdated: false,
-  isDeleted: false,
-  error: null,
-};
-
-
 interface UserData {
   fname: string;
   lname: string;
@@ -25,6 +17,25 @@ interface UserData {
   role: string;
   avatar?: File | Blob | string | null;
 }
+
+interface HealthFormData {
+   diabetic: boolean;
+    hypertension: boolean;
+    kidneyProblem: boolean;
+    cardiovascular: boolean;
+    obese: boolean;
+    heartDisease: boolean;
+    none: boolean;
+}
+
+const initialState: UserState = {
+  loading: false,
+  isUpdated: false,
+  isDeleted: false,
+  error: null,
+};
+
+
 
 
 export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string | number, { dispatch }) => {
@@ -68,7 +79,28 @@ export const updateUser = createAsyncThunk<boolean, { id: string | number; userD
   }
 });
 
-
+export const submitHealthDeclaration = createAsyncThunk<boolean, HealthFormData>('user/updateUser',async (healthData, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(updateUserRequest());
+      const config = {
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        withCredentials: true,
+      };
+      const { data } = await axios.patch(`${import.meta.env.VITE_BASE_URL}/api/v1/user/health-declaration`, healthData, config);
+      dispatch(updateUserSuccess(data.success));
+      return data.success;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(updateUserFail(error.response?.data?.message || 'An error occurred'));
+        return rejectWithValue(error.response?.data?.message || 'An error occurred');
+      }
+      dispatch(updateUserFail('An error occurred'));
+      return rejectWithValue('An error occurred');
+    }
+  }
+);
 
 
 const userSlice = createSlice({

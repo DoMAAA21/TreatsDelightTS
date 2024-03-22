@@ -17,6 +17,15 @@ interface UserDetails {
         store?: {
             storeId: string;
             name: string;
+        },
+        health?: {
+            diabetic: boolean;
+            hypertension: boolean;
+            kidneyProblem: boolean;
+            cardiovascular: boolean;
+            obese: boolean;
+            heartDisease: boolean;
+            none: boolean;
         }
     };
     loading: boolean;
@@ -42,6 +51,22 @@ export const getUserDetails = createAsyncThunk('userDetails/getUserDetails', asy
         dispatch(userDetailsRequest());
 
         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/admin/user/${id}`, { withCredentials: true });
+        dispatch(userDetailsSuccess(data.user));
+        return data.user;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            dispatch(userDetailsFail(error.response?.data?.message || 'An error occurred'));
+            return rejectWithValue(error.response?.data?.message || 'An error occurred');
+        }
+        dispatch(userDetailsFail('An error occurred'));
+        return rejectWithValue('An error occurred');
+    }
+});
+
+export const getUserHealth = createAsyncThunk('userDetails/getUserDetails', async (_, { dispatch, rejectWithValue }) => {
+    try {
+        dispatch(userDetailsRequest());
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/user/get-health`, { withCredentials: true });
         dispatch(userDetailsSuccess(data.user));
         return data.user;
     } catch (error) {
