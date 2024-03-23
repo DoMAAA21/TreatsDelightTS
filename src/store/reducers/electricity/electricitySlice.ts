@@ -50,6 +50,26 @@ export const restoreElectricity = createAsyncThunk('electricity/reelectricityEle
 }
 );
 
+export const updateElectricity = createAsyncThunk(
+    'electricity/updateElectricity',
+    async ({ id, storeId }: { id: string | number, storeId: string | number }, { dispatch }) => {
+      try {
+        const { data } = await axios.patch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/admin/electricity/update-status`,
+          { id, storeId },
+          { withCredentials: true }
+        );
+        dispatch(updateElectricitySuccess(data.success));
+        return data.success;
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          throw error.response?.data?.message || 'An error occurred';
+        }
+        throw 'An error occurred';
+      }
+    }
+  );
+
 
 
 
@@ -71,6 +91,13 @@ const electricitySlice = createSlice({
         restoreElectricityReset: (state) => {
             state.isRestored = false;
         },
+        updateElectricitySuccess: (state, action) => {
+            state.loading = false;
+            state.isUpdated = action.payload;
+        },
+        updateElectricityReset: (state) => {
+            state.isUpdated = false;
+        },
         clearErrors: (state) => {
             state.error = null;
         },
@@ -82,6 +109,8 @@ export const {
     deleteElectricityReset,
     restoreElectricitySuccess,
     restoreElectricityReset,
+    updateElectricitySuccess,
+    updateElectricityReset,
     clearErrors,
 } = electricitySlice.actions;
 
