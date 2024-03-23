@@ -33,14 +33,14 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
     const [showIssuedAt, setShowIssuedAt] = useState(false);
     const [showPaidAt, setShowPaidAt] = useState(false);
     const [isPaid, setIsPaid] = useState(false);
-    const [type, setType] = useState("");
+    const [type, setType] = useState("topay");
     const [cateredBy, setIsCateredBy] = useState("");
     const [issuedAt, setIssuedAt] = useState(new Date());
     const [paidAt, setPaidAt] = useState(new Date());
 
     const initialValues = {
         amount: 0,
-        type: '',
+        type: 'topay',
         issuedAt: new Date(),
         storeId: '',
         cateredBy: '',
@@ -111,6 +111,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                 name="type"
                                                 className="mt-1 p-2 w-full border border-gray-400 rounded-md"
                                                 onChange={handleTypeChange}
+                                                disabled
                                             >
                                                 <option value="" label="Select a type"/>
                                                 <option value="topay">To pay</option>

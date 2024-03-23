@@ -51,6 +51,27 @@ export const restoreRent = createAsyncThunk('rent/rerentRent', async (id: string
 }
 );
 
+export const updateRent = createAsyncThunk(
+    'rent/updateRent',
+    async ({ id, storeId }: { id: string | number, storeId: string | number }, { dispatch }) => {
+      try {
+        const { data } = await axios.patch(
+          `${import.meta.env.VITE_BASE_URL}/api/v1/admin/rent/update-status`,
+          { id, storeId },
+          { withCredentials: true }
+        );
+        dispatch(updateRentSuccess(data.success));
+        return data.success;
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          throw error.response?.data?.message || 'An error occurred';
+        }
+        throw 'An error occurred';
+      }
+    }
+  );
+
+
 
 
 
@@ -72,6 +93,13 @@ const rentSlice = createSlice({
         restoreRentReset: (state) => {
             state.isRestored = false;
         },
+        updateRentSuccess: (state, action) => {
+            state.loading = false;
+            state.isUpdated = action.payload;
+        },
+        updateRentReset: (state) => {
+            state.isUpdated = false;
+        },
         clearErrors: (state) => {
             state.error = null;
         },
@@ -83,6 +111,8 @@ export const {
     deleteRentReset,
     restoreRentSuccess,
     restoreRentReset,
+    updateRentSuccess,
+    updateRentReset,
     clearErrors,
 } = rentSlice.actions;
 

@@ -55,7 +55,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
         price: 0,
         additionals: 0,
         total: 0,
-        type: '',
+        type: 'topay',
         issuedAt: new Date(),
         storeId: '',
         paidAt: new Date(),
@@ -199,6 +199,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                     name="type"
                                                     className="mt-1 p-2 w-full border border-gray-400 rounded-md"
                                                     onChange={handleTypeChange}
+                                                    disabled
                                                 >
                                                     <option value="" label="Select a type" disabled />
                                                     <option value="topay">To pay</option>

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllMaintenances } from '../../../store/reducers/maintenance/allMaintenanceSlice';
-import { deleteMaintenance, deleteMaintenanceReset } from '../../../store/reducers/maintenance/maintenanceSlice';
+import { deleteMaintenance, deleteMaintenanceReset, updateMaintenance, updateMaintenanceReset } from '../../../store/reducers/maintenance/maintenanceSlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import MaintenanceModal from './maintenanceModal';
@@ -11,6 +11,7 @@ import TableLoader from '../../../components/loaders/TableLoader';
 import { colors } from '../../../components/theme';
 import { newMaintenanceReset } from '../../../store/reducers/maintenance/newMaintenanceSlice';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';
+import PayIcon from '../../../assets/icons/pay.svg';
 import ArchiveIcon from '../../../assets/icons/archive.svg';
 import Swal from 'sweetalert2';
 
@@ -35,9 +36,10 @@ const MaintenanceTransaction: FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const { maintenances, loading } = useAppSelector((state) => state.allMaintenance);
-    const { isDeleted } = useAppSelector((state) => state.maintenance);
+    const { isDeleted, isUpdated } = useAppSelector((state) => state.maintenance);
     const { success } = useAppSelector((state) => state.newMaintenance);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const storeId = id;
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -60,12 +62,39 @@ const MaintenanceTransaction: FC = () => {
             dispatch(newMaintenanceReset());
         }
 
+      
+    }, [dispatch, success]);
+
+    useEffect(()=>{
         if (isDeleted && id) {
             dispatch(fetchAllMaintenances(id));
             dispatch(deleteMaintenanceReset());
             successMsg('Maintenance deleted successfully');
         }
-    }, [dispatch, success, isDeleted]);
+
+        if (isUpdated && id) {
+            dispatch(fetchAllMaintenances(id));
+            dispatch(updateMaintenanceReset());
+            successMsg('Maintenance updated successfully');
+        }
+    },[isDeleted, isUpdated])
+
+
+    const payMaintenanceHandler = ( id :  number | string) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'info',
+            text: "Mark this transaction paid?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                storeId && dispatch(updateMaintenance({id, storeId}));
+            }
+        });
+    };
 
 
 
@@ -135,7 +164,16 @@ const MaintenanceTransaction: FC = () => {
             ),
 
             actions: (
-                <div className="flex items-center  justify-center ml-6">
+                <div className="flex items-center  justify-center ">
+                     {maintenance.type === "topay" && 
+                        <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8 mr-4" onClick={() => payMaintenanceHandler(maintenance._id)} title="Pay" >
+                            <img
+                                src={PayIcon}
+                                alt="Pay Icon"
+                                className="transition duration-300 ease-in-out transform hover:scale-110"
+                            />
+                        </button>
+                    }
                     <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteMaintenanceHandler(maintenance._id)}>
                         <img
                             src={DeleteIcon}

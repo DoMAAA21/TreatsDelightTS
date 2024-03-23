@@ -36,13 +36,13 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
     const [showIssuedAt, setShowIssuedAt] = useState(false);
     const [showPaidAt, setShowPaidAt] = useState(false);
     const [isPaid, setIsPaid] = useState(false);
-    const [type, setType] = useState("");
+    const [type, setType] = useState("topay");
     const [issuedAt, setIssuedAt] = useState(new Date());
     const [paidAt, setPaidAt] = useState(new Date());
 
     const initialValues = {
         amount: 0,
-        type: '',
+        type: 'topay',
         issuedAt: new Date(),
         storeId: '',
         paidAt: new Date()
@@ -114,6 +114,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                 name="type"
                                                 className="mt-1 p-2 w-full border border-gray-400 rounded-md"
                                                 onChange={handleTypeChange}
+                                                disabled
                                             >
                                                 <option value="" label="Select a type"/>
                                                 <option value="topay">To pay</option>
@@ -135,21 +136,6 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose }) 
                                                 <Datepicker options={options} onChange={(date) => setPaidAt(date)} show={showPaidAt} setShow={(show) => setShowPaidAt(show)} value={paidAt} />
                                             </div>
                                         )}
-
-                                        <div className="mb-4">
-                                            <label htmlFor="note" className="block text-sm font-medium text-gray-700">
-                                                Note
-                                            </label>
-                                            <Field
-                                                as="textarea"
-                                                id="note"
-                                                name="note"
-                                                className="mt-1 p-2 w-full border border-gray-400 rounded-md"
-                                            />
-                                            <ErrorMessage name="note" component="div" className="text-red-500" />
-                                        </div>
-
-
 
                                         <button
                                             type="submit"

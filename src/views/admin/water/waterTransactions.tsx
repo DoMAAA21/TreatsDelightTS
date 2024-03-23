@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllWaters } from '../../../store/reducers/water/allWatersSlice';
-import { deleteWater, deleteWaterReset } from '../../../store/reducers/water/waterSlice';
+import { deleteWater, deleteWaterReset, updateWater, updateWaterReset } from '../../../store/reducers/water/waterSlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import WaterModal from './waterModal';
@@ -11,6 +11,7 @@ import TableLoader from '../../../components/loaders/TableLoader';
 import { colors } from '../../../components/theme';
 import { newWaterReset } from '../../../store/reducers/water/newWaterSlice';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';
+import PayIcon from '../../../assets/icons/pay.svg';
 import ArchiveIcon from '../../../assets/icons/archive.svg';
 import Swal from 'sweetalert2';
 
@@ -37,10 +38,10 @@ const WaterPage: FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const { waters, loading } = useAppSelector((state) => state.allWater);
-    const { isDeleted } = useAppSelector((state) => state.water);
+    const { isDeleted, isUpdated } = useAppSelector((state) => state.water);
     const { success } = useAppSelector((state) => state.newWater);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const storeId = id;
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -63,15 +64,26 @@ const WaterPage: FC = () => {
             dispatch(newWaterReset());
         }
 
+
+    }, [dispatch, success]);
+
+    useEffect(() => {
         if (isDeleted && id) {
             dispatch(fetchAllWaters(id));
             dispatch(deleteWaterReset());
             successMsg('Water deleted successfully');
         }
-    }, [dispatch, success, isDeleted]);
+
+        if (isUpdated && id) {
+            dispatch(fetchAllWaters(id));
+            dispatch(updateWaterReset());
+            successMsg('Water updated successfully');
+        }
+
+    }, [isDeleted, isUpdated])
 
 
-    
+
     const deleteWaterHandler = (id: number | string) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -85,6 +97,24 @@ const WaterPage: FC = () => {
             if (result.isConfirmed) {
                 dispatch(deleteWater(id));
                 Swal.fire('Deleted!', 'Water has been deleted.', 'success');
+            }
+        });
+    };
+
+
+    const payWaterHandler = ( id :  number | string) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'info',
+            text: "Mark this transaction paid?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                storeId && dispatch(updateWater({id, storeId}));
             }
         });
     };
@@ -121,7 +151,7 @@ const WaterPage: FC = () => {
             additionals: water.additionals,
             issuedAt: new Date(water.issuedAt).toISOString().split('T')[0],
             paidAt: water?.paidAt ? new Date(water.paidAt).toISOString().split('T')[0] : 'Not paid yet',
-            type: water?.type==="paid" ? (
+            type: water?.type === "paid" ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Paid
                 </span>
@@ -130,10 +160,18 @@ const WaterPage: FC = () => {
                     To Pay
                 </span>
             ),
-
             actions: (
-                <div className="flex items-center  justify-center ml-6">
-                     <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteWaterHandler(water._id)}>
+                <div className="flex items-center  justify-center">
+                    {water.type === "topay" && 
+                        <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8 mr-4" onClick={() => payWaterHandler(water._id)} title="Pay" >
+                            <img
+                                src={PayIcon}
+                                alt="Pay Icon"
+                                className="transition duration-300 ease-in-out transform hover:scale-110"
+                            />
+                        </button>
+                    }
+                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteWaterHandler(water._id)}>
                         <img
                             src={DeleteIcon}
                             alt="Delete Icon"
@@ -163,7 +201,7 @@ const WaterPage: FC = () => {
                     <h1 className="text-2xl font-semibold">Water Transaction</h1>
                 </div>
                 <div className="p-4 flex items-center justify-center">
-                <Link to={`/admin/water/store-archived/${id}`}>
+                    <Link to={`/admin/water/store-archived/${id}`}>
                         <img
                             src={ArchiveIcon}
                             alt="Delete Icon"
