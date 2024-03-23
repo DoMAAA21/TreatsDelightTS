@@ -51,7 +51,25 @@ export const restoreMaintenance = createAsyncThunk('maintenance/remaintenanceMai
 );
 
 
-
+export const updateMaintenance = createAsyncThunk(
+    'maintenance/updateMaintenance',
+    async ({ id, storeId }: { id: string | number, storeId: string | number }, { dispatch }) => {
+        try {
+            const { data } = await axios.patch(
+                `${import.meta.env.VITE_BASE_URL}/api/v1/admin/maintenance/update-status`,
+                { id, storeId },
+                { withCredentials: true }
+            );
+            dispatch(updateMaintenanceSuccess(data.success));
+            return data.success;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw error.response?.data?.message || 'An error occurred';
+            }
+            throw 'An error occurred';
+        }
+    }
+);
 
 const maintenanceSlice = createSlice({
     name: 'maintenance',
@@ -71,6 +89,13 @@ const maintenanceSlice = createSlice({
         restoreMaintenanceReset: (state) => {
             state.isRestored = false;
         },
+        updateMaintenanceSuccess: (state, action) => {
+            state.loading = false;
+            state.isUpdated = action.payload;
+        },
+        updateMaintenanceReset: (state) => {
+            state.isUpdated = false;
+        },
         clearErrors: (state) => {
             state.error = null;
         },
@@ -82,6 +107,8 @@ export const {
     deleteMaintenanceReset,
     restoreMaintenanceSuccess,
     restoreMaintenanceReset,
+    updateMaintenanceSuccess,
+    updateMaintenanceReset,
     clearErrors,
 } = maintenanceSlice.actions;
 
