@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllRents } from '../../../store/reducers/rent/allRentsSlice';
-import { deleteRent, deleteRentReset } from '../../../store/reducers/rent/rentSlice';
+import { deleteRent, deleteRentReset, updateRent, updateRentReset } from '../../../store/reducers/rent/rentSlice';
 import DataTable from '../../../components/DataTable';
 import MetaData from '../../../components/MetaData';
 import RentModal from './rentModal';
@@ -11,6 +11,7 @@ import TableLoader from '../../../components/loaders/TableLoader';
 import { colors } from '../../../components/theme';
 import { newRentReset } from '../../../store/reducers/rent/newRentSlice';
 import DeleteIcon from '../../../assets/icons/trashcan.svg';
+import PayIcon from '../../../assets/icons/pay.svg';
 import ArchiveIcon from '../../../assets/icons/archive.svg';
 import Swal from 'sweetalert2';
 
@@ -34,9 +35,10 @@ const RentPage: FC = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const { rents, loading } = useAppSelector((state) => state.allRent);
-    const { isDeleted } = useAppSelector((state) => state.rent);
+    const { isDeleted, isUpdated } = useAppSelector((state) => state.rent);
     const { success } = useAppSelector((state) => state.newRent);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const storeId = id;
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -59,15 +61,26 @@ const RentPage: FC = () => {
             dispatch(newRentReset());
         }
 
+
+    }, [dispatch, success]);
+
+
+    useEffect(() => {
         if (isDeleted && id) {
             dispatch(fetchAllRents(id));
             dispatch(deleteRentReset());
             successMsg('Rent deleted successfully');
         }
-    }, [dispatch, success, isDeleted]);
+
+        if (isUpdated && id) {
+            dispatch(fetchAllRents(id));
+            dispatch(updateRentReset());
+            successMsg('Rent updated successfully');
+        }
+    }, [isDeleted, isUpdated])
 
 
-    
+
     const deleteRentHandler = (id: number | string) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -81,6 +94,23 @@ const RentPage: FC = () => {
             if (result.isConfirmed) {
                 dispatch(deleteRent(id));
                 Swal.fire('Deleted!', 'Rent has been deleted.', 'success');
+            }
+        });
+    };
+
+    const payRentHandler = (id: number | string) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'info',
+            text: "Mark this transaction paid?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                storeId && dispatch(updateRent({ id, storeId }));
             }
         });
     };
@@ -113,7 +143,7 @@ const RentPage: FC = () => {
             rent: rent.amount ? renderRentStatus(rent?.amount) : 'No payment yet',
             issuedAt: new Date(rent.issuedAt).toISOString().split('T')[0],
             paidAt: rent?.paidAt ? new Date(rent.paidAt).toISOString().split('T')[0] : 'Not paid yet',
-            type: rent?.type==="paid" ? (
+            type: rent?.type === "paid" ? (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-green-600 text-white">
                     Paid
                 </span>
@@ -124,8 +154,17 @@ const RentPage: FC = () => {
             ),
 
             actions: (
-                <div className="flex items-center  justify-center ml-6">
-                     <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteRentHandler(rent._id)}>
+                <div className="flex items-center  justify-center">
+                    {rent.type === "topay" &&
+                        <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8 mr-4" onClick={() => payRentHandler(rent._id)} title="Pay" >
+                            <img
+                                src={PayIcon}
+                                alt="Pay Icon"
+                                className="transition duration-300 ease-in-out transform hover:scale-110"
+                            />
+                        </button>
+                    }
+                    <button className="w-8 h-8 md:h-12 md:w-12 lg:h-8 lg:w-8" onClick={() => deleteRentHandler(rent._id)}>
                         <img
                             src={DeleteIcon}
                             alt="Delete Icon"
@@ -155,7 +194,7 @@ const RentPage: FC = () => {
                     <h1 className="text-2xl font-semibold">Rent Transaction</h1>
                 </div>
                 <div className="p-4 flex items-center justify-center">
-                <Link to={`/admin/rent/store-archived/${id}`}>
+                    <Link to={`/admin/rent/store-archived/${id}`}>
                         <img
                             src={ArchiveIcon}
                             alt="Delete Icon"
