@@ -68,10 +68,10 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ isOpen, onClose }
         <div className="fixed top-16 right-4 w-72 bg-white border border-gray-300 shadow-md overflow-y-auto max-h-[35rem] rounded-lg notification-scrollbar">
             <h2 className="pl-2 py-2 text-lg font-semibold">Notifications</h2>
             {notifications.map(notification => (
-                <div key={notification?._id} className={`p-4 border-b border-gray-200 cursor-pointer flex items-center hover:bg-gray-400 ${notification?.read ? 'bg-white' : 'bg-[#cfd8e6]'}`} onClick={() => handleNotificationClick(notification._id, notification?.webLink)} 
+                <div title={notification?.message} key={notification?._id} className={`p-4 border-b border-gray-200 cursor-pointer flex items-center hover:bg-gray-400 ${notification?.read ? 'bg-white' : 'bg-[#cfd8e6]'}`} onClick={() => handleNotificationClick(notification._id, notification?.webLink)} 
                
                 >
-                    <img src={notification?.image} alt="User" className="w-12 h-12 rounded-full mr-2" />
+                   {notification?.image && <img src={notification.image} alt="User" className="w-12 h-12 rounded-full mr-2" />}
                     <p className="flex-grow truncate text-sm ">{notification?.message}</p>
                 </div>
             ))}
