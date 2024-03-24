@@ -34,7 +34,8 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ isOpen, onClose }
         onClose();
         dispatch(updateNotification(notificationId));
         dispatch(fetchAllNotification({ page: 1 }));
-        navigate(webLink);
+        if(webLink)
+            navigate(webLink);
     };
 
     if (!isOpen) {
