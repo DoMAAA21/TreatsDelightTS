@@ -11,12 +11,14 @@ export const useNav = () => {
       {
         title: 'Home',
         path: '/home',
-       
       },
       {
         title: 'Shop',
         path: '/shop',
-
+      }, 
+      {
+        title: 'Mobile App',
+        path: '/app-download',
       }, 
     ];
     return defaultConfig;

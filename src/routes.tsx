@@ -69,7 +69,8 @@ import ProtectedRoute from './ProtectedRoute'; //allowed roles should be lowerca
 //Mobile gateway
 import MobilePaymentPage from './views/mobile/payment';
 
-
+//Download our app
+import DownloadApp from './views/home/ourApp';
 
 
 const AppRoutes: FC = () => {
@@ -134,6 +135,7 @@ const AppRoutes: FC = () => {
         { path: 'cart', element: <CartPage /> },
         { path: 'payment', element: <PaymentPage /> },
         { path: 'receipt', element: <Receipt /> },
+        { path: 'app-download', element: <DownloadApp /> },
         { path: 'me', element: <ProtectedRoute allowedRoles={['user', 'admin', 'owner', 'employee', 'doctor']}><ProfilePage /></ProtectedRoute> },
         { path: 'me/edit-profile/:id', element: <ProtectedRoute allowedRoles={['user', 'admin', 'owner', 'employee', 'doctor']}> <EditProfilePage /> </ProtectedRoute> },
         { path: 'me/my-orders', element: <ProtectedRoute allowedRoles={['user', 'admin', 'owner', 'employee', 'doctor']}><MyOrderPage /> </ProtectedRoute> },
