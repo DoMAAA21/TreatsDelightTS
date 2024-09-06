@@ -3,6 +3,9 @@ This website is a requirement for our Capstone in partial fulfillment of the req
 #### Website Link: https://treatsdelight.shop
 
 ## Technologies 
+![ReactJS](https://img.shields.io/badge/React-0E39A9.svg?style=for-the-badge&logo=React&logoColor=white)
+![NodeJS](https://img.shields.io/badge/Node.js-339933.svg?style=for-the-badge&logo=nodedotjs&logoColor=white)
+
  * OPENAI
  * WEBSOCKET
  * REDUX TOOLKIT
