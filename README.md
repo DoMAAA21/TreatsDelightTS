@@ -2,7 +2,7 @@
 This website is a requirement for our Capstone in partial fulfillment of the requirement for our undergraduate degree at the Technological University of the Philippines - Taguig. The main users of this website application is the canteen staff, students, faculty, and admin of the TUP-T. 
 #### Website Link: https://treatsdelight.shop
 
-##Technologies 
+## Technologies 
  * OPENAI
  * WEBSOCKET
  * REDUX TOOLKIT
