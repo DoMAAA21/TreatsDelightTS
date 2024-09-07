@@ -12,13 +12,24 @@
 ![OpenAI](https://img.shields.io/badge/OpenAI-412991.svg?style=for-the-badge&logo=OpenAI&logoColor=white)
 
 ## Dependencies
-| Dependency | Function |
-| ------------ | ----------- | 
-| [aos](https://www.npmjs.com/package/aos) | To develop animations that play when components scroll into view |
-| [axios](https://www.npmjs.com/package/axios) | For making HTTP requests from both the browser and Node.js environments |
-| [@paypal/react-paypal-js](https://www.npmjs.com/package/@paypal/react-paypal-js) | To integrate PayPal's payment services |
-| [@reduxjs/toolkit](https://www.npmjs.com/package/@reduxjs/toolkit)| To simplify the process of using Redux in React applications |
-| [socket.io-client](https://www.npmjs.com/package/socket.io-client) | To enable features like chat, notifications, and live updates|
+| Dependency                                                                           | Function                                                                |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | 
+| [aos](https://www.npmjs.com/package/aos)                                             | To develop animations that play when components scroll into view        |
+| [axios](https://www.npmjs.com/package/axios)                                         | For making HTTP requests from both the browser and Node.js environments |
+| [compressorjs](https://www.npmjs.com/package/compressorjs)                           | For compressing of images                                               |
+| [formik](https://www.npmjs.com/package/formik)                                       | For managing of forms in React applications                             |
+| [html-to-image](https://www.npmjs.com/package/html-to-image)                         | For converting HTML content into image formats                          |
+| [jspdf](https://www.npmjs.com/package/jspdf)                                         | To generate PDF documents                                               |
+| [OpenAI](https://www.npmjs.com/package/openai)                                       | To access OpenAI REST APIs                                              |
+| [@paypal/react-paypal-js](https://www.npmjs.com/package/@paypal/react-paypal-js)     | To integrate PayPal's payment services                                  |
+| [qrcode.react](https://www.npmjs.com/package/qrcode.react)                           | To generate QR codes                                                    |
+| [recharts](https://www.npmjs.com/package/recharts)                                   | For incorporating charts to the system                                  |
+| [@reduxjs/toolkit](https://www.npmjs.com/package/@reduxjs/toolkit)                   | To simplify the process of using Redux in React applications            |
+| [slick-carousel](https://www.npmjs.com/package/slick-carousel)                       | For creating customizable carousels or sliders                          |
+| [socket.io-client](https://www.npmjs.com/package/socket.io-client)                   | To enable features like chat, notifications, and live updates           |
+| [sweetalert2](https://www.npmjs.com/package/sweetalert2)                             | For integrating alert messages                                          |
+| [tailwind-datepicker-react](https://www.npmjs.com/package/tailwind-datepicker-react) | A date picker styled with Tailwind CSS                                  |
+| [yup](https://www.npmjs.com/package/yup)                                             | A schema builder for value parsing and validation                       |
 
 ## Contributors 
 | Name                      | GitHub Profile                                        |  Role                               |
