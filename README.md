@@ -1,5 +1,5 @@
 # Treats Delight: A Digital Transformation of TUP-Taguig Canteen - Project Overview 
-[*Subject to Change*] This website partially fulfills the requirement for our undergraduate degree under the IT Capstone course at the Technological University of the Philippines-Taguig. The primary users of this website application are the canteen staff, students, faculty, and admin officers of the TUP-T. 
+This website partially fulfills the requirement for our undergraduate degree under the IT Capstone course at the Technological University of the Philippines-Taguig. The primary users of this website application are the canteen staff, students, faculty, and administrative officers of the TUP-T. This system encompasses more than just canteen management. It also features efficient ordering and administrative control systems for seamless operations.
 #### Website Link: https://treatsdelight.shop
 
 ## Technologies 
